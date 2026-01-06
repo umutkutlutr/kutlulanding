@@ -16,4 +16,33 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    // Code splitting for better performance
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom'],
+          'vendor-motion': ['motion/react'],
+          'vendor-ui': [
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-accordion',
+            '@radix-ui/react-select',
+            '@radix-ui/react-label',
+          ],
+        },
+      },
+    },
+    // Minification - esbuild is faster than terser
+    minify: 'esbuild',
+    // Chunk size warnings
+    chunkSizeWarningLimit: 1000,
+    // Source maps disabled for production
+    sourcemap: false,
+    // Target modern browsers for smaller bundles
+    target: 'esnext',
+  },
+  // Optimize dependencies
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'motion/react'],
+  },
 })
