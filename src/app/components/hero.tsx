@@ -1,12 +1,65 @@
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion } from "motion/react";
 import { Button } from "./ui/button";
 import { ArrowRight } from "lucide-react";
+import { useEffect, useState, useRef } from "react";
 
 export function Hero() {
-  const { scrollY } = useScroll();
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
-  const scale = useTransform(scrollY, [0, 300], [1, 0.95]);
-  const y = useTransform(scrollY, [0, 500], [0, 150]);
+  const [scrollValues, setScrollValues] = useState({ opacity: 1, scale: 1, y: 0, layer2Y: 0, orb1Y: 0, orb2Y: 0, orb3Y: 0, indicatorOpacity: 1 });
+  const rafRef = useRef<number | null>(null);
+  const lastScrollRef = useRef(0);
+
+  useEffect(() => {
+    let ticking = false;
+    
+    const handleScroll = () => {
+      if (!ticking) {
+        rafRef.current = requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          
+          // Only update if change is significant (> 5px)
+          if (Math.abs(scrollY - lastScrollRef.current) < 5) {
+            ticking = false;
+            return;
+          }
+          lastScrollRef.current = scrollY;
+
+          // Calculate all transforms at once
+          const opacity = Math.max(0, 1 - scrollY / 300);
+          const scale = Math.max(0.95, 1 - scrollY / 6000); // Slower scale change
+          const y = Math.min(150, scrollY * 0.3);
+          const layer2Y = Math.min(-150, -scrollY * 0.3);
+          const orb1Y = Math.min(-100, -scrollY * 0.2);
+          const orb2Y = Math.min(120, scrollY * 0.24);
+          const orb3Y = Math.min(60, scrollY * 0.12);
+          const indicatorOpacity = Math.max(0, 1 - scrollY / 200);
+
+          setScrollValues({
+            opacity,
+            scale,
+            y,
+            layer2Y,
+            orb1Y,
+            orb2Y,
+            orb3Y,
+            indicatorOpacity,
+          });
+          
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Initial call
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
+  }, []);
   
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -37,8 +90,12 @@ export function Hero() {
         />
 
         {/* Layer 2 - Scroll-based movement */}
-        <motion.div
-          style={{ y: useTransform(scrollY, [0, 500], [0, -150]) }}
+        <div
+          style={{ 
+            transform: `translateY(${scrollValues.layer2Y}px)`,
+            transition: 'transform 0.1s ease-out',
+            willChange: 'transform'
+          }}
           className="absolute inset-0 opacity-30"
         >
           <div
@@ -48,7 +105,7 @@ export function Hero() {
                 "radial-gradient(ellipse at 70% 30%, rgba(30, 58, 138, 0.12) 0%, transparent 60%)",
             }}
           />
-        </motion.div>
+        </div>
       </div>
 
       {/* Floating 3D shapes with enhanced animation */}
@@ -57,7 +114,9 @@ export function Hero() {
         style={{
           background: "radial-gradient(circle, rgba(251, 146, 60, 0.15) 0%, transparent 70%)",
           filter: "blur(60px)",
-          y: useTransform(scrollY, [0, 500], [0, -100]),
+          transform: `translateY(${scrollValues.orb1Y}px)`,
+          transition: 'transform 0.1s ease-out',
+          willChange: 'transform',
         }}
         animate={{
           y: [0, -40, 0],
@@ -75,7 +134,9 @@ export function Hero() {
         style={{
           background: "radial-gradient(circle, rgba(30, 64, 175, 0.12) 0%, transparent 70%)",
           filter: "blur(70px)",
-          y: useTransform(scrollY, [0, 500], [0, 120]),
+          transform: `translateY(${scrollValues.orb2Y}px)`,
+          transition: 'transform 0.1s ease-out',
+          willChange: 'transform',
         }}
         animate={{
           y: [0, 50, 0],
@@ -93,7 +154,9 @@ export function Hero() {
         style={{
           background: "radial-gradient(circle, rgba(30, 58, 138, 0.08) 0%, transparent 70%)",
           filter: "blur(90px)",
-          y: useTransform(scrollY, [0, 500], [0, 60]),
+          transform: `translateY(${scrollValues.orb3Y}px)`,
+          transition: 'transform 0.1s ease-out',
+          willChange: 'transform',
         }}
         animate={{
           scale: [1, 1.15, 1],
@@ -116,7 +179,13 @@ export function Hero() {
 
       {/* Content */}
       <motion.div 
-        style={{ opacity, scale, y }}
+        style={{ 
+          opacity: scrollValues.opacity,
+          scale: scrollValues.scale,
+          transform: `translateY(${scrollValues.y}px)`,
+          transition: 'opacity 0.1s ease-out, transform 0.1s ease-out',
+          willChange: 'transform, opacity',
+        }}
         className="relative z-10 max-w-5xl mx-auto px-6 lg:px-12 text-center"
       >
         <motion.div
@@ -186,7 +255,10 @@ export function Hero() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
         className="absolute bottom-12 left-1/2 -translate-x-1/2"
-        style={{ opacity: useTransform(scrollY, [0, 200], [1, 0]) }}
+        style={{ 
+          opacity: scrollValues.indicatorOpacity,
+          transition: 'opacity 0.1s ease-out',
+        }}
       >
         <motion.div
           animate={{ y: [0, 12, 0] }}

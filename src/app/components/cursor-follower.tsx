@@ -14,22 +14,22 @@ export function CursorFollower() {
   const handleMouseMove = useCallback((e: MouseEvent) => {
     if (rafId.current === null) {
       rafId.current = requestAnimationFrame(() => {
-        setMousePosition({ x: e.clientX, y: e.clientY });
-        cursorX.set(e.clientX);
-        cursorY.set(e.clientY);
+      setMousePosition({ x: e.clientX, y: e.clientY });
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
         rafId.current = null;
       });
     }
   }, [cursorX, cursorY]);
 
   const handleMouseOver = useCallback((e: MouseEvent) => {
-    const target = e.target as HTMLElement;
+      const target = e.target as HTMLElement;
     setIsHovering(
-      target.tagName === "BUTTON" ||
-      target.tagName === "A" ||
+        target.tagName === "BUTTON" ||
+        target.tagName === "A" ||
       !!target.closest("button") ||
       !!target.closest("a") ||
-      target.classList.contains("cursor-hover")
+        target.classList.contains("cursor-hover")
     );
   }, []);
 

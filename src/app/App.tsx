@@ -47,26 +47,26 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#f5f1ea] text-[#1a1d29] antialiased">
       <Suspense fallback={null}>
-        <ScrollVortex />
-        <CursorFollower />
+      <ScrollVortex />
+      <CursorFollower />
       </Suspense>
       <ScrollProgress />
       <Navbar />
       <main>
         <Hero />
         <Suspense fallback={null}>
-          <ProofStrip />
-          <Expertise />
-          <Industries />
-          <Process />
-          <Work />
-          <DiscoveryCall />
-          <Maintenance />
-          <Contact />
+        <ProofStrip />
+        <Expertise />
+        <Industries />
+        <Process />
+        <Work />
+        <DiscoveryCall />
+        <Maintenance />
+        <Contact />
         </Suspense>
       </main>
       <Suspense fallback={null}>
-        <Footer />
+      <Footer />
       </Suspense>
     </div>
   );
