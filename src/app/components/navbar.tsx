@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef } from "react";
-import { motion } from "motion/react";
+import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 
 export function Navbar() {
@@ -63,52 +62,35 @@ export function Navbar() {
             <span className="text-xl tracking-tight relative inline-block text-[#1a1d29] font-semibold">
               Kutlu Solutions
             </span>
-          </motion.div>
+          </div>
 
           {/* Center Nav */}
           <div className="hidden lg:flex items-center gap-10">
-            {navItems.map((item, i) => (
-              <motion.button
+            {navItems.map((item) => (
+              <button
                 key={item.id}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
                 onClick={() => scrollToSection(item.id)}
-                className="relative text-sm text-[#52525b] hover:text-[#1a1d29] transition-colors duration-500 tracking-wide group font-medium"
-                whileHover={{ scale: 1.05 }}
+                className="relative text-sm text-[#52525b] hover:text-[#1a1d29] transition-colors duration-500 tracking-wide group font-medium hover:scale-105"
               >
                 <span className="relative z-10">{item.label}</span>
-                <motion.div
-                  className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-[#fb923c] to-[#1e40af] origin-left"
-                  initial={{ scaleX: 0 }}
-                  whileHover={{ scaleX: 1 }}
-                  transition={{ duration: 0.3 }}
-                />
-              </motion.button>
+                <div className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-[#fb923c] to-[#1e40af] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+              </button>
             ))}
           </div>
 
           {/* Right CTA */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex items-center gap-4"
-          >
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
+          <div className="flex items-center gap-4">
+            <div className="hover:scale-105 active:scale-95 transition-transform duration-300">
               <Button
                 onClick={() => scrollToSection("contact")}
                 className="relative overflow-hidden bg-[#1e40af] text-white px-6 py-2.5 rounded-lg text-sm tracking-wide border-0 hover:bg-[#1e3a8a] transition-all duration-300 font-semibold cursor-hover shadow-lg shadow-[#1e40af]/30"
               >
                 <span className="relative z-10">Let's Talk</span>
               </Button>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </div>
-    </motion.nav>
+    </nav>
   );
 }
