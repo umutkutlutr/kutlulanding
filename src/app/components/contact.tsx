@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+// Motion removed for performance
 import { ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -67,36 +67,26 @@ export function Contact() {
       />
 
       <div className="relative max-w-4xl mx-auto px-6 lg:px-12">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl lg:text-6xl tracking-tight mb-6">
             Get in Touch
           </h2>
           <p className="text-[#9ca3af] leading-relaxed">
             Let's discuss your project.
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+        <div
           className="max-w-2xl mx-auto cursor-hover"
           onMouseMove={handleMouseMove}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={handleMouseLeave}
         >
-          <motion.div 
+          <div 
             className="p-10 border border-white/5 rounded-xl bg-white/[0.01] backdrop-blur-sm relative overflow-hidden"
           >
             {/* Mouse-following gradient spotlight */}
-            <motion.div
+            <div
               className="absolute inset-0 opacity-0 transition-opacity duration-300 pointer-events-none"
               style={{
                 background: `radial-gradient(circle 300px at ${(mousePosition.x + 0.5) * 100}% ${(mousePosition.y + 0.5) * 100}%, rgba(167, 139, 250, 0.1), transparent)`,
@@ -117,12 +107,7 @@ export function Contact() {
 
             <form onSubmit={handleSubmit} className="space-y-6 relative" style={{ transform: "translateZ(20px)" }}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                >
+                <div>
                   <Label htmlFor="contact-name" className="text-[#9ca3af] text-sm">
                     Full Name
                   </Label>
@@ -133,14 +118,9 @@ export function Contact() {
                     placeholder=""
                     className="bg-white/5 border-white/10 mt-2 focus:border-[#a78bfa]/50 transition-all duration-300"
                   />
-                </motion.div>
+                </div>
 
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                >
+                <div>
                   <Label htmlFor="contact-email" className="text-[#9ca3af] text-sm">
                     Email
                   </Label>
@@ -152,15 +132,10 @@ export function Contact() {
                     placeholder=""
                     className="bg-white/5 border-white/10 mt-2 focus:border-[#60a5fa]/50 transition-all duration-300"
                   />
-                </motion.div>
+                </div>
               </div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-              >
+              <div>
                 <Label htmlFor="contact-company" className="text-[#9ca3af] text-sm">
                   Company
                 </Label>
@@ -171,14 +146,9 @@ export function Contact() {
                   placeholder=""
                   className="bg-white/5 border-white/10 mt-2 focus:border-[#f472b6]/50 transition-all duration-300"
                 />
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-              >
+              <div>
                 <Label htmlFor="contact-message" className="text-[#9ca3af] text-sm">
                   Message
                 </Label>
@@ -189,16 +159,9 @@ export function Contact() {
                   placeholder=""
                   className="bg-white/5 border-white/10 mt-2 min-h-[140px] focus:border-[#a78bfa]/50 transition-all duration-300"
                 />
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.7 }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
+              <div className="hover:scale-[1.02] active:scale-[0.98] transition-transform duration-300">
                 <Button
                   type="submit"
                   className="w-full bg-white text-[#1a1d29] hover:bg-[#f3f4f6] transition-all duration-300 py-6 text-sm tracking-wide border-0 font-medium cursor-hover"
@@ -208,25 +171,19 @@ export function Contact() {
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </span>
                 </Button>
-              </motion.div>
+              </div>
 
-              <motion.div 
-                className="pt-6 border-t border-white/5 text-center"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.8 }}
-              >
+              <div className="pt-6 border-t border-white/5 text-center">
                 <p className="text-sm text-[#9ca3af] mb-2">
                   hello@kutlusolutions.com
                 </p>
                 <p className="text-xs text-[#71717a]">
                   Response within 24 hours
                 </p>
-              </motion.div>
+              </div>
             </form>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   );

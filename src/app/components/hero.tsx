@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+// Motion removed for performance
 import { Button } from "./ui/button";
 import { ArrowRight } from "lucide-react";
 
@@ -51,11 +51,7 @@ export function Hero() {
 
       {/* Content */}
       <div className="relative z-10 max-w-5xl mx-auto px-6 lg:px-12 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        >
+        <div>
           <h1 className="text-6xl md:text-7xl lg:text-8xl tracking-tight mb-8 leading-[1.1] text-[#1a1d29] font-bold">
             Software built for the
             <br />
@@ -63,25 +59,15 @@ export function Hero() {
               long term.
             </span>
           </h1>
-        </motion.div>
+        </div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="text-lg md:text-xl text-[#52525b] mb-16 max-w-2xl mx-auto leading-relaxed font-medium"
-        >
+        <p className="text-lg md:text-xl text-[#52525b] mb-16 max-w-2xl mx-auto leading-relaxed font-medium">
           We partner with enterprises to build mission-critical systems.
           <br />
           Senior-led. On-site discovery. Ongoing support.
-        </motion.p>
+        </p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button
             onClick={() => scrollToSection("contact")}
             className="relative overflow-hidden bg-[#1e40af] text-white px-10 py-6 rounded-lg text-base tracking-wide border-0 hover:bg-[#1e3a8a] transition-all duration-300 cursor-hover font-semibold shadow-xl shadow-[#1e40af]/30 hover:scale-105 hover:-translate-y-0.5 active:scale-95"
@@ -99,7 +85,7 @@ export function Hero() {
           >
             Our Expertise
           </Button>
-        </motion.div>
+        </div>
       </div>
 
       {/* Scroll Indicator - removed for performance */}
