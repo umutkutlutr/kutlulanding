@@ -1,4 +1,3 @@
-import { motion } from "motion/react";
 import { Layers, ChartBar, Brain, Workflow } from "lucide-react";
 import { useState } from "react";
 
@@ -41,67 +40,37 @@ export function Services() {
 
   return (
     <section id="services" className="relative py-32 border-t border-[#e5e7eb]/50 overflow-hidden bg-[#fafaf9]">
-      {/* Floating background elements */}
-      <motion.div
+      {/* Static background elements - no animation */}
+      <div
         className="absolute top-20 right-20 w-96 h-96 rounded-full"
         style={{
-          background: "radial-gradient(circle, rgba(251, 146, 60, 0.1) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(251, 146, 60, 0.08) 0%, transparent 70%)",
           filter: "blur(30px)",
-        }}
-        animate={{
-          y: [0, -50, 0],
-          x: [0, 30, 0],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "easeInOut"
         }}
       />
 
-      <motion.div
+      <div
         className="absolute bottom-20 left-20 w-96 h-96 rounded-full"
         style={{
-          background: "radial-gradient(circle, rgba(96, 165, 250, 0.08) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(96, 165, 250, 0.06) 0%, transparent 70%)",
           filter: "blur(30px)",
-        }}
-        animate={{
-          y: [0, 50, 0],
-          x: [0, -30, 0],
-        }}
-        transition={{
-          duration: 25,
-          repeat: Infinity,
-          ease: "easeInOut"
         }}
       />
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-20"
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="inline-block mb-4"
-          >
+        <div className="text-center mb-20">
+          <div className="inline-block mb-4">
             <span className="text-sm tracking-[0.3em] text-[#fb923c] uppercase font-medium">
               Expertise
             </span>
-          </motion.div>
+          </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl tracking-tight mb-6 text-[#1a1d29]">
             Our Expertise
           </h2>
           <p className="text-[#71717a] max-w-2xl mx-auto leading-relaxed text-lg">
             Reliable software for critical business processes.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {services.map((service, i) => {
@@ -131,18 +100,14 @@ function ServiceCard({ service, index }: any) {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
+    <div
       className="group relative cursor-hover"
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
     >
-      {/* 3D Card with perspective */}
-      <motion.div
+      {/* Card */}
+      <div
         className="relative p-10 rounded-2xl backdrop-blur-sm transition-all duration-700 overflow-hidden"
         style={{
           border: "1px solid rgba(255, 255, 255, 0.05)",
@@ -150,7 +115,7 @@ function ServiceCard({ service, index }: any) {
         }}
       >
         {/* Gradient glow on hover */}
-        <motion.div
+        <div
           className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 transition-opacity duration-700`}
           style={{ 
             transform: "translateZ(-1px)",
@@ -159,82 +124,56 @@ function ServiceCard({ service, index }: any) {
         />
 
         {/* Mouse-following spotlight */}
-        <motion.div
+        <div
           className="absolute inset-0 opacity-0 transition-opacity duration-300"
           style={{
-            background: `radial-gradient(circle 200px at ${(mousePosition.x + 0.5) * 100}% ${(mousePosition.y + 0.5) * 100}%, ${service.color}, transparent)`,
+            background: `radial-gradient(circle 200px at ${(mousePosition.x + 0.5) * 100}% ${(mousePosition.y + 0.5) * 100}%, ${service.color}20, transparent)`,
             opacity: isHovered ? 1 : 0,
           }}
         />
 
-        {/* Animated border gradient */}
-        <motion.div
+        {/* Border gradient */}
+        <div
           className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
           style={{
-            background: `linear-gradient(135deg, ${service.color}, transparent)`,
+            background: `linear-gradient(135deg, ${service.color}30, transparent)`,
             filter: "blur(10px)",
             transform: "translateZ(-2px)",
           }}
         />
 
-        {/* Icon with 3D animation */}
-        <motion.div
-          initial={{ scale: 0, rotate: -180 }}
-          whileInView={{ scale: 1, rotate: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: index * 0.1 + 0.2, ease: [0.16, 1, 0.3, 1] }}
+        {/* Icon */}
+        <div
           className="relative mb-6"
-          style={{ 
-            transformStyle: "preserve-3d",
-            transform: "translateZ(40px)",
-          }}
         >
-          <motion.div
-            animate={{
-              rotateY: isHovered ? [0, 360] : 0,
-            }}
-            transition={{
-              duration: 1,
-              ease: "easeInOut"
-            }}
-            style={{ transformStyle: "preserve-3d" }}
-          >
+          <div style={{ transformStyle: "preserve-3d" }}>
             <service.icon 
               className="h-10 w-10 text-white/60 group-hover:text-white/80 transition-colors duration-700" 
               strokeWidth={1.5} 
               style={{ 
                 filter: `drop-shadow(0 0 20px ${service.color})`,
-                transform: "translateZ(20px)"
               }}
             />
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
-        <h3 className="relative text-xl mb-3 tracking-tight" style={{ transform: "translateZ(30px)" }}>
+        <h3 className="relative text-xl mb-3 tracking-tight">
           {service.title}
         </h3>
-        <p className="relative text-[#9ca3af] text-sm leading-relaxed" style={{ transform: "translateZ(20px)" }}>
+        <p className="relative text-[#9ca3af] text-sm leading-relaxed">
           {service.description}
         </p>
 
-        {/* Floating particles */}
-        <motion.div
+        {/* Floating particle */}
+        <div
           className="absolute top-4 right-4 w-2 h-2 rounded-full"
           style={{
             background: service.color,
             boxShadow: `0 0 20px ${service.color}`,
-          }}
-          animate={{
-            y: [0, -10, 0],
-            opacity: [0.3, 1, 0.3],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            delay: index * 0.5,
+            opacity: 0.6,
           }}
         />
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }

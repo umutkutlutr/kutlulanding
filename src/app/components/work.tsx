@@ -1,6 +1,8 @@
 // Motion removed for performance
+import { useLanguage } from "../../contexts/LanguageContext";
 
 export function Work() {
+  const { t } = useLanguage();
 
   const clients = [
     { name: "Global Finance Corp", logo: "GF" },

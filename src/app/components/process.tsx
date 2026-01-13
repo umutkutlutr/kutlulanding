@@ -172,11 +172,6 @@ function ProcessStep({ step, index, onClick }: any) {
       <div className="flex items-start gap-8">
         {/* Number Circle */}
         <div
-          className="relative flex-shrink-0"
-          initial={{ scale: 0 }}
-          whileInView={{ scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: index * 0.1 + 0.2 }}
           className="relative flex-shrink-0 z-10 cursor-hover"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
