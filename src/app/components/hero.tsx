@@ -53,27 +53,27 @@ export function Hero() {
       <div className="relative z-10 max-w-5xl mx-auto px-6 lg:px-12 text-center">
         <div>
           <h1 className="text-6xl md:text-7xl lg:text-8xl tracking-tight mb-8 leading-[1.1] text-[#1a1d29] font-bold">
-            Software built for the
+            Üretim verimliliğini
             <br />
             <span className="bg-gradient-to-r from-[#fb923c] to-[#1e40af] bg-clip-text text-transparent">
-              long term.
+              ölçülebilir kılan yazılımlar
             </span>
           </h1>
         </div>
 
         <p className="text-lg md:text-xl text-[#52525b] mb-16 max-w-2xl mx-auto leading-relaxed font-medium">
-          We partner with enterprises to build mission-critical systems.
+          OEE, izlenebilirlik, planlama ve shopfloor görünürlüğü için entegre sistemler.
           <br />
-          Senior-led. On-site discovery. Ongoing support.
+          Operasyonel mükemmellik, veriyle desteklenir.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button
-            onClick={() => scrollToSection("contact")}
+            onClick={() => scrollToSection("discovery")}
             className="relative overflow-hidden bg-[#1e40af] text-white px-10 py-6 rounded-lg text-base tracking-wide border-0 hover:bg-[#1e3a8a] transition-all duration-300 cursor-hover font-semibold shadow-xl shadow-[#1e40af]/30 hover:scale-105 hover:-translate-y-0.5 active:scale-95"
           >
             <span className="relative z-10 flex items-center">
-              Schedule a Discovery Call
+              Keşif Görüşmesi Planla
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-500" />
             </span>
           </Button>
@@ -83,7 +83,7 @@ export function Hero() {
             variant="outline"
             className="border-[#1a1d29]/30 hover:border-[#fb923c]/60 bg-white/80 hover:bg-white text-[#1a1d29] px-10 py-6 rounded-lg transition-all duration-300 text-base tracking-wide cursor-hover font-semibold shadow-lg hover:scale-105 hover:-translate-y-0.5 active:scale-95"
           >
-            Our Expertise
+            Çözümlerimiz
           </Button>
         </div>
       </div>
