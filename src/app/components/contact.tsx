@@ -6,8 +6,10 @@ import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { useState, useRef } from "react";
 import { saveFormSubmission } from "../../utils/formSubmission";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 export function Contact() {
+  const { t } = useLanguage();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const [formData, setFormData] = useState({
@@ -69,10 +71,10 @@ export function Contact() {
       <div className="relative max-w-4xl mx-auto px-6 lg:px-12">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl lg:text-6xl tracking-tight mb-6">
-            Get in Touch
+            {t('contact.title')}
           </h2>
           <p className="text-[#9ca3af] leading-relaxed">
-            Let's discuss your project.
+            {t('contact.subtitle')}
           </p>
         </div>
 
@@ -109,7 +111,7 @@ export function Contact() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <Label htmlFor="contact-name" className="text-[#9ca3af] text-sm">
-                    Full Name
+                    {t('contact.form.name')}
                   </Label>
                   <Input
                     id="contact-name"
@@ -122,7 +124,7 @@ export function Contact() {
 
                 <div>
                   <Label htmlFor="contact-email" className="text-[#9ca3af] text-sm">
-                    Email
+                    {t('contact.form.email')}
                   </Label>
                   <Input
                     id="contact-email"
@@ -137,7 +139,7 @@ export function Contact() {
 
               <div>
                 <Label htmlFor="contact-company" className="text-[#9ca3af] text-sm">
-                  Company
+                  {t('contact.form.company')}
                 </Label>
                 <Input
                   id="contact-company"
@@ -150,7 +152,7 @@ export function Contact() {
 
               <div>
                 <Label htmlFor="contact-message" className="text-[#9ca3af] text-sm">
-                  Message
+                  {t('contact.form.message')}
                 </Label>
                 <Textarea
                   id="contact-message"
@@ -167,7 +169,7 @@ export function Contact() {
                   className="w-full bg-white text-[#1a1d29] hover:bg-[#f3f4f6] transition-all duration-300 py-6 text-sm tracking-wide border-0 font-medium cursor-hover"
                 >
                   <span className="relative z-10 flex items-center justify-center">
-                    Send Message
+                    {t('contact.form.submit')}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </span>
                 </Button>
@@ -175,10 +177,10 @@ export function Contact() {
 
               <div className="pt-6 border-t border-white/5 text-center">
                 <p className="text-sm text-[#9ca3af] mb-2">
-                  hello@kutlusolutions.com
+                  {t('contact.email')}
                 </p>
                 <p className="text-xs text-[#71717a]">
-                  Response within 24 hours
+                  {t('contact.response')}
                 </p>
               </div>
             </form>

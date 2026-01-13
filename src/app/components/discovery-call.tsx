@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { motion } from "motion/react";
 import { Button } from "./ui/button";
+import { useLanguage } from "../../contexts/LanguageContext";
 import {
   Dialog,
   DialogContent,
@@ -15,6 +15,7 @@ import { Calendar, Clock, CheckCircle, ArrowRight } from "lucide-react";
 import { saveFormSubmission } from "../../utils/formSubmission";
 
 export function DiscoveryCall() {
+  const { t } = useLanguage();
   const [showModal, setShowModal] = useState(false);
   const [step, setStep] = useState(1); // 1: Form, 2: Calendar, 3: Confirmation
   const [formData, setFormData] = useState({
@@ -95,129 +96,73 @@ export function DiscoveryCall() {
       />
 
       <div className="relative max-w-4xl mx-auto px-6 lg:px-12">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center"
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="inline-block mb-4"
-          >
+        <div className="text-center">
+          <div className="inline-block mb-4">
             <span className="text-sm tracking-[0.3em] text-[#1e40af] uppercase font-medium">
-              Start Here
+              {t('discovery.badge')}
             </span>
-          </motion.div>
+          </div>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl tracking-tight mb-6 text-[#1a1d29]">
-            Schedule a Discovery Call
+            {t('discovery.title')}
           </h2>
           <p className="text-[#71717a] max-w-2xl mx-auto mb-12 leading-relaxed text-lg">
-            We don't offer fixed-price packages. Every enterprise has unique needs. Start with a discovery call to understand your requirements before we propose an engagement.
+            {t('discovery.subtitle')}
           </p>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative max-w-2xl mx-auto"
-          >
-            {/* 3D Card effect */}
-            <motion.div
-              className="relative p-12 rounded-2xl border-2 border-[#e5e7eb] backdrop-blur-sm overflow-hidden bg-white/60"
-              style={{
-                transformStyle: "preserve-3d",
-              }}
-              whileHover={{
-                rotateX: 2,
-                rotateY: 2,
-                transition: { duration: 0.3 }
-              }}
-            >
-              {/* Animated gradient background */}
-              <motion.div 
-                className="absolute inset-0 opacity-20"
-                animate={{
-                  background: [
-                    "radial-gradient(circle at 20% 50%, rgba(251, 146, 60, 0.15) 0%, transparent 50%)",
-                    "radial-gradient(circle at 80% 50%, rgba(30, 64, 175, 0.15) 0%, transparent 50%)",
-                    "radial-gradient(circle at 20% 50%, rgba(251, 146, 60, 0.15) 0%, transparent 50%)",
-                  ]
-                }}
-                transition={{
-                  duration: 8,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
+          <div className="relative max-w-2xl mx-auto">
+            {/* Card */}
+            <div className="relative p-12 rounded-2xl border-2 border-[#e5e7eb] backdrop-blur-sm overflow-hidden bg-white/60 hover:scale-[1.01] transition-transform duration-300">
+              {/* Static gradient background */}
+              <div className="absolute inset-0 opacity-20" style={{
+                background: "radial-gradient(circle at 50% 50%, rgba(251, 146, 60, 0.15) 0%, transparent 50%)",
+              }} />
               
               <div className="relative space-y-8" style={{ transform: "translateZ(20px)" }}>
                 <div className="space-y-4">
                   {[
-                    "45-minute video consultation",
-                    "Understand your business and technical needs",
-                    "Discuss project scope and timeline",
-                    "Receive preliminary recommendations"
-                  ].map((feature, i) => (
-                    <motion.div
+                    "discovery.feature.0",
+                    "discovery.feature.1",
+                    "discovery.feature.2",
+                    "discovery.feature.3"
+                  ].map((featureKey, i) => (
+                    <div
                       key={i}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: i * 0.1 }}
                       className="flex items-start gap-4 group"
                     >
-                      <motion.div 
+                      <div 
                         className="w-1.5 h-1.5 rounded-full mt-2.5"
                         style={{
                           background: `linear-gradient(135deg, #fb923c, #1e40af)`,
                           boxShadow: "0 0 10px rgba(251, 146, 60, 0.5)",
                         }}
-                        animate={{
-                          scale: [1, 1.3, 1],
-                          opacity: [0.6, 1, 0.6],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          delay: i * 0.3
-                        }}
                       />
                       <p className="text-[#52525b] text-left group-hover:text-[#1a1d29] transition-colors duration-500">
-                        {feature}
+                        {t(featureKey)}
                       </p>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
 
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
+                <div className="hover:scale-[1.02] active:scale-[0.98] transition-transform duration-300">
                   <Button
                     onClick={() => setShowModal(true)}
                     className="w-full bg-[#1e40af] text-white hover:bg-[#1e3a8a] py-6 text-sm tracking-wide rounded-lg border-0 transition-colors duration-300 font-semibold cursor-hover shadow-xl shadow-[#1e40af]/30"
                   >
                     <span className="relative z-10 flex items-center justify-center gap-2">
-                      Schedule Your Call
+                      {t('discovery.cta')}
                       <ArrowRight className="w-4 h-4" />
                     </span>
                   </Button>
-                </motion.div>
+                </div>
 
                 <p className="text-xs text-[#9ca3af] text-center">
-                  No commitment required • Free consultation
+                  {t('discovery.footer')}
                 </p>
               </div>
-            </motion.div>
-          </motion.div>
-        </motion.div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Discovery Call Modal */}
@@ -225,14 +170,14 @@ export function DiscoveryCall() {
         <DialogContent className="bg-white border-[#e5e7eb] max-w-3xl rounded-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-3xl tracking-tight text-[#1a1d29]">
-              {step === 1 && "Tell us about your project"}
-              {step === 2 && "Choose a time"}
-              {step === 3 && "You're all set!"}
+              {step === 1 && t('discovery.modal.step1.title')}
+              {step === 2 && t('discovery.modal.step2.title')}
+              {step === 3 && t('discovery.modal.step3.title')}
             </DialogTitle>
             <DialogDescription className="text-base text-[#71717a]">
-              {step === 1 && "We'll use this information to prepare for our conversation."}
-              {step === 2 && "Select a date and time that works best for you."}
-              {step === 3 && "We've sent a calendar invite to your email."}
+              {step === 1 && t('discovery.modal.step1.subtitle')}
+              {step === 2 && t('discovery.modal.step2.subtitle')}
+              {step === 3 && t('discovery.modal.step3.subtitle')}
             </DialogDescription>
           </DialogHeader>
 
@@ -242,7 +187,7 @@ export function DiscoveryCall() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="name" className="text-[#52525b] font-medium">
-                    Full Name *
+                    {t('discovery.form.name')} *
                   </Label>
                   <Input
                     id="name"
@@ -255,7 +200,7 @@ export function DiscoveryCall() {
                 </div>
                 <div>
                   <Label htmlFor="email" className="text-[#52525b] font-medium">
-                    Email *
+                    {t('discovery.form.email')} *
                   </Label>
                   <Input
                     id="email"
@@ -272,7 +217,7 @@ export function DiscoveryCall() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="company" className="text-[#52525b] font-medium">
-                    Company *
+                    {t('discovery.form.company')} *
                   </Label>
                   <Input
                     id="company"
@@ -285,7 +230,7 @@ export function DiscoveryCall() {
                 </div>
                 <div>
                   <Label htmlFor="role" className="text-[#52525b] font-medium">
-                    Your Role *
+                    {t('discovery.form.role')} *
                   </Label>
                   <Input
                     id="role"
@@ -300,7 +245,7 @@ export function DiscoveryCall() {
 
               <div>
                 <Label htmlFor="phone" className="text-[#52525b] font-medium">
-                  Phone Number (optional)
+                  {t('discovery.form.phone')}
                 </Label>
                 <Input
                   id="phone"
@@ -313,7 +258,7 @@ export function DiscoveryCall() {
 
               <div>
                 <Label htmlFor="projectBrief" className="text-[#52525b] font-medium">
-                  Brief Project Description *
+                  {t('discovery.form.projectBrief')} *
                 </Label>
                 <Textarea
                   id="projectBrief"
@@ -329,7 +274,7 @@ export function DiscoveryCall() {
                 type="submit"
                 className="w-full bg-[#1e40af] text-white hover:bg-[#1e3a8a] py-6 text-base tracking-wide border-0 font-semibold transition-colors duration-300 shadow-lg shadow-[#1e40af]/30"
               >
-                Continue to Scheduling
+                {t('discovery.form.continue')}
               </Button>
             </form>
           )}
@@ -344,12 +289,9 @@ export function DiscoveryCall() {
                 </Label>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   {availableDates.map((dateObj, i) => (
-                    <motion.button
+                    <button
                       key={i}
                       type="button"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: i * 0.05 }}
                       onClick={() => setSelectedDate(dateObj.date)}
                       className={`p-4 rounded-lg border-2 transition-all duration-300 ${
                         selectedDate === dateObj.date
@@ -360,29 +302,22 @@ export function DiscoveryCall() {
                       <Calendar className="w-5 h-5 mx-auto mb-2 text-[#1e40af]" />
                       <p className="text-sm font-semibold text-[#1a1d29]">{dateObj.day}</p>
                       <p className="text-xs text-[#71717a]">{dateObj.date}</p>
-                    </motion.button>
+                    </button>
                   ))}
                 </div>
               </div>
 
               {/* Time Selection */}
               {selectedDate && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4 }}
-                >
-                  <Label className="text-[#52525b] font-medium mb-4 block">
-                    Select a Time (EST)
-                  </Label>
+                      <div>
+                        <Label className="text-[#52525b] font-medium mb-4 block">
+                          {t('discovery.calendar.selectTime')}
+                        </Label>
                   <div className="grid grid-cols-3 gap-3">
                     {availableTimes.map((time, i) => (
-                      <motion.button
+                      <button
                         key={i}
                         type="button"
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: i * 0.05 }}
                         onClick={() => setSelectedTime(time)}
                         className={`p-3 rounded-lg border-2 transition-all duration-300 ${
                           selectedTime === time
@@ -392,48 +327,35 @@ export function DiscoveryCall() {
                       >
                         <Clock className="w-4 h-4 mx-auto mb-1 text-[#1e40af]" />
                         <p className="text-xs font-semibold text-[#1a1d29]">{time}</p>
-                      </motion.button>
+                      </button>
                     ))}
                   </div>
-                </motion.div>
+                </div>
               )}
 
-              {/* Confirm Button */}
-              {selectedDate && selectedTime && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                >
-                  <Button
-                    onClick={handleTimeSelection}
-                    className="w-full bg-[#1e40af] text-white hover:bg-[#1e3a8a] py-6 text-base tracking-wide border-0 font-semibold transition-colors duration-300 shadow-lg shadow-[#1e40af]/30"
-                  >
-                    Confirm Meeting
-                  </Button>
-                </motion.div>
-              )}
+                      {/* Confirm Button */}
+                      {selectedDate && selectedTime && (
+                        <div>
+                          <Button
+                            onClick={handleTimeSelection}
+                            className="w-full bg-[#1e40af] text-white hover:bg-[#1e3a8a] py-6 text-base tracking-wide border-0 font-semibold transition-colors duration-300 shadow-lg shadow-[#1e40af]/30"
+                          >
+                            {t('discovery.calendar.confirm')}
+                          </Button>
+                        </div>
+                      )}
             </div>
           )}
 
           {/* Step 3: Confirmation */}
           {step === 3 && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              className="text-center py-12"
-            >
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#10b981]/10 mb-6"
-              >
+            <div className="text-center py-12">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#10b981]/10 mb-6">
                 <CheckCircle className="w-10 h-10 text-[#10b981]" />
-              </motion.div>
+              </div>
 
               <h3 className="text-2xl font-semibold text-[#1a1d29] mb-4">
-                Meeting Scheduled!
+                {t('discovery.confirmation.title')}
               </h3>
               
               <div className="bg-[#f9fafb] rounded-xl p-6 mb-6 space-y-2">
@@ -448,18 +370,16 @@ export function DiscoveryCall() {
               </div>
 
               <p className="text-[#71717a] mb-8">
-                We've sent a calendar invite to <strong className="text-[#1a1d29]">{formData.email}</strong>.
-                <br />
-                You'll receive a Zoom link 24 hours before the meeting.
+                {t('discovery.confirmation.message', { email: formData.email })}
               </p>
 
               <Button
                 onClick={handleClose}
                 className="bg-[#1e40af] text-white hover:bg-[#1e3a8a] px-8 py-3 rounded-lg font-semibold"
               >
-                Done
+                {t('discovery.confirmation.done')}
               </Button>
-            </motion.div>
+            </div>
           )}
         </DialogContent>
       </Dialog>

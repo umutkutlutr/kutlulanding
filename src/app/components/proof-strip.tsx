@@ -1,21 +1,24 @@
+import { useLanguage } from "../../contexts/LanguageContext";
+
 export function ProofStrip() {
+  const { t } = useLanguage();
 
   const stats = [
     { 
       number: "$2.3B+", 
-      label: "Systems under management",
+      labelKey: "proof.stats.0.label",
       color: "#fb923c",
       gradient: "from-[#fb923c] to-[#f97316]"
     },
     { 
       number: "18 years", 
-      label: "Average team tenure",
+      labelKey: "proof.stats.1.label",
       color: "#1e40af",
       gradient: "from-[#1e40af] to-[#1e3a8a]"
     },
     { 
       number: "Enterprise", 
-      label: "Exclusively",
+      labelKey: "proof.stats.2.label",
       color: "#f97316",
       gradient: "from-[#f97316] to-[#fb923c]"
     },
@@ -94,7 +97,7 @@ export function ProofStrip() {
                     className="text-sm text-[#9ca3af] relative"
                     style={{ transform: "translateZ(10px)" }}
                   >
-                    {stat.label}
+                    {t(stat.labelKey)}
                   </p>
                 </div>
               </div>

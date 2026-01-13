@@ -41,14 +41,14 @@ export function Work() {
         <div className="text-center mb-20">
           <div className="inline-block mb-4">
             <span className="text-sm tracking-[0.3em] text-[#fb923c] uppercase font-semibold">
-              References
+              {t('work.badge')}
             </span>
           </div>
           <h2 className="text-5xl md:text-6xl lg:text-7xl tracking-tight mb-6 text-[#1a1d29] font-bold">
-            Trusted brands
+            {t('work.title')}
           </h2>
           <p className="text-[#52525b] text-xl max-w-2xl mx-auto font-medium">
-            Serving leading companies across different industries
+            {t('work.subtitle')}
           </p>
         </div>
 

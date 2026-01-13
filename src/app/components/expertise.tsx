@@ -1,6 +1,6 @@
-import { motion } from "motion/react";
 import { Code, Users, Shield, Wrench } from "lucide-react";
 import { useState } from "react";
+import { useLanguage } from "../../contexts/LanguageContext";
 import {
   Dialog,
   DialogContent,
@@ -10,140 +10,110 @@ import {
 } from "./ui/dialog";
 
 export function Expertise() {
-
+  const { t } = useLanguage();
   const [selectedExpertise, setSelectedExpertise] = useState<number | null>(null);
 
   const expertiseAreas = [
     {
       icon: Code,
-      title: "Custom Enterprise Software",
-      brief: "Built to last decades, not months.",
+      titleKey: "expertise.0.title",
+      briefKey: "expertise.0.brief",
       color: "#fb923c",
       gradient: "from-[#fb923c]/20 to-[#f97316]/12",
       borderColor: "border-[#fb923c]/40",
-      details: [
-        "We build systems designed for 10+ year lifecycles",
-        "Senior architects lead every engagement",
-        "Technologies chosen for stability and maintainability",
-        "In-house expertise, no outsourcing",
-        "Full documentation and knowledge transfer"
+      detailsKeys: [
+        "expertise.0.details.0",
+        "expertise.0.details.1",
+        "expertise.0.details.2",
+        "expertise.0.details.3",
+        "expertise.0.details.4"
       ],
-      approach: "We start with deep operational discovery. Our team spends time on-site understanding your workflows, constraints, and long-term vision before writing a single line of code."
+      approachKey: "expertise.0.approach"
     },
     {
       icon: Users,
-      title: "On-Site Discovery",
-      brief: "We come to you. We learn your business.",
+      titleKey: "expertise.1.title",
+      briefKey: "expertise.1.brief",
       color: "#1e40af",
       gradient: "from-[#1e40af]/20 to-[#1e3a8a]/12",
       borderColor: "border-[#1e40af]/40",
-      details: [
-        "Multi-day on-site workshops with your team",
-        "Process mapping and stakeholder interviews",
-        "Technical infrastructure assessment",
-        "Identify integration requirements",
-        "Build shared understanding before development"
+      detailsKeys: [
+        "expertise.1.details.0",
+        "expertise.1.details.1",
+        "expertise.1.details.2",
+        "expertise.1.details.3",
+        "expertise.1.details.4"
       ],
-      approach: "Discovery is not a formality. We embed with your team to understand the real problems—not just the stated requirements. This foundation prevents costly mistakes later."
+      approachKey: "expertise.1.approach"
     },
     {
       icon: Shield,
-      title: "Secure & Compliant",
-      brief: "Enterprise-grade security from day one.",
+      titleKey: "expertise.2.title",
+      briefKey: "expertise.2.brief",
       color: "#f97316",
       gradient: "from-[#f97316]/20 to-[#fb923c]/12",
       borderColor: "border-[#f97316]/40",
-      details: [
-        "Security architecture review included",
-        "Compliance requirements (SOC2, HIPAA, etc.)",
-        "Regular security audits and updates",
-        "Incident response planning",
-        "Staff training on secure development"
+      detailsKeys: [
+        "expertise.2.details.0",
+        "expertise.2.details.1",
+        "expertise.2.details.2",
+        "expertise.2.details.3",
+        "expertise.2.details.4"
       ],
-      approach: "Security is not an add-on. We design with threat modeling, implement defense in depth, and maintain ongoing vigilance through your system's entire lifecycle."
+      approachKey: "expertise.2.approach"
     },
     {
       icon: Wrench,
-      title: "Long-Term Maintenance",
-      brief: "We stay. We support. We improve.",
+      titleKey: "expertise.3.title",
+      briefKey: "expertise.3.brief",
       color: "#1e3a8a",
       gradient: "from-[#1e3a8a]/20 to-[#1e40af]/12",
       borderColor: "border-[#1e3a8a]/40",
-      details: [
-        "Dedicated support team, not offshore help desk",
-        "Proactive monitoring and maintenance",
-        "Regular feature improvements and optimizations",
-        "Technology updates and dependency management",
-        "Annual roadmap planning sessions"
+      detailsKeys: [
+        "expertise.3.details.0",
+        "expertise.3.details.1",
+        "expertise.3.details.2",
+        "expertise.3.details.3",
+        "expertise.3.details.4"
       ],
-      approach: "We're in it for the long term. Most of our client relationships span 5-10+ years. We treat your system as if it's our own, because effectively, it is."
+      approachKey: "expertise.3.approach"
     },
   ];
 
   return (
     <>
-      <section id="expertise" ref={ref} className="relative py-32 border-t border-[#e5e7eb]/50 overflow-hidden bg-[#fafaf9]">
-        {/* Floating background elements */}
-        <motion.div
+      <section id="expertise" className="relative py-32 border-t border-[#e5e7eb]/50 overflow-hidden bg-[#fafaf9]">
+        {/* Static background elements - no animation */}
+        <div
           className="absolute top-20 right-20 w-96 h-96 rounded-full"
           style={{
-            background: "radial-gradient(circle, rgba(251, 146, 60, 0.1) 0%, transparent 70%)",
-            filter: "blur(60px)",
-          }}
-          animate={{
-            y: [0, -50, 0],
-            x: [0, 30, 0],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "easeInOut"
+            background: "radial-gradient(circle, rgba(251, 146, 60, 0.08) 0%, transparent 70%)",
+            filter: "blur(30px)",
           }}
         />
 
-        <motion.div
+        <div
           className="absolute bottom-20 left-20 w-96 h-96 rounded-full"
           style={{
-            background: "radial-gradient(circle, rgba(96, 165, 250, 0.08) 0%, transparent 70%)",
-            filter: "blur(60px)",
-          }}
-          animate={{
-            y: [0, 50, 0],
-            x: [0, -30, 0],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "easeInOut"
+            background: "radial-gradient(circle, rgba(96, 165, 250, 0.06) 0%, transparent 70%)",
+            filter: "blur(30px)",
           }}
         />
 
         <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-center mb-20"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="inline-block mb-4"
-            >
+          <div className="text-center mb-20">
+            <div className="inline-block mb-4">
               <span className="text-sm tracking-[0.3em] text-[#fb923c] uppercase font-medium">
-                Expertise
+                {t('expertise.title')}
               </span>
-            </motion.div>
+            </div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl tracking-tight mb-6 text-[#1a1d29]">
-              What we do
+              {t('expertise.heading')}
             </h2>
             <p className="text-[#71717a] max-w-2xl mx-auto leading-relaxed text-lg">
-              Reliable software for critical business processes.
+              {t('expertise.subtitle')}
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {expertiseAreas.map((area, i) => {
@@ -165,10 +135,10 @@ export function Expertise() {
         <DialogContent className="bg-white/95 backdrop-blur-xl border-[#e5e7eb] max-w-2xl rounded-2xl">
           <DialogHeader>
             <DialogTitle className="text-3xl tracking-tight text-[#1a1d29] mb-2">
-              {selectedExpertise !== null && expertiseAreas[selectedExpertise].title}
+              {selectedExpertise !== null && t(expertiseAreas[selectedExpertise].titleKey)}
             </DialogTitle>
             <DialogDescription className="text-base text-[#71717a] leading-relaxed">
-              {selectedExpertise !== null && expertiseAreas[selectedExpertise].brief}
+              {selectedExpertise !== null && t(expertiseAreas[selectedExpertise].briefKey)}
             </DialogDescription>
           </DialogHeader>
           {selectedExpertise !== null && (
@@ -179,30 +149,27 @@ export function Expertise() {
                   Our Approach
                 </h4>
                 <p className="text-[#52525b] leading-relaxed">
-                  {expertiseAreas[selectedExpertise].approach}
+                  {selectedExpertise !== null && t(expertiseAreas[selectedExpertise].approachKey)}
                 </p>
               </div>
 
               {/* Details */}
               <div>
                 <h4 className="text-sm uppercase tracking-widest text-[#9ca3af] mb-4">
-                  What This Includes
+                  {t('expertise.modal.title')}
                 </h4>
                 <div className="space-y-3">
-                  {expertiseAreas[selectedExpertise].details.map((detail, i) => (
-                    <motion.div
+                  {expertiseAreas[selectedExpertise].detailsKeys.map((detailKey, i) => (
+                    <div
                       key={i}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.1 }}
                       className="flex items-start gap-3"
                     >
                       <div 
                         className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" 
                         style={{ backgroundColor: expertiseAreas[selectedExpertise].color }}
                       />
-                      <p className="text-sm text-[#52525b]">{detail}</p>
-                    </motion.div>
+                      <p className="text-sm text-[#52525b]">{t(detailKey)}</p>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -230,11 +197,7 @@ function ExpertiseCard({ area, index, onClick }: any) {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
+    <div
       className="group relative cursor-hover"
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
@@ -242,7 +205,7 @@ function ExpertiseCard({ area, index, onClick }: any) {
       onClick={onClick}
     >
       {/* 3D Card with perspective */}
-      <motion.div
+      <div
         className="relative p-10 rounded-2xl backdrop-blur-sm transition-all duration-700 overflow-hidden"
         style={{
           border: "1px solid rgba(255, 255, 255, 0.05)",
@@ -250,7 +213,7 @@ function ExpertiseCard({ area, index, onClick }: any) {
         }}
       >
         {/* Gradient glow on hover */}
-        <motion.div
+        <div
           className={`absolute inset-0 bg-gradient-to-br ${area.gradient} opacity-0 transition-opacity duration-700`}
           style={{ 
             transform: "translateZ(-1px)",
@@ -259,7 +222,7 @@ function ExpertiseCard({ area, index, onClick }: any) {
         />
 
         {/* Mouse-following spotlight */}
-        <motion.div
+        <div
           className="absolute inset-0 opacity-0 transition-opacity duration-300"
           style={{
             background: `radial-gradient(circle 200px at ${(mousePosition.x + 0.5) * 100}% ${(mousePosition.y + 0.5) * 100}%, ${area.color}15, transparent)`,
@@ -267,37 +230,30 @@ function ExpertiseCard({ area, index, onClick }: any) {
           }}
         />
 
-        {/* Animated border gradient */}
-        <motion.div
+        {/* Static border gradient */}
+        <div
           className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
           style={{
             background: `linear-gradient(135deg, ${area.color}40, transparent)`,
-            filter: "blur(20px)",
+            filter: "blur(15px)",
             transform: "translateZ(-2px)",
           }}
         />
 
-        {/* Icon with 3D animation */}
-        <motion.div
-          initial={{ scale: 0, rotate: -180 }}
-          whileInView={{ scale: 1, rotate: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: index * 0.1 + 0.2, ease: [0.16, 1, 0.3, 1] }}
+        {/* Icon */}
+        <div
           className="relative mb-6"
           style={{ 
             transformStyle: "preserve-3d",
             transform: "translateZ(40px)",
           }}
         >
-          <motion.div
-            animate={{
-              rotateY: isHovered ? [0, 360] : 0,
+          <div
+            className="transition-transform duration-300"
+            style={{ 
+              transformStyle: "preserve-3d",
+              transform: isHovered ? "rotateY(360deg)" : "rotateY(0deg)",
             }}
-            transition={{
-              duration: 1,
-              ease: "easeInOut"
-            }}
-            style={{ transformStyle: "preserve-3d" }}
           >
             <area.icon 
               className="h-10 w-10 transition-colors duration-700" 
@@ -308,8 +264,8 @@ function ExpertiseCard({ area, index, onClick }: any) {
                 transform: "translateZ(20px)"
               }}
             />
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         <h3 className="relative text-xl mb-3 tracking-tight text-[#1a1d29]" style={{ transform: "translateZ(30px)" }}>
           {area.title}
@@ -321,33 +277,20 @@ function ExpertiseCard({ area, index, onClick }: any) {
         {/* Learn more indicator */}
         <div className="flex items-center gap-2 text-sm text-[#9ca3af] group-hover:text-[#1a1d29] transition-colors duration-300" style={{ transform: "translateZ(20px)" }}>
           <span>Learn more</span>
-          <motion.span
-            animate={{ x: isHovered ? [0, 4, 0] : 0 }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          >
+          <span className="transition-transform duration-300">
             →
-          </motion.span>
+          </span>
         </div>
 
         {/* Floating particles */}
-        <motion.div
-          className="absolute top-4 right-4 w-2 h-2 rounded-full"
+        <div
+          className="absolute top-4 right-4 w-2 h-2 rounded-full opacity-60"
           style={{
             background: area.color,
             boxShadow: `0 0 20px ${area.color}`,
-            opacity: 0.6,
-          }}
-          animate={{
-            y: [0, -10, 0],
-            opacity: [0.4, 1, 0.4],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            delay: index * 0.3,
           }}
         />
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }

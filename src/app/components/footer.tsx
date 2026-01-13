@@ -1,4 +1,7 @@
+import { useLanguage } from "../../contexts/LanguageContext";
+
 export function Footer() {
+  const { t } = useLanguage();
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -32,26 +35,26 @@ export function Footer() {
               Kutlu Solutions
             </h3>
             <p className="text-sm text-[#9ca3af] max-w-md leading-relaxed">
-              Enterprise software consulting.
+              {t('footer.description')}
             </p>
           </div>
 
           {/* Links */}
           <div>
-            <h4 className="text-sm mb-4 text-[#9ca3af]">Menu</h4>
+            <h4 className="text-sm mb-4 text-[#9ca3af]">{t('footer.menu')}</h4>
             <div className="space-y-2">
               {[
-                { id: "expertise", label: "Expertise" },
-                { id: "industries", label: "Industries" },
-                { id: "approach", label: "Our Approach" },
-                { id: "contact", label: "Contact" },
+                { id: "expertise", labelKey: "nav.expertise" },
+                { id: "industries", labelKey: "nav.industries" },
+                { id: "approach", labelKey: "nav.approach" },
+                { id: "contact", labelKey: "nav.contact" },
               ].map((link) => (
                 <button
                   key={link.id}
                   onClick={() => scrollToSection(link.id)}
                   className="block text-sm text-[#71717a] hover:text-white transition-colors duration-500 cursor-hover relative group hover:translate-x-1"
                 >
-                  {link.label}
+                  {t(link.labelKey)}
                   <span className="absolute -left-2 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </button>
               ))}
@@ -60,7 +63,7 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="text-sm mb-4 text-[#9ca3af]">Contact</h4>
+            <h4 className="text-sm mb-4 text-[#9ca3af]">{t('footer.contact')}</h4>
             <div className="space-y-3 text-sm text-[#71717a]">
               <a
                 href="mailto:hello@kutlusolutions.com"
@@ -88,7 +91,7 @@ export function Footer() {
         <div className="pt-8 border-t border-white/5">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-xs text-[#71717a] text-center md:text-left">
-              © {new Date().getFullYear()} Kutlu Solutions
+              {t('footer.copyright').replace('{year}', new Date().getFullYear().toString())}
             </p>
             <button
               onClick={() => {
@@ -97,7 +100,7 @@ export function Footer() {
               }}
               className="text-xs text-[#71717a] hover:text-[#a78bfa] hover:translate-x-1 transition-all duration-300 cursor-hover"
             >
-              Gizlilik Sözleşmesi
+              {t('footer.privacy')}
             </button>
           </div>
         </div>

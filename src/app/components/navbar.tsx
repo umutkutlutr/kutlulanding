@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
 
   useEffect(() => {
     let lastScrollY = 0;
@@ -40,10 +42,10 @@ export function Navbar() {
   };
 
   const navItems = [
-    { id: "expertise", label: "Expertise" },
-    { id: "industries", label: "Industries" },
-    { id: "approach", label: "Our Approach" },
-    { id: "contact", label: "Contact" },
+    { id: "expertise", label: t("nav.expertise") },
+    { id: "industries", label: t("nav.industries") },
+    { id: "approach", label: t("nav.approach") },
+    { id: "contact", label: t("nav.contact") },
   ];
 
   return (
@@ -80,12 +82,24 @@ export function Navbar() {
 
           {/* Right CTA */}
           <div className="flex items-center gap-4">
+            {/* Language Toggle */}
+            <button
+              onClick={() => setLanguage(language === 'en' ? 'tr' : 'en')}
+              className="w-8 h-8 rounded-md hover:bg-white/10 transition-colors duration-300 flex items-center justify-center"
+              title={language === 'en' ? 'Switch to Turkish' : 'Switch to English'}
+            >
+              {language === 'en' ? (
+                <span className="text-lg">🇹🇷</span>
+              ) : (
+                <span className="text-lg">🇬🇧</span>
+              )}
+            </button>
             <div className="hover:scale-105 active:scale-95 transition-transform duration-300">
               <Button
                 onClick={() => scrollToSection("contact")}
                 className="relative overflow-hidden bg-[#1e40af] text-white px-6 py-2.5 rounded-lg text-sm tracking-wide border-0 hover:bg-[#1e3a8a] transition-all duration-300 font-semibold cursor-hover shadow-lg shadow-[#1e40af]/30"
               >
-                <span className="relative z-10">Let's Talk</span>
+                <span className="relative z-10">{t("nav.cta")}</span>
               </Button>
             </div>
           </div>
