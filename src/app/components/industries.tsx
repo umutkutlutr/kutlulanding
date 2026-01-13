@@ -1,4 +1,3 @@
-import { motion } from "motion/react";
 import { useState } from "react";
 import { 
   Building2, 
@@ -464,67 +463,37 @@ export function Industries() {
 
   return (
     <section id="industries" className="relative py-32 border-t border-[#e5e7eb]/50 overflow-hidden bg-white">
-      {/* Floating background elements */}
-      <motion.div
+      {/* Static background elements - no animation */}
+      <div
         className="absolute top-20 left-20 w-96 h-96 rounded-full"
         style={{
-          background: "radial-gradient(circle, rgba(30, 64, 175, 0.08) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(30, 64, 175, 0.06) 0%, transparent 70%)",
           filter: "blur(30px)",
-        }}
-        animate={{
-          y: [0, -50, 0],
-          x: [0, 30, 0],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "easeInOut"
         }}
       />
 
-      <motion.div
+      <div
         className="absolute bottom-20 right-20 w-96 h-96 rounded-full"
         style={{
-          background: "radial-gradient(circle, rgba(251, 146, 60, 0.1) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(251, 146, 60, 0.08) 0%, transparent 70%)",
           filter: "blur(30px)",
-        }}
-        animate={{
-          y: [0, 50, 0],
-          x: [0, -30, 0],
-        }}
-        transition={{
-          duration: 25,
-          repeat: Infinity,
-          ease: "easeInOut"
         }}
       />
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-20"
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="inline-block mb-4"
-          >
+        <div className="text-center mb-20">
+          <div className="inline-block mb-4">
             <span className="text-sm tracking-[0.3em] text-[#1e40af] uppercase font-medium">
               Industries
             </span>
-          </motion.div>
+          </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl tracking-tight mb-6 text-[#1a1d29]">
             Deep industry expertise
           </h2>
           <p className="text-[#71717a] max-w-2xl mx-auto leading-relaxed text-lg">
             We understand the unique challenges, regulations, and opportunities within each sector.
           </p>
-        </motion.div>
+        </div>
 
         {/* Industries Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -544,22 +513,15 @@ export function Industries() {
 
         {/* Hovered Industry Details */}
         {selectedIndustry !== null && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.3 }}
-            className="mt-16 p-10 rounded-2xl border-2 bg-white shadow-2xl"
+          <div
+            className="mt-16 p-10 rounded-2xl border-2 bg-white shadow-2xl transition-all duration-300"
             style={{
               borderColor: industries[selectedIndustry].color,
             }}
           >
             {/* Industry Title */}
-            <motion.div 
+            <div 
               className="mb-8 pb-6 border-b border-[#e5e7eb]"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
             >
               <h3 
                 className="text-2xl tracking-tight mb-2"
@@ -570,16 +532,13 @@ export function Industries() {
               <p className="text-sm text-[#71717a]">
                 Specialized software solutions for each subsector
               </p>
-            </motion.div>
+            </div>
 
             {/* Subsectors with their Solutions */}
             <div className="space-y-8">
               {industries[selectedIndustry].subsectors.map((subsector, i) => (
-                <motion.div
+                <div
                   key={i}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
                   className="group"
                 >
                   {/* Subsector Name */}
@@ -599,11 +558,8 @@ export function Industries() {
                   {/* Solutions for this Subsector */}
                   <div className="pl-6 grid grid-cols-1 md:grid-cols-2 gap-3">
                     {subsector.solutions.map((solution, j) => (
-                      <motion.div
+                      <div
                         key={j}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: (i * 0.1) + (j * 0.03) }}
                         className="flex items-start gap-2 group/solution"
                       >
                         <div 
@@ -616,23 +572,20 @@ export function Industries() {
                         <p className="text-sm text-[#52525b] group-hover/solution:text-[#1a1d29] group-hover/solution:translate-x-1 transition-all duration-300 leading-relaxed">
                           {solution}
                         </p>
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
 
                   {/* Divider line (except for last item) */}
                   {i < industries[selectedIndustry].subsectors.length - 1 && (
-                    <motion.div 
+                    <div 
                       className="mt-6 h-px bg-gradient-to-r from-transparent via-[#e5e7eb] to-transparent"
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ delay: (i * 0.1) + 0.3 }}
                     />
                   )}
-                </motion.div>
+                </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         )}
       </div>
     </section>
@@ -649,37 +602,30 @@ function IndustryCard({ industry, index, isHovered, onHover, onLeave }: any) {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
+    <div
       className="group relative cursor-pointer"
       onClick={handleClick}
     >
       {/* Card */}
-      <motion.div
-        className="relative p-6 rounded-xl border-2 transition-all duration-500 overflow-hidden bg-white"
+      <div
+        className="relative p-6 rounded-xl border-2 transition-all duration-500 overflow-hidden bg-white hover:-translate-y-1"
         style={{
           borderColor: isHovered ? industry.color : "#e5e7eb",
           boxShadow: isHovered ? `0 20px 40px ${industry.color}20` : "0 4px 6px rgba(0,0,0,0.05)",
         }}
-        whileHover={{ y: -5 }}
       >
         {/* Gradient background on hover */}
-        <motion.div
+        <div
           className={`absolute inset-0 bg-gradient-to-br ${industry.gradient} opacity-0 transition-opacity duration-500`}
           style={{ opacity: isHovered ? 1 : 0 }}
         />
 
-        {/* Icon with animation */}
-        <motion.div
-          className="relative mb-4"
-          animate={{
-            scale: isHovered ? 1.1 : 1,
-            rotate: isHovered ? 5 : 0,
+        {/* Icon */}
+        <div
+          className="relative mb-4 transition-transform duration-300"
+          style={{
+            transform: isHovered ? 'scale(1.1) rotate(5deg)' : 'scale(1) rotate(0deg)',
           }}
-          transition={{ duration: 0.3 }}
         >
           <industry.icon 
             className="h-8 w-8 transition-colors duration-500" 
@@ -689,7 +635,7 @@ function IndustryCard({ industry, index, isHovered, onHover, onLeave }: any) {
               filter: isHovered ? `drop-shadow(0 0 10px ${industry.color}50)` : "none"
             }}
           />
-        </motion.div>
+        </div>
 
         <h3 className="relative text-base font-semibold mb-2 tracking-tight text-[#1a1d29]">
           {industry.title}
@@ -701,38 +647,28 @@ function IndustryCard({ industry, index, isHovered, onHover, onLeave }: any) {
         </p>
 
         {/* Hover indicator */}
-        <motion.div
+        <div
           className="absolute bottom-4 right-4 opacity-0 transition-opacity duration-300"
           style={{ opacity: isHovered ? 1 : 0 }}
         >
-          <motion.span
+          <span
             className="text-xs"
             style={{ color: industry.color }}
-            animate={{ x: isHovered ? [0, 4, 0] : 0 }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
           >
             →
-          </motion.span>
-        </motion.div>
+          </span>
+        </div>
 
         {/* Floating particle */}
-        <motion.div
+        <div
           className="absolute top-3 right-3 w-1 h-1 rounded-full"
           style={{
             background: industry.color,
             boxShadow: `0 0 10px ${industry.color}`,
             opacity: 0.6,
           }}
-          animate={{
-            y: isHovered ? [0, -8, 0] : 0,
-            opacity: isHovered ? [0.4, 1, 0.4] : 0.6,
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-          }}
         />
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }

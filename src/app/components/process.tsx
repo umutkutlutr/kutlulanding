@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { Search, Palette, Code, Rocket, Settings } from "lucide-react";
 import {
   Dialog,
@@ -82,39 +81,24 @@ export function Process() {
 
   return (
     <section id="approach" className="relative py-32 border-t border-white/5 overflow-hidden">
-      {/* Animated gradient background */}
-      <motion.div
+      {/* Static gradient background - no animation */}
+      <div
         className="absolute top-1/3 right-1/4 w-[500px] h-[500px] rounded-full"
         style={{
-          background: "radial-gradient(circle, rgba(167, 139, 250, 0.08) 0%, transparent 70%)",
-          filter: "blur(80px)",
-        }}
-        animate={{
-          y: [0, -30, 0],
-          x: [0, 50, 0],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "easeInOut"
+          background: "radial-gradient(circle, rgba(167, 139, 250, 0.06) 0%, transparent 70%)",
+          filter: "blur(30px)",
         }}
       />
 
       <div className="max-w-5xl mx-auto px-6 lg:px-12">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-20"
-        >
+        <div className="text-center mb-20">
           <h2 className="text-4xl md:text-5xl lg:text-6xl tracking-tight mb-6">
             Our Approach
           </h2>
           <p className="text-[#9ca3af] max-w-2xl mx-auto leading-relaxed">
             Transparent and predictable delivery.
           </p>
-        </motion.div>
+        </div>
 
         <div className="relative">
           {/* Static Connecting Line */}
@@ -157,11 +141,8 @@ export function Process() {
             <div className="space-y-6 pt-4">
               <div className="space-y-3">
                 {steps[selectedStep].details.map((detail, i) => (
-                  <motion.div
+                  <div
                     key={i}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.1 }}
                     className="flex items-start gap-3"
                   >
                     <div 
@@ -172,7 +153,7 @@ export function Process() {
                       }}
                     />
                     <p className="text-sm text-[#9ca3af]">{detail}</p>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
@@ -187,16 +168,11 @@ function ProcessStep({ step, index, onClick }: any) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      className="relative"
-    >
+    <div className="relative">
       <div className="flex items-start gap-8">
-        {/* Animated Number Circle */}
-        <motion.div
+        {/* Number Circle */}
+        <div
+          className="relative flex-shrink-0"
           initial={{ scale: 0 }}
           whileInView={{ scale: 1 }}
           viewport={{ once: true }}
@@ -205,19 +181,16 @@ function ProcessStep({ step, index, onClick }: any) {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <motion.div 
-            className="w-24 h-24 rounded-full bg-white/[0.02] border border-white/10 flex items-center justify-center backdrop-blur-sm relative overflow-hidden"
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.3 }}
+          <div 
+            className="w-24 h-24 rounded-full bg-white/[0.02] border border-white/10 flex items-center justify-center backdrop-blur-sm relative overflow-hidden hover:scale-110 transition-transform duration-300"
           >
             {/* Animated glow */}
-            <motion.div
-              className="absolute inset-0 rounded-full opacity-0"
+            <div
+              className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-300"
               style={{
                 background: `radial-gradient(circle, ${step.color}30 0%, transparent 70%)`,
                 opacity: isHovered ? 1 : 0,
               }}
-              transition={{ duration: 0.3 }}
             />
             
             <span 
@@ -229,15 +202,13 @@ function ProcessStep({ step, index, onClick }: any) {
             >
               {step.number}
             </span>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* Content */}
-        <motion.div
+        <div
           onClick={onClick}
-          className="flex-1 group cursor-pointer pt-4 cursor-hover"
-          whileHover={{ x: 10 }}
-          transition={{ duration: 0.3 }}
+          className="flex-1 group cursor-pointer pt-4 cursor-hover hover:translate-x-2 transition-transform duration-300"
         >
           <div className="transition-all duration-500 relative">
             <h3 className="text-2xl mb-2 tracking-tight group-hover:text-white/80 transition-colors duration-500">
@@ -246,25 +217,23 @@ function ProcessStep({ step, index, onClick }: any) {
             <p className="text-[#9ca3af] text-sm leading-relaxed">
               {step.description}
             </p>
-            <motion.p
-              initial={{ opacity: 0, x: -10 }}
-              whileInView={{ opacity: 0.5, x: 0 }}
-              className="text-xs mt-3 group-hover:text-white/50 transition-colors duration-500"
+            <p
+              className="text-xs mt-3 group-hover:text-white/50 transition-colors duration-500 opacity-50"
               style={{ color: step.color }}
             >
               Details →
-            </motion.p>
+            </p>
 
             {/* Hover indicator */}
-            <motion.div
+            <div
               className="absolute -left-2 top-0 bottom-0 w-[2px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
               style={{
                 background: `linear-gradient(to bottom, ${step.color}, transparent)`,
               }}
             />
           </div>
-        </motion.div>
+        </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

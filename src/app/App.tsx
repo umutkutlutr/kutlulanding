@@ -1,5 +1,6 @@
 import { useEffect, lazy, Suspense } from "react";
 import { LanguageProvider } from "../contexts/LanguageContext";
+import { ErrorBoundary } from "./components/ErrorBoundary";
 import { Navbar } from "./components/navbar";
 import { Hero } from "./components/hero";
 
@@ -40,26 +41,28 @@ export default function App() {
   }, []);
 
   return (
-    <LanguageProvider>
-      <div className="min-h-screen bg-[#f5f1ea] text-[#1a1d29] antialiased">
-        <Navbar />
-        <main>
-          <Hero />
+    <ErrorBoundary>
+      <LanguageProvider>
+        <div className="min-h-screen bg-[#f5f1ea] text-[#1a1d29] antialiased">
+          <Navbar />
+          <main>
+            <Hero />
+            <Suspense fallback={null}>
+            <ProofStrip />
+            <Expertise />
+            <Industries />
+            <Process />
+            <Work />
+            <DiscoveryCall />
+            <Maintenance />
+            <Contact />
+            </Suspense>
+          </main>
           <Suspense fallback={null}>
-          <ProofStrip />
-          <Expertise />
-          <Industries />
-          <Process />
-          <Work />
-          <DiscoveryCall />
-          <Maintenance />
-          <Contact />
+          <Footer />
           </Suspense>
-        </main>
-        <Suspense fallback={null}>
-        <Footer />
-        </Suspense>
-      </div>
-    </LanguageProvider>
+        </div>
+      </LanguageProvider>
+    </ErrorBoundary>
   );
 }
