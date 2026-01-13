@@ -1,13 +1,8 @@
-import { motion, useScroll, useTransform, useSpring } from "motion/react";
+import { motion } from "motion/react";
 import { Shield, Activity, TrendingUp } from "lucide-react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 export function Maintenance() {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
 
   const features = [
     {
@@ -36,36 +31,22 @@ export function Maintenance() {
   return (
     <section
       id="maintenance"
-      ref={ref}
       className="relative py-32 border-t border-white/5 overflow-hidden"
     >
-      {/* Colorful animated backgrounds */}
-      <motion.div
+      {/* Static backgrounds - no animation, reduced blur */}
+      <div
         className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full"
         style={{
-          background: "radial-gradient(circle, rgba(167, 139, 250, 0.1) 0%, transparent 70%)",
-          filter: "blur(80px)",
-          y: useTransform(scrollYProgress, [0, 1], [100, -100]),
-          x: useTransform(scrollYProgress, [0, 1], [-50, 50]),
+          background: "radial-gradient(circle, rgba(167, 139, 250, 0.06) 0%, transparent 70%)",
+          filter: "blur(30px)",
         }}
       />
 
-      <motion.div
+      <div
         className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full"
         style={{
-          background: "radial-gradient(circle, rgba(96, 165, 250, 0.08) 0%, transparent 70%)",
-          filter: "blur(90px)",
-          y: useTransform(scrollYProgress, [0, 1], [-80, 80]),
-          x: useTransform(scrollYProgress, [0, 1], [40, -40]),
-        }}
-      />
-
-      <motion.div
-        className="absolute top-1/2 right-1/3 w-[350px] h-[350px] rounded-full"
-        style={{
-          background: "radial-gradient(circle, rgba(45, 212, 191, 0.1) 0%, transparent 70%)",
-          filter: "blur(70px)",
-          y: useTransform(scrollYProgress, [0, 1], [60, -60]),
+          background: "radial-gradient(circle, rgba(96, 165, 250, 0.05) 0%, transparent 70%)",
+          filter: "blur(30px)",
         }}
       />
 
@@ -88,14 +69,8 @@ export function Maintenance() {
         {/* Feature Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {features.map((feature, i) => {
-            const yOffset = useTransform(
-              scrollYProgress,
-              [0, 1],
-              [40 * (i % 2 === 0 ? 1 : -1), -40 * (i % 2 === 0 ? 1 : -1)]
-            );
-
             return (
-              <FeatureCard key={i} feature={feature} index={i} yOffset={yOffset} />
+              <FeatureCard key={i} feature={feature} index={i} />
             );
           })}
         </div>
@@ -104,28 +79,18 @@ export function Maintenance() {
   );
 }
 
-function FeatureCard({ feature, index, yOffset }: any) {
+function FeatureCard({ feature, index }: any) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
-
-  const mouseX = useSpring(0, { stiffness: 300, damping: 30 });
-  const mouseY = useSpring(0, { stiffness: 300, damping: 30 });
-
-  const rotateX = useTransform(mouseY, [-0.5, 0.5], [8, -8]);
-  const rotateY = useTransform(mouseX, [-0.5, 0.5], [-8, 8]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
-    mouseX.set(x);
-    mouseY.set(y);
     setMousePosition({ x, y });
   };
 
   const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
     setIsHovered(false);
   };
 
@@ -135,7 +100,6 @@ function FeatureCard({ feature, index, yOffset }: any) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      style={{ y: yOffset }}
       className="relative group cursor-hover"
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
@@ -143,11 +107,6 @@ function FeatureCard({ feature, index, yOffset }: any) {
     >
       <motion.div 
         className="p-10 border border-white/5 rounded-xl transition-all duration-700 bg-white/[0.01] relative overflow-hidden"
-        style={{
-          transformStyle: "preserve-3d",
-          rotateX,
-          rotateY,
-        }}
       >
         {/* Gradient background on hover */}
         <motion.div

@@ -4,19 +4,30 @@ export function ScrollProgress() {
   const [progress, setProgress] = useState(0);
   const rafRef = useRef<number | null>(null);
   const lastProgressRef = useRef(0);
+  const frameSkipRef = useRef(0);
 
   useEffect(() => {
     let ticking = false;
+    let lastScrollY = 0;
     
     const handleScroll = () => {
       if (!ticking) {
         rafRef.current = requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          
+          // Only update every 50px scroll - very aggressive throttling
+          if (Math.abs(scrollY - lastScrollY) < 50) {
+            ticking = false;
+            return;
+          }
+          lastScrollY = scrollY;
+          
           const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-          const newProgress = scrollHeight > 0 ? window.scrollY / scrollHeight : 0;
+          const newProgress = scrollHeight > 0 ? scrollY / scrollHeight : 0;
           const clampedProgress = Math.min(Math.max(newProgress, 0), 1);
           
-          // Only update if change is significant (> 0.01)
-          if (Math.abs(clampedProgress - lastProgressRef.current) > 0.01) {
+          // Only update if change is significant (> 0.05) - very aggressive
+          if (Math.abs(clampedProgress - lastProgressRef.current) > 0.05) {
             setProgress(clampedProgress);
             lastProgressRef.current = clampedProgress;
           }

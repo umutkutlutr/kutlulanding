@@ -1,12 +1,6 @@
-import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { motion } from "motion/react";
 
 export function ProofStrip() {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
 
   const stats = [
     { 
@@ -30,14 +24,9 @@ export function ProofStrip() {
   ];
 
   return (
-    <section ref={ref} className="relative py-24 border-y border-[#e5e7eb] overflow-hidden bg-gradient-to-b from-[#fafaf9] to-white">
+    <section className="relative py-24 border-y border-[#e5e7eb] overflow-hidden bg-gradient-to-b from-[#fafaf9] to-white">
       {/* Multi-layer animated gradient backgrounds */}
-      <motion.div
-        className="absolute inset-0 opacity-20"
-        style={{
-          y: useTransform(scrollYProgress, [0, 1], [0, -80]),
-        }}
-      >
+      <div className="absolute inset-0 opacity-20">
         <motion.div
           className="absolute inset-0"
           animate={{
@@ -55,14 +44,20 @@ export function ProofStrip() {
         />
       </motion.div>
 
-      {/* Additional floating orbs */}
+      {/* Additional floating orbs - static, no scroll transforms */}
       <motion.div
         className="absolute top-1/2 left-1/4 w-64 h-64 rounded-full"
         style={{
           background: "radial-gradient(circle, rgba(244, 114, 182, 0.12) 0%, transparent 70%)",
           filter: "blur(60px)",
-          y: useTransform(scrollYProgress, [0, 1], [50, -50]),
-          x: useTransform(scrollYProgress, [0, 1], [-30, 30]),
+        }}
+        animate={{
+          y: [0, -20, 0],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut"
         }}
       />
 
@@ -71,8 +66,14 @@ export function ProofStrip() {
         style={{
           background: "radial-gradient(circle, rgba(45, 212, 191, 0.1) 0%, transparent 70%)",
           filter: "blur(70px)",
-          y: useTransform(scrollYProgress, [0, 1], [-40, 40]),
-          x: useTransform(scrollYProgress, [0, 1], [20, -20]),
+        }}
+        animate={{
+          y: [0, 20, 0],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut"
         }}
       />
 
@@ -80,18 +81,6 @@ export function ProofStrip() {
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
           {stats.map((stat, i) => {
-            const yOffset = useTransform(
-              scrollYProgress,
-              [0, 1],
-              [30 * (i % 2 === 0 ? 1 : -1), -30 * (i % 2 === 0 ? 1 : -1)]
-            );
-
-            const scale = useTransform(
-              scrollYProgress,
-              [0, 0.5, 1],
-              [0.9, 1.05, 0.9]
-            );
-
             return (
               <motion.div
                 key={i}
@@ -99,7 +88,6 @@ export function ProofStrip() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.8, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                style={{ y: yOffset, scale }}
                 className="text-center relative group"
               >
                 {/* 3D Card wrapper */}

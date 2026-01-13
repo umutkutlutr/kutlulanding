@@ -1,5 +1,5 @@
-import { motion, useScroll, useTransform } from "motion/react";
-import { useRef, useState } from "react";
+import { motion } from "motion/react";
+import { useState } from "react";
 import { 
   Building2, 
   Heart, 
@@ -20,11 +20,6 @@ import {
 } from "lucide-react";
 
 export function Industries() {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
 
   const [selectedIndustry, setSelectedIndustry] = useState<number | null>(null);
 
@@ -468,13 +463,13 @@ export function Industries() {
   ];
 
   return (
-    <section id="industries" ref={ref} className="relative py-32 border-t border-[#e5e7eb]/50 overflow-hidden bg-white">
+    <section id="industries" className="relative py-32 border-t border-[#e5e7eb]/50 overflow-hidden bg-white">
       {/* Floating background elements */}
       <motion.div
         className="absolute top-20 left-20 w-96 h-96 rounded-full"
         style={{
           background: "radial-gradient(circle, rgba(30, 64, 175, 0.08) 0%, transparent 70%)",
-          filter: "blur(60px)",
+          filter: "blur(30px)",
         }}
         animate={{
           y: [0, -50, 0],
@@ -491,7 +486,7 @@ export function Industries() {
         className="absolute bottom-20 right-20 w-96 h-96 rounded-full"
         style={{
           background: "radial-gradient(circle, rgba(251, 146, 60, 0.1) 0%, transparent 70%)",
-          filter: "blur(60px)",
+          filter: "blur(30px)",
         }}
         animate={{
           y: [0, 50, 0],
@@ -534,18 +529,11 @@ export function Industries() {
         {/* Industries Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {industries.map((industry, i) => {
-            const yOffset = useTransform(
-              scrollYProgress,
-              [0, 1],
-              [20 * (i % 2 === 0 ? 1 : -1), -20 * (i % 2 === 0 ? 1 : -1)]
-            );
-
             return (
               <IndustryCard
                 key={i}
                 industry={industry}
                 index={i}
-                yOffset={yOffset}
                 isHovered={selectedIndustry === i}
                 onHover={() => setSelectedIndustry(i)}
                 onLeave={() => setSelectedIndustry(null)}
@@ -651,7 +639,7 @@ export function Industries() {
   );
 }
 
-function IndustryCard({ industry, index, yOffset, isHovered, onHover, onLeave }: any) {
+function IndustryCard({ industry, index, isHovered, onHover, onLeave }: any) {
   const handleClick = () => {
     if (isHovered) {
       onLeave();
@@ -666,7 +654,6 @@ function IndustryCard({ industry, index, yOffset, isHovered, onHover, onLeave }:
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.8, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
-      style={{ y: yOffset }}
       className="group relative cursor-pointer"
       onClick={handleClick}
     >

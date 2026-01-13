@@ -1,10 +1,10 @@
-import { motion, useSpring, useTransform } from "motion/react";
+import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { saveFormSubmission } from "../../utils/formSubmission";
 
 export function Contact() {
@@ -16,26 +16,28 @@ export function Contact() {
     company: "",
     message: "",
   });
-
-  const mouseX = useSpring(0, { stiffness: 300, damping: 30 });
-  const mouseY = useSpring(0, { stiffness: 300, damping: 30 });
-
-  const rotateX = useTransform(mouseY, [-0.5, 0.5], [5, -5]);
-  const rotateY = useTransform(mouseX, [-0.5, 0.5], [-5, 5]);
+  const rafRef = useRef<number | null>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
-    mouseX.set(x);
-    mouseY.set(y);
-    setMousePosition({ x, y });
+    
+    // Throttle with requestAnimationFrame
+    if (rafRef.current === null) {
+      rafRef.current = requestAnimationFrame(() => {
+        setMousePosition({ x, y });
+        rafRef.current = null;
+      });
+    }
   };
 
   const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
     setIsHovered(false);
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -55,21 +57,12 @@ export function Contact() {
 
   return (
     <section id="contact" className="relative py-32 border-t border-white/5 overflow-hidden">
-      {/* Animated background gradient */}
-      <motion.div
+      {/* Static background gradient - no animation, reduced blur */}
+      <div
         className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full"
         style={{
-          background: "radial-gradient(circle, rgba(96, 165, 250, 0.08) 0%, transparent 70%)",
-          filter: "blur(80px)",
-        }}
-        animate={{
-          y: [0, 40, 0],
-          x: [0, -40, 0],
-        }}
-        transition={{
-          duration: 18,
-          repeat: Infinity,
-          ease: "easeInOut"
+          background: "radial-gradient(circle, rgba(96, 165, 250, 0.05) 0%, transparent 70%)",
+          filter: "blur(30px)",
         }}
       />
 
@@ -101,11 +94,6 @@ export function Contact() {
         >
           <motion.div 
             className="p-10 border border-white/5 rounded-xl bg-white/[0.01] backdrop-blur-sm relative overflow-hidden"
-            style={{
-              transformStyle: "preserve-3d",
-              rotateX,
-              rotateY,
-            }}
           >
             {/* Mouse-following gradient spotlight */}
             <motion.div
@@ -116,16 +104,16 @@ export function Contact() {
               }}
             />
 
-            {/* Animated border glow */}
-            <motion.div
-              className="absolute inset-0 rounded-xl opacity-0 transition-opacity duration-700"
-              style={{
-                background: "linear-gradient(135deg, rgba(167, 139, 250, 0.2), rgba(96, 165, 250, 0.2))",
-                filter: "blur(30px)",
-                transform: "translateZ(-1px)",
-                opacity: isHovered ? 1 : 0,
-              }}
-            />
+                  {/* Static border glow - reduced blur */}
+                  <div
+                    className="absolute inset-0 rounded-xl opacity-0 transition-opacity duration-700"
+                    style={{
+                      background: "linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(96, 165, 250, 0.15))",
+                      filter: "blur(15px)",
+                      transform: "translateZ(-1px)",
+                      opacity: isHovered ? 1 : 0,
+                    }}
+                  />
 
             <form onSubmit={handleSubmit} className="space-y-6 relative" style={{ transform: "translateZ(20px)" }}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

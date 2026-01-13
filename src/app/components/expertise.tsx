@@ -1,6 +1,6 @@
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "motion/react";
+import { motion } from "motion/react";
 import { Code, Users, Shield, Wrench } from "lucide-react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -10,11 +10,6 @@ import {
 } from "./ui/dialog";
 
 export function Expertise() {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
 
   const [selectedExpertise, setSelectedExpertise] = useState<number | null>(null);
 
@@ -152,18 +147,11 @@ export function Expertise() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {expertiseAreas.map((area, i) => {
-              const yOffset = useTransform(
-                scrollYProgress,
-                [0, 1],
-                [30 * (i % 2 === 0 ? 1 : -1), -30 * (i % 2 === 0 ? 1 : -1)]
-              );
-
               return (
                 <ExpertiseCard 
                   key={i} 
                   area={area} 
                   index={i} 
-                  yOffset={yOffset} 
                   onClick={() => setSelectedExpertise(i)}
                 />
               );
@@ -226,28 +214,18 @@ export function Expertise() {
   );
 }
 
-function ExpertiseCard({ area, index, yOffset, onClick }: any) {
+function ExpertiseCard({ area, index, onClick }: any) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
-
-  const mouseX = useSpring(0, { stiffness: 300, damping: 30 });
-  const mouseY = useSpring(0, { stiffness: 300, damping: 30 });
-
-  const rotateX = useTransform(mouseY, [-0.5, 0.5], [10, -10]);
-  const rotateY = useTransform(mouseX, [-0.5, 0.5], [-10, 10]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
-    mouseX.set(x);
-    mouseY.set(y);
     setMousePosition({ x, y });
   };
 
   const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
     setIsHovered(false);
   };
 
@@ -257,7 +235,6 @@ function ExpertiseCard({ area, index, yOffset, onClick }: any) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.8, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
-      style={{ y: yOffset }}
       className="group relative cursor-hover"
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
@@ -268,11 +245,8 @@ function ExpertiseCard({ area, index, yOffset, onClick }: any) {
       <motion.div
         className="relative p-10 rounded-2xl backdrop-blur-sm transition-all duration-700 overflow-hidden"
         style={{
-          transformStyle: "preserve-3d",
           border: "1px solid rgba(255, 255, 255, 0.05)",
           background: "rgba(255, 255, 255, 0.01)",
-          rotateX,
-          rotateY,
         }}
       >
         {/* Gradient glow on hover */}

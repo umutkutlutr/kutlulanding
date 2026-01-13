@@ -1,12 +1,6 @@
-import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { motion } from "motion/react";
 
 export function Footer() {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -14,15 +8,21 @@ export function Footer() {
   };
 
   return (
-    <footer ref={ref} className="relative border-t border-white/5 py-16 overflow-hidden">
-      {/* Animated gradient backgrounds */}
+    <footer className="relative border-t border-white/5 py-16 overflow-hidden">
+      {/* Static gradient backgrounds - no scroll transforms */}
       <motion.div
         className="absolute top-0 left-1/4 w-[400px] h-[400px] rounded-full"
         style={{
           background: "radial-gradient(circle, rgba(167, 139, 250, 0.08) 0%, transparent 70%)",
           filter: "blur(80px)",
-          y: useTransform(scrollYProgress, [0, 1], [100, -50]),
-          x: useTransform(scrollYProgress, [0, 1], [-50, 0]),
+        }}
+        animate={{
+          y: [0, -20, 0],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut"
         }}
       />
 
@@ -31,17 +31,14 @@ export function Footer() {
         style={{
           background: "radial-gradient(circle, rgba(96, 165, 250, 0.08) 0%, transparent 70%)",
           filter: "blur(70px)",
-          y: useTransform(scrollYProgress, [0, 1], [-50, 50]),
-          x: useTransform(scrollYProgress, [0, 1], [30, -30]),
         }}
-      />
-
-      <motion.div
-        className="absolute bottom-0 left-1/3 w-[300px] h-[300px] rounded-full"
-        style={{
-          background: "radial-gradient(circle, rgba(244, 114, 182, 0.06) 0%, transparent 70%)",
-          filter: "blur(60px)",
-          y: useTransform(scrollYProgress, [0, 1], [80, -40]),
+        animate={{
+          y: [0, 20, 0],
+        }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          ease: "easeInOut"
         }}
       />
 

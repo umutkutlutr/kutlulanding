@@ -1,15 +1,9 @@
 import { useEffect, lazy, Suspense } from "react";
 import { Navbar } from "./components/navbar";
 import { Hero } from "./components/hero";
-import { ScrollProgress } from "./components/scroll-progress";
 
 // Lazy load heavy components for better initial load performance
-const ScrollVortex = lazy(() => 
-  import("./components/scroll-vortex").then(m => ({ default: m.ScrollVortex }))
-);
-const CursorFollower = lazy(() => 
-  import("./components/cursor-follower").then(m => ({ default: m.CursorFollower }))
-);
+// ScrollVortex and CursorFollower removed for performance
 const ProofStrip = lazy(() => 
   import("./components/proof-strip").then(m => ({ default: m.ProofStrip }))
 );
@@ -46,11 +40,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#f5f1ea] text-[#1a1d29] antialiased">
-      <Suspense fallback={null}>
-      <ScrollVortex />
-      <CursorFollower />
-      </Suspense>
-      <ScrollProgress />
       <Navbar />
       <main>
         <Hero />

@@ -77,38 +77,20 @@ export function DiscoveryCall() {
 
   return (
     <section id="discovery" className="relative py-32 border-t border-[#e5e7eb]/50 overflow-hidden bg-white">
-      {/* Floating gradient orbs */}
-      <motion.div
+      {/* Static gradient orbs - no animation, reduced blur */}
+      <div
         className="absolute top-20 left-1/4 w-96 h-96 rounded-full"
         style={{
-          background: "radial-gradient(circle, rgba(251, 146, 60, 0.12) 0%, transparent 70%)",
-          filter: "blur(80px)",
-        }}
-        animate={{
-          y: [0, 50, 0],
-          x: [0, -30, 0],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "easeInOut"
+          background: "radial-gradient(circle, rgba(251, 146, 60, 0.08) 0%, transparent 70%)",
+          filter: "blur(30px)",
         }}
       />
 
-      <motion.div
+      <div
         className="absolute bottom-20 right-1/4 w-96 h-96 rounded-full"
         style={{
-          background: "radial-gradient(circle, rgba(30, 64, 175, 0.1) 0%, transparent 70%)",
-          filter: "blur(80px)",
-        }}
-        animate={{
-          y: [0, -40, 0],
-          x: [0, 20, 0],
-        }}
-        transition={{
-          duration: 18,
-          repeat: Infinity,
-          ease: "easeInOut"
+          background: "radial-gradient(circle, rgba(30, 64, 175, 0.06) 0%, transparent 70%)",
+          filter: "blur(30px)",
         }}
       />
 

@@ -1,13 +1,8 @@
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "motion/react";
+import { motion } from "motion/react";
 import { Layers, ChartBar, Brain, Workflow } from "lucide-react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 export function Services() {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
 
   const services = [
     {
@@ -45,13 +40,13 @@ export function Services() {
   ];
 
   return (
-    <section id="services" ref={ref} className="relative py-32 border-t border-[#e5e7eb]/50 overflow-hidden bg-[#fafaf9]">
+    <section id="services" className="relative py-32 border-t border-[#e5e7eb]/50 overflow-hidden bg-[#fafaf9]">
       {/* Floating background elements */}
       <motion.div
         className="absolute top-20 right-20 w-96 h-96 rounded-full"
         style={{
           background: "radial-gradient(circle, rgba(251, 146, 60, 0.1) 0%, transparent 70%)",
-          filter: "blur(60px)",
+          filter: "blur(30px)",
         }}
         animate={{
           y: [0, -50, 0],
@@ -68,7 +63,7 @@ export function Services() {
         className="absolute bottom-20 left-20 w-96 h-96 rounded-full"
         style={{
           background: "radial-gradient(circle, rgba(96, 165, 250, 0.08) 0%, transparent 70%)",
-          filter: "blur(60px)",
+          filter: "blur(30px)",
         }}
         animate={{
           y: [0, 50, 0],
@@ -110,14 +105,8 @@ export function Services() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {services.map((service, i) => {
-            const yOffset = useTransform(
-              scrollYProgress,
-              [0, 1],
-              [30 * (i % 2 === 0 ? 1 : -1), -30 * (i % 2 === 0 ? 1 : -1)]
-            );
-
             return (
-              <ServiceCard key={i} service={service} index={i} yOffset={yOffset} />
+              <ServiceCard key={i} service={service} index={i} />
             );
           })}
         </div>
@@ -126,28 +115,18 @@ export function Services() {
   );
 }
 
-function ServiceCard({ service, index, yOffset }: any) {
+function ServiceCard({ service, index }: any) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
-
-  const mouseX = useSpring(0, { stiffness: 300, damping: 30 });
-  const mouseY = useSpring(0, { stiffness: 300, damping: 30 });
-
-  const rotateX = useTransform(mouseY, [-0.5, 0.5], [10, -10]);
-  const rotateY = useTransform(mouseX, [-0.5, 0.5], [-10, 10]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
-    mouseX.set(x);
-    mouseY.set(y);
     setMousePosition({ x, y });
   };
 
   const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
     setIsHovered(false);
   };
 
@@ -157,7 +136,6 @@ function ServiceCard({ service, index, yOffset }: any) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.8, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
-      style={{ y: yOffset }}
       className="group relative cursor-hover"
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
@@ -167,11 +145,8 @@ function ServiceCard({ service, index, yOffset }: any) {
       <motion.div
         className="relative p-10 rounded-2xl backdrop-blur-sm transition-all duration-700 overflow-hidden"
         style={{
-          transformStyle: "preserve-3d",
           border: "1px solid rgba(255, 255, 255, 0.05)",
           background: "rgba(255, 255, 255, 0.01)",
-          rotateX,
-          rotateY,
         }}
       >
         {/* Gradient glow on hover */}
@@ -197,7 +172,7 @@ function ServiceCard({ service, index, yOffset }: any) {
           className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
           style={{
             background: `linear-gradient(135deg, ${service.color}, transparent)`,
-            filter: "blur(20px)",
+            filter: "blur(10px)",
             transform: "translateZ(-2px)",
           }}
         />

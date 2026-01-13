@@ -4,29 +4,21 @@ import { Button } from "./ui/button";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const rafRef = useRef<number | null>(null);
-  const lastScrollRef = useRef(0);
 
   useEffect(() => {
+    let lastScrollY = 0;
     let ticking = false;
     
     const handleScroll = () => {
       if (!ticking) {
-        rafRef.current = requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
           const scrollY = window.scrollY;
           const newScrolled = scrollY > 50;
           
-          // Only update state if changed to prevent unnecessary re-renders
-          if (newScrolled !== scrolled) {
+          // Only update if state actually changed
+          if (newScrolled !== scrolled && Math.abs(scrollY - lastScrollY) > 20) {
             setScrolled(newScrolled);
-          }
-          
-          // Calculate scroll progress (0-1) for smooth transitions
-          const progress = Math.min(scrollY / 100, 1);
-          if (Math.abs(progress - lastScrollRef.current) > 0.05) {
-            setScrollProgress(progress);
-            lastScrollRef.current = progress;
+            lastScrollY = scrollY;
           }
           
           ticking = false;
@@ -36,13 +28,10 @@ export function Navbar() {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Initial call
+    handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
-      }
     };
   }, [scrolled]);
 
@@ -58,31 +47,19 @@ export function Navbar() {
     { id: "contact", label: "Contact" },
   ];
 
-  // Calculate values from scroll progress (CSS will handle transitions smoothly)
-  const navBlur = scrollProgress * 20;
-  const logoScale = 1 - (scrollProgress * 0.15);
-  const padding = 1.25 - (scrollProgress * 0.75); // 1.25rem to 0.5rem
-
   return (
-    <motion.nav
-      style={{ 
-        backdropFilter: navBlur > 0 ? `blur(${navBlur}px)` : "none",
-        opacity: 1,
-        paddingTop: `${padding}rem`,
-        paddingBottom: `${padding}rem`,
-      }}
+    <nav
       className={`fixed top-0 left-0 right-0 z-[90] transition-all duration-300 ${
-        scrolled ? "bg-[#f5f1ea]/90 shadow-lg border-b border-[#e5e7eb]" : "bg-[#f5f1ea]/40"
+        scrolled 
+          ? "bg-[#f5f1ea]/90 shadow-lg border-b border-[#e5e7eb] backdrop-blur-sm py-3" 
+          : "bg-[#f5f1ea]/40 py-5"
       }`}
     >
       {/* Content */}
       <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between">
-          {/* Logo with subtle animation */}
-          <motion.div 
-            style={{ scale: logoScale }} 
-            className="flex-shrink-0 relative transition-transform duration-300"
-          >
+          {/* Logo */}
+          <div className="flex-shrink-0 relative">
             <span className="text-xl tracking-tight relative inline-block text-[#1a1d29] font-semibold">
               Kutlu Solutions
             </span>

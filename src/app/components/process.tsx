@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { Search, Palette, Code, Rocket, Settings } from "lucide-react";
 import {
   Dialog,
@@ -8,15 +8,9 @@ import {
   DialogTitle,
   DialogDescription,
 } from "./ui/dialog";
-import { useRef } from "react";
 
 export function Process() {
   const [selectedStep, setSelectedStep] = useState<number | null>(null);
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
 
   const steps = [
     {
@@ -87,7 +81,7 @@ export function Process() {
   ];
 
   return (
-    <section id="approach" ref={ref} className="relative py-32 border-t border-white/5 overflow-hidden">
+    <section id="approach" className="relative py-32 border-t border-white/5 overflow-hidden">
       {/* Animated gradient background */}
       <motion.div
         className="absolute top-1/3 right-1/4 w-[500px] h-[500px] rounded-full"
@@ -123,34 +117,19 @@ export function Process() {
         </motion.div>
 
         <div className="relative">
-          {/* Animated Connecting Line */}
-          <motion.div 
-            className="absolute left-12 top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-white/10 to-transparent hidden md:block overflow-hidden"
-          >
-            <motion.div
-              className="w-full h-full bg-gradient-to-b from-[#a78bfa] via-[#60a5fa] to-[#f472b6]"
-              style={{
-                scaleY: scrollYProgress,
-                transformOrigin: "top"
-              }}
-            />
-          </motion.div>
+          {/* Static Connecting Line */}
+          <div className="absolute left-12 top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-white/10 to-transparent hidden md:block">
+            <div className="w-full h-full bg-gradient-to-b from-[#a78bfa] via-[#60a5fa] to-[#f472b6]" />
+          </div>
 
           <div className="space-y-8">
             {steps.map((step, i) => {
-              const yOffset = useTransform(
-                scrollYProgress,
-                [i / steps.length, (i + 1) / steps.length],
-                [50, -20]
-              );
-
               return (
                 <ProcessStep 
                   key={i} 
                   step={step} 
                   index={i} 
                   onClick={() => setSelectedStep(i)}
-                  yOffset={yOffset}
                 />
               );
             })}
@@ -204,7 +183,7 @@ export function Process() {
   );
 }
 
-function ProcessStep({ step, index, onClick, yOffset }: any) {
+function ProcessStep({ step, index, onClick }: any) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -213,7 +192,6 @@ function ProcessStep({ step, index, onClick, yOffset }: any) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      style={{ y: yOffset }}
       className="relative"
     >
       <div className="flex items-start gap-8">
