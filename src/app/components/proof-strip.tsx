@@ -138,10 +138,11 @@ export function ProofStrip() {
                     style={{ transform: "translateZ(20px)" }}
                   >
                     <p
-                      className={`text-3xl md:text-4xl lg:text-5xl tracking-tight bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent font-bold`}
+                      className={`text-3xl md:text-4xl lg:text-5xl tracking-tight bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent font-medium`}
                       style={{
                         textShadow: `0 0 40px ${stat.color}40`,
                         lineHeight: '1.2',
+                        letterSpacing: '-0.02em',
                       }}
                     >
                       {stat.number}
@@ -150,8 +151,11 @@ export function ProofStrip() {
 
                   {/* Label */}
                   <p 
-                    className="text-sm text-[#9ca3af] relative"
-                    style={{ transform: "translateZ(10px)" }}
+                    className="text-sm text-[#9ca3af] relative font-normal"
+                    style={{ 
+                      transform: "translateZ(10px)",
+                      letterSpacing: '0.01em',
+                    }}
                   >
                     {t(stat.labelKey)}
                   </p>
