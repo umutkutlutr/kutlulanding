@@ -83,8 +83,8 @@ export function Industries() {
     },
     {
       icon: FileSearch,
-      title: "RAG Solutions (Knowledge Retrieval)",
-      description: "Turn scattered operational documents into controlled, source-grounded answers for teams. Ideal for SOPs, maintenance logs, quality records, and ERP exports—built with role-based access and audit-friendly citations. We can layer lightweight AI integrations only where they improve speed and accuracy.",
+      title: "RAG Solutions",
+      description: "Turn scattered operational documents into controlled, source-grounded answers for teams. Ideal for SOPs, maintenance logs, quality records, and ERP exports—built with role-based access and audit-friendly citations. We can layer AI integrations only where they improve speed and accuracy.",
       color: "#fb923c",
       gradient: "from-[#fb923c]/20 to-[#f97316]/10",
     },
