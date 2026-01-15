@@ -14,7 +14,8 @@ import {
   Bitcoin,
   Plane,
   ShieldCheck,
-  Leaf
+  Leaf,
+  FileSearch
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
@@ -79,6 +80,13 @@ export function Industries() {
       description: "Production-grade mobile games with polished UX, live-ops readiness, analytics hooks, and scalable backend foundations.",
       color: "#1e3a8a",
       gradient: "from-[#1e3a8a]/20 to-[#1e40af]/10",
+    },
+    {
+      icon: FileSearch,
+      title: "RAG Solutions (Knowledge Retrieval)",
+      description: "Turn scattered operational documents into controlled, source-grounded answers for teams. Ideal for SOPs, maintenance logs, quality records, and ERP exports—built with role-based access and audit-friendly citations. We can layer lightweight AI integrations only where they improve speed and accuracy.",
+      color: "#fb923c",
+      gradient: "from-[#fb923c]/20 to-[#f97316]/10",
     },
   ];
 
