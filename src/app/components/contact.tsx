@@ -64,7 +64,7 @@ export function Contact() {
     // Throttle with requestAnimationFrame
     if (rafRef.current === null) {
       rafRef.current = requestAnimationFrame(() => {
-        setMousePosition({ x, y });
+    setMousePosition({ x, y });
         rafRef.current = null;
       });
     }
@@ -168,14 +168,14 @@ export function Contact() {
 
                   {/* Static border glow - reduced blur */}
                   <div
-                    className="absolute inset-0 rounded-xl opacity-0 transition-opacity duration-700"
-                    style={{
+              className="absolute inset-0 rounded-xl opacity-0 transition-opacity duration-700"
+              style={{
                       background: "linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(96, 165, 250, 0.15))",
                       filter: "blur(15px)",
-                      transform: "translateZ(-1px)",
-                      opacity: isHovered ? 1 : 0,
-                    }}
-                  />
+                transform: "translateZ(-1px)",
+                opacity: isHovered ? 1 : 0,
+              }}
+            />
 
             <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6 relative" style={{ transform: "translateZ(20px)" }}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">

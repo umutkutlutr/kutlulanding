@@ -94,14 +94,14 @@ export function ScrollVortex() {
             transition: 'opacity 0.1s ease-out'
           }}
         >
-          <defs>
-            <linearGradient id="spiral1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <defs>
+              <linearGradient id="spiral1" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#fb923c" stopOpacity="0.2" />
               <stop offset="100%" stopColor="#1e40af" stopOpacity="0.1" />
-            </linearGradient>
-          </defs>
+              </linearGradient>
+            </defs>
           <circle cx="500" cy="500" r="400" fill="none" stroke="url(#spiral1)" strokeWidth="1" opacity="0.5" />
-        </svg>
+          </svg>
       </div>
     </div>
   );

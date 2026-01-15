@@ -85,7 +85,7 @@ export function DiscoveryCall() {
         selectedTime,
         type: 'discovery-call',
       });
-      setStep(3);
+    setStep(3);
     } catch (error) {
       console.error('Error saving form submission:', error);
       alert('There was an error scheduling your call. Please try again.');
@@ -370,9 +370,9 @@ export function DiscoveryCall() {
               {/* Time Selection */}
               {selectedDate && (
                       <div>
-                        <Label className="text-[#52525b] font-medium mb-4 block">
+                  <Label className="text-[#52525b] font-medium mb-4 block">
                           {t('discovery.calendar.selectTime')}
-                        </Label>
+                  </Label>
                   <div className="grid grid-cols-3 gap-3">
                     {availableTimes.map((time, i) => (
                       <button
@@ -393,17 +393,17 @@ export function DiscoveryCall() {
                 </div>
               )}
 
-                      {/* Confirm Button */}
-                      {selectedDate && selectedTime && (
+              {/* Confirm Button */}
+              {selectedDate && selectedTime && (
                         <div>
-                          <Button
-                            onClick={handleTimeSelection}
-                            className="w-full bg-[#1e40af] text-white hover:bg-[#1e3a8a] py-6 text-base tracking-wide border-0 font-semibold transition-colors duration-300 shadow-lg shadow-[#1e40af]/30"
-                          >
+                  <Button
+                    onClick={handleTimeSelection}
+                    className="w-full bg-[#1e40af] text-white hover:bg-[#1e3a8a] py-6 text-base tracking-wide border-0 font-semibold transition-colors duration-300 shadow-lg shadow-[#1e40af]/30"
+                  >
                             {t('discovery.calendar.confirm')}
-                          </Button>
+                  </Button>
                         </div>
-                      )}
+              )}
             </div>
           )}
 

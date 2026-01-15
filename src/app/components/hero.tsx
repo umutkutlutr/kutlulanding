@@ -81,23 +81,23 @@ export function Hero() {
         </p>
 
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto">
-          <Button
+            <Button
             onClick={() => scrollToSection("discovery")}
             className="relative overflow-hidden bg-[#1e40af] text-white w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-6 rounded-lg text-sm sm:text-base tracking-wide border-0 hover:bg-[#1e3a8a] transition-all duration-300 cursor-hover font-semibold shadow-xl shadow-[#1e40af]/30 hover:scale-105 hover:-translate-y-0.5 active:scale-95 min-h-[44px] sm:min-h-[52px]"
-          >
+            >
             <span className="relative z-10 flex items-center justify-center">
               {t('hero.cta.primary')}
               <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform duration-500" />
-            </span>
-          </Button>
+              </span>
+            </Button>
 
-          <Button
+            <Button
             onClick={() => scrollToSection("contact")}
-            variant="outline"
+              variant="outline"
             className="border-2 border-[#1a1d29] hover:border-[#fb923c] bg-transparent hover:bg-[#fb923c]/10 text-[#1a1d29] hover:text-[#1a1d29] w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-6 rounded-lg transition-all duration-300 text-sm sm:text-base tracking-wide cursor-hover font-semibold shadow-md hover:shadow-lg hover:scale-105 hover:-translate-y-0.5 active:scale-95 min-h-[44px] sm:min-h-[52px]"
           >
             {t('hero.cta.secondary')}
-          </Button>
+            </Button>
         </div>
       </div>
 

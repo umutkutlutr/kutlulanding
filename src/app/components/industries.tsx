@@ -83,8 +83,8 @@ export function Industries() {
     },
     {
       icon: FileSearch,
-      title: "RAG Solutions",
-      description: "Turn scattered operational documents into controlled, source-grounded answers for teams. Ideal for SOPs, maintenance logs, quality records, and ERP exports—built with role-based access and audit-friendly citations. We can layer AI integrations only where they improve speed and accuracy.",
+      title: "RAG Solutions (Knowledge Retrieval)",
+      description: "Turn scattered operational documents into controlled, source-grounded answers for teams. Ideal for SOPs, maintenance logs, quality records, and ERP exports—built with role-based access and audit-friendly citations. We can layer lightweight AI integrations only where they improve speed and accuracy.",
       color: "#fb923c",
       gradient: "from-[#fb923c]/20 to-[#f97316]/10",
     },
@@ -115,33 +115,33 @@ export function Industries() {
             <span className="text-xs md:text-sm tracking-[0.3em] text-[#1e40af] uppercase font-medium">
               Industries
             </span>
-          </div>
+        </div>
           <h2 
             className="tracking-tight mb-4 md:mb-6 text-[#1a1d29]"
             style={{
               fontSize: 'clamp(1.5rem, 5vw, 3.75rem)',
               lineHeight: '1.1',
             }}
-          >
+            >
             Software built for real operations.
           </h2>
           <p 
             className="text-[#71717a] max-w-2xl mx-auto leading-relaxed"
-            style={{
+                      style={{ 
               fontSize: 'clamp(0.9375rem, 1.5vw, 1.125rem)',
               lineHeight: '1.6',
             }}
           >
             From factory floors to field devices, we deliver systems that make processes measurable, traceable, and scalable.
           </p>
-        </div>
+                  </div>
 
         {/* Industries Grid - Clean and Simple */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {mainIndustries.map((industry, i) => (
             <IndustryCard key={i} industry={industry} index={i} />
-          ))}
-        </div>
+              ))}
+            </div>
       </div>
     </section>
   );
@@ -182,24 +182,24 @@ function IndustryCard({ industry, index }: {
     return () => {
       if (cardRef.current) {
         observer.unobserve(cardRef.current);
-      }
-    };
+    }
+  };
   }, []);
 
   return (
     <div
       ref={cardRef}
       className="group relative p-6 md:p-8 rounded-xl md:rounded-2xl border-2 border-[#e5e7eb] bg-white hover:border-[#fb923c]/40 hover:shadow-xl hover:shadow-[#fb923c]/10 transition-all duration-500 opacity-0 translate-y-8"
-      style={{
+        style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? 'translateY(0)' : 'translateY(32px)',
         transitionDelay: `${index * 80}ms`,
-      }}
-    >
-              {/* Gradient background on hover */}
+        }}
+      >
+        {/* Gradient background on hover */}
               <div
                 className={`absolute inset-0 bg-gradient-to-br ${industry.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl md:rounded-2xl`}
-              />
+        />
 
               {/* Icon */}
               <div className="relative mb-4 md:mb-6">
@@ -208,14 +208,14 @@ function IndustryCard({ industry, index }: {
                   style={{
                     background: `linear-gradient(135deg, ${industry.color}15, ${industry.color}05)`,
                   }}
-                >
-                  <industry.icon 
+        >
+          <industry.icon 
                     className="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 transition-colors duration-500" 
-                    strokeWidth={1.5} 
-                    style={{ 
+            strokeWidth={1.5} 
+            style={{ 
                       color: industry.color,
-                    }}
-                  />
+            }}
+          />
                 </div>
               </div>
 
@@ -227,8 +227,8 @@ function IndustryCard({ industry, index }: {
                     fontSize: 'clamp(1rem, 2.5vw, 1.25rem)',
                   }}
                 >
-                  {industry.title}
-                </h3>
+          {industry.title}
+        </h3>
                 <p 
                   className="text-[#71717a] leading-relaxed group-hover:text-[#52525b] transition-colors duration-500"
                   style={{
@@ -243,11 +243,11 @@ function IndustryCard({ industry, index }: {
               {/* Decorative corner element */}
               <div
                 className="absolute top-4 right-4 w-2 h-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  background: industry.color,
-                  boxShadow: `0 0 10px ${industry.color}`,
-                }}
-              />
+          style={{
+            background: industry.color,
+            boxShadow: `0 0 10px ${industry.color}`,
+          }}
+        />
     </div>
   );
 }

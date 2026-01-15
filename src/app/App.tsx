@@ -47,25 +47,25 @@ export default function App() {
     <ErrorBoundary>
       <LanguageProvider>
         <div className="min-h-screen bg-[#f5f1ea] text-[#1a1d29] antialiased overflow-x-hidden">
-          <Navbar />
-          <main>
-            <Hero />
+      <Navbar />
+      <main>
+        <Hero />
             <Suspense fallback={null}>
-            <ProofStrip />
-            <Expertise />
-            <Industries />
-            <Process />
-            <Work />
-            <DiscoveryCall />
-            <Maintenance />
-            <Contact />
+        <ProofStrip />
+        <Expertise />
+        <Industries />
+        <Process />
+        <Work />
+        <DiscoveryCall />
+        <Maintenance />
+        <Contact />
             <About />
             </Suspense>
-          </main>
+      </main>
           <Suspense fallback={null}>
-          <Footer />
+      <Footer />
           </Suspense>
-        </div>
+    </div>
       </LanguageProvider>
     </ErrorBoundary>
   );

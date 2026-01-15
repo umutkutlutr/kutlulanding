@@ -60,8 +60,8 @@ export function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-[90] transition-all duration-300 ${
         scrolled 
-          ? "bg-[#f5f1ea]/90 shadow-lg border-b border-[#e5e7eb] backdrop-blur-sm py-2 md:py-3" 
-          : "bg-[#f5f1ea]/40 py-2 md:py-3"
+          ? "bg-[#f5f1ea]/90 shadow-lg border-b border-[#e5e7eb] backdrop-blur-sm py-1 md:py-2" 
+          : "bg-[#f5f1ea]/40 py-1 md:py-2"
       }`}
     >
       {/* Content */}
@@ -70,15 +70,21 @@ export function Navbar() {
           {/* Logo */}
           <div className="flex-shrink-0 relative">
             <a href="/" className="flex items-center">
-              <div className="relative">
+              <div 
+                className="relative"
+                style={{
+                  backgroundColor: 'transparent',
+                }}
+              >
                 <img
                   src="/images/logos/kutlu.png"
                   alt="Kutlu Solutions"
-                  className="h-12 md:h-16 lg:h-20 w-auto object-contain"
+                  className="h-24 md:h-32 lg:h-40 w-auto object-contain"
                   style={{
-                    display: 'block',
-                    maxWidth: '100%',
-                    height: 'auto',
+                    backgroundColor: 'transparent',
+                    mixBlendMode: 'multiply',
+                    filter: 'contrast(1.2) brightness(0.95)',
+                    imageRendering: 'crisp-edges',
                   }}
                 />
               </div>

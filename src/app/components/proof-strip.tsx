@@ -57,11 +57,11 @@ export function ProofStrip() {
     <section 
       ref={sectionRef}
       className="relative py-12 md:py-20 lg:py-24 border-y border-[#e5e7eb] overflow-hidden bg-gradient-to-b from-[#fafaf9] to-white opacity-0 translate-y-8 transition-all duration-700 ease-out"
-      style={{
+        style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? 'translateY(0)' : 'translateY(32px)',
-      }}
-    >
+        }}
+      >
       {/* Static gradient backgrounds - no animation */}
       <div className="absolute inset-0 opacity-20">
         <div
@@ -107,7 +107,7 @@ export function ProofStrip() {
                 return () => clearTimeout(timer);
               }, [isVisible, index]);
 
-              return (
+            return (
                 <div
                   ref={cardRef}
                   key={index}
@@ -116,7 +116,7 @@ export function ProofStrip() {
                     opacity: cardVisible ? 1 : 0,
                     transform: cardVisible ? 'translateY(0)' : 'translateY(16px)',
                   }}
-                >
+              >
                 {/* Card wrapper */}
                 <div
                   className="relative cursor-hover hover:scale-105 transition-transform duration-300"
