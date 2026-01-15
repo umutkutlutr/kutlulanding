@@ -1,9 +1,16 @@
 // Motion removed for performance
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CheckCircle } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "./ui/dialog";
 import { useState, useRef, useEffect } from "react";
 import { saveFormSubmission } from "../../utils/formSubmission";
 import { useLanguage } from "../../contexts/LanguageContext";
@@ -13,6 +20,7 @@ export function Contact() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -72,17 +80,24 @@ export function Contact() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    saveFormSubmission({
-      ...formData,
-      type: 'contact',
-    });
-    // Reset form
-    setFormData({
-      name: "",
-      email: "",
-      company: "",
-      message: "",
-    });
+    try {
+      saveFormSubmission({
+        ...formData,
+        type: 'contact',
+      });
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        company: "",
+        message: "",
+      });
+      // Show success dialog
+      setShowSuccessDialog(true);
+    } catch (error) {
+      console.error('Error saving form submission:', error);
+      alert('There was an error submitting your message. Please try again.');
+    }
   };
 
   return (
@@ -172,7 +187,7 @@ export function Contact() {
                     id="contact-name"
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    placeholder={t('contact.form.namePlaceholder') || "John Smith"}
+                    placeholder={t('contact.form.namePlaceholder') || "e.g., Sarah Johnson"}
                     className="bg-white border-[#e5e7eb] text-[#1a1d29] placeholder:text-[#9ca3af] mt-0 focus:border-[#a78bfa] focus:ring-[#a78bfa]/20 focus:ring-2 transition-all duration-300 w-full min-h-[48px] text-base shadow-sm hover:border-[#d1d5db]"
                   />
                 </div>
@@ -186,7 +201,7 @@ export function Contact() {
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    placeholder={t('contact.form.emailPlaceholder') || "john@company.com"}
+                    placeholder={t('contact.form.emailPlaceholder') || "e.g., sarah.johnson@manufacturing.com"}
                     className="bg-white border-[#e5e7eb] text-[#1a1d29] placeholder:text-[#9ca3af] mt-0 focus:border-[#60a5fa] focus:ring-[#60a5fa]/20 focus:ring-2 transition-all duration-300 w-full min-h-[48px] text-base shadow-sm hover:border-[#d1d5db]"
                   />
                 </div>
@@ -200,7 +215,7 @@ export function Contact() {
                   id="contact-company"
                   value={formData.company}
                   onChange={(e) => setFormData({...formData, company: e.target.value})}
-                  placeholder={t('contact.form.companyPlaceholder') || "Company Name"}
+                  placeholder={t('contact.form.companyPlaceholder') || "e.g., Acme Manufacturing Inc."}
                   className="bg-white border-[#e5e7eb] text-[#1a1d29] placeholder:text-[#9ca3af] mt-0 focus:border-[#f472b6] focus:ring-[#f472b6]/20 focus:ring-2 transition-all duration-300 w-full min-h-[48px] text-base shadow-sm hover:border-[#d1d5db]"
                 />
               </div>
@@ -213,7 +228,7 @@ export function Contact() {
                   id="contact-message"
                   value={formData.message}
                   onChange={(e) => setFormData({...formData, message: e.target.value})}
-                  placeholder={t('contact.form.messagePlaceholder') || "Tell us about your project..."}
+                  placeholder={t('contact.form.messagePlaceholder') || "Describe your operational challenges, current systems, and what you're looking to improve..."}
                   className="bg-white border-[#e5e7eb] text-[#1a1d29] placeholder:text-[#9ca3af] mt-0 min-h-[120px] md:min-h-[140px] focus:border-[#a78bfa] focus:ring-[#a78bfa]/20 focus:ring-2 transition-all duration-300 w-full text-base shadow-sm hover:border-[#d1d5db] resize-y"
                 />
               </div>
@@ -242,6 +257,33 @@ export function Contact() {
           </div>
         </div>
       </div>
+
+      {/* Success Dialog */}
+      <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+        <DialogContent className="bg-white border-[#e5e7eb] max-w-md rounded-xl">
+          <DialogHeader>
+            <div className="flex items-center justify-center mb-4">
+              <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
+                <CheckCircle className="w-8 h-8 text-green-600" />
+              </div>
+            </div>
+            <DialogTitle className="text-2xl text-center text-[#1a1d29]">
+              {t('contact.success.title')}
+            </DialogTitle>
+            <DialogDescription className="text-center text-[#52525b] mt-2">
+              {t('contact.success.message')}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="mt-6">
+            <Button
+              onClick={() => setShowSuccessDialog(false)}
+              className="w-full bg-[#1e40af] text-white hover:bg-[#1e3a8a] py-3 rounded-lg text-base font-semibold transition-colors duration-300"
+            >
+              {t('contact.success.button')}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }

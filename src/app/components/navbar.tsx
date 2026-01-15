@@ -49,11 +49,11 @@ export function Navbar() {
   };
 
   const navItems = [
-    { id: "about", label: t("nav.about") },
     { id: "expertise", label: t("nav.expertise") },
     { id: "industries", label: t("nav.industries") },
     { id: "approach", label: t("nav.approach") },
     { id: "contact", label: t("nav.contact") },
+    { id: "about", label: t("nav.about") },
   ];
 
   return (
@@ -74,6 +74,10 @@ export function Navbar() {
                 src="/images/logos/kutlu.png"
                 alt="Kutlu Solutions"
                 className="h-10 md:h-12 lg:h-14 w-auto object-contain"
+                style={{
+                  mixBlendMode: 'multiply',
+                  filter: 'contrast(1.1)',
+                }}
               />
             </a>
           </div>

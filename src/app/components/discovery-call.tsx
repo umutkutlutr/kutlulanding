@@ -77,14 +77,19 @@ export function DiscoveryCall() {
   };
 
   const handleTimeSelection = () => {
-    // Save form submission to file
-    saveFormSubmission({
-      ...formData,
-      selectedDate,
-      selectedTime,
-      type: 'discovery-call',
-    });
-    setStep(3);
+    try {
+      // Save form submission to localStorage
+      saveFormSubmission({
+        ...formData,
+        selectedDate,
+        selectedTime,
+        type: 'discovery-call',
+      });
+      setStep(3);
+    } catch (error) {
+      console.error('Error saving form submission:', error);
+      alert('There was an error scheduling your call. Please try again.');
+    }
   };
 
   const handleClose = () => {
@@ -249,7 +254,7 @@ export function DiscoveryCall() {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    placeholder="John Smith"
+                    placeholder={t('discovery.form.namePlaceholder') || "e.g., Michael Chen"}
                     className="bg-white border-[#e5e7eb] mt-2 focus:border-[#fb923c] transition-colors text-[#1a1d29] placeholder:text-[#9ca3af] w-full min-h-[44px]"
                   />
                 </div>
@@ -263,7 +268,7 @@ export function DiscoveryCall() {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    placeholder="john@company.com"
+                    placeholder={t('discovery.form.emailPlaceholder') || "e.g., mchen@productionco.com"}
                     className="bg-white border-[#e5e7eb] mt-2 focus:border-[#1e40af] transition-colors text-[#1a1d29] placeholder:text-[#9ca3af] w-full min-h-[44px]"
                   />
                 </div>
@@ -279,7 +284,7 @@ export function DiscoveryCall() {
                     required
                     value={formData.company}
                     onChange={(e) => setFormData({...formData, company: e.target.value})}
-                    placeholder="Acme Corporation"
+                    placeholder={t('discovery.form.companyPlaceholder') || "e.g., Production Co. Manufacturing"}
                     className="bg-white border-[#e5e7eb] mt-2 focus:border-[#fb923c] transition-colors text-[#1a1d29] placeholder:text-[#9ca3af] w-full min-h-[44px]"
                   />
                 </div>
@@ -292,7 +297,7 @@ export function DiscoveryCall() {
                     required
                     value={formData.role}
                     onChange={(e) => setFormData({...formData, role: e.target.value})}
-                    placeholder="CTO, Founder, etc."
+                    placeholder={t('discovery.form.rolePlaceholder') || "e.g., Operations Director, Plant Manager"}
                     className="bg-white border-[#e5e7eb] mt-2 focus:border-[#1e40af] transition-colors text-[#1a1d29] placeholder:text-[#9ca3af] w-full min-h-[44px]"
                   />
                 </div>
@@ -306,7 +311,7 @@ export function DiscoveryCall() {
                   id="phone"
                   value={formData.phone}
                   onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                  placeholder="+1 (555) 123-4567"
+                  placeholder={t('discovery.form.phonePlaceholder') || "e.g., +1 (555) 123-4567"}
                   className="bg-white border-[#e5e7eb] mt-2 focus:border-[#fb923c] transition-colors text-[#1a1d29] placeholder:text-[#9ca3af] w-full min-h-[44px]"
                 />
               </div>
@@ -320,7 +325,7 @@ export function DiscoveryCall() {
                   required
                   value={formData.projectBrief}
                   onChange={(e) => setFormData({...formData, projectBrief: e.target.value})}
-                  placeholder="Tell us about your project goals, challenges, and timeline..."
+                  placeholder={t('discovery.form.projectBriefPlaceholder') || "Describe your production challenges, current systems, goals, and timeline..."}
                   className="bg-white border-[#e5e7eb] mt-2 min-h-[120px] focus:border-[#1e40af] transition-colors text-[#1a1d29] placeholder:text-[#9ca3af] w-full"
                 />
               </div>
