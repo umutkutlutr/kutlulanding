@@ -92,9 +92,9 @@ export function Hero() {
           </Button>
 
           <Button
-            onClick={() => scrollToSection("expertise")}
+            onClick={() => scrollToSection("contact")}
             variant="outline"
-            className="border-[#1a1d29]/30 hover:border-[#fb923c]/60 bg-white/80 hover:bg-white text-[#1a1d29] w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-6 rounded-lg transition-all duration-300 text-sm sm:text-base tracking-wide cursor-hover font-semibold shadow-lg hover:scale-105 hover:-translate-y-0.5 active:scale-95 min-h-[44px] sm:min-h-[52px]"
+            className="border-2 border-[#1a1d29] hover:border-[#fb923c] bg-transparent hover:bg-[#fb923c]/10 text-[#1a1d29] hover:text-[#1a1d29] w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-6 rounded-lg transition-all duration-300 text-sm sm:text-base tracking-wide cursor-hover font-semibold shadow-md hover:shadow-lg hover:scale-105 hover:-translate-y-0.5 active:scale-95 min-h-[44px] sm:min-h-[52px]"
           >
             {t('hero.cta.secondary')}
           </Button>

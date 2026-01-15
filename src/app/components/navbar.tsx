@@ -75,8 +75,9 @@ export function Navbar() {
                 alt="Kutlu Solutions"
                 className="h-24 md:h-32 lg:h-40 w-auto object-contain"
                 style={{
-                  mixBlendMode: 'multiply',
-                  filter: 'contrast(1.1)',
+                  backgroundColor: 'transparent',
+                  mixBlendMode: 'normal',
+                  filter: 'none',
                 }}
               />
             </a>
