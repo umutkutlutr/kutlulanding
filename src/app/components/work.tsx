@@ -2,22 +2,26 @@
 import { useState, useEffect, useRef } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
 
+// Logo type definition
+type Client = {
+  name: string;
+  logo: string;
+  fallback?: string;
+};
+
 export function Work() {
   const { t } = useLanguage();
 
   const clients = [
-    { name: "Global Finance Corp", logo: "GF" },
-    { name: "TechVentures Inc", logo: "TV" },
-    { name: "SecureHealth Systems", logo: "SH" },
-    { name: "International Logistics", logo: "IL" },
-    { name: "Advanced Manufacturing", logo: "AM" },
-    { name: "Enterprise Solutions", logo: "ES" },
-    { name: "Financial Services Group", logo: "FS" },
-    { name: "Supply Chain Partners", logo: "SC" },
-    { name: "Healthcare Network", logo: "HN" },
-    { name: "Technology Holdings", logo: "TH" },
-    { name: "Global Operations", logo: "GO" },
-    { name: "Strategic Systems", logo: "SS" },
+    { name: "Maison Sacree", logo: "/images/logos/maison-sacree.png", fallback: "MS" },
+    { name: "TM Mühendislik", logo: "/images/logos/tm-muhendislik.png", fallback: "TM" },
+    { name: "Ledvision", logo: "/images/logos/ledvision.png", fallback: "LV" },
+    { name: "Avitech Metal", logo: "/images/logos/avitech-metal.png", fallback: "AM" },
+    { name: "Graphene", logo: "/images/logos/graphene.png", fallback: "GR" },
+    { name: "Vesil", logo: "/images/logos/vesil.png", fallback: "VE" },
+    { name: "Işıl Metal", logo: "/images/logos/isil-metal.png", fallback: "IM" },
+    { name: "Sadık Kağıt", logo: "/images/logos/sadik-kagit.png", fallback: "SK" },
+    { name: "Diaporta", logo: "/images/logos/diaporta.png", fallback: "DI" },
   ];
 
   return (
@@ -93,7 +97,8 @@ export function Work() {
   );
 }
 
-function ClientCard({ client, index }: { client: { name: string; logo: string }, index: number }) {
+function ClientCard({ client, index }: { client: Client, index: number }) {
+  const [imageError, setImageError] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -145,18 +150,28 @@ function ClientCard({ client, index }: { client: { name: string; logo: string },
 
                 {/* Content */}
                 <div className="relative z-10 h-full flex flex-col items-center justify-center p-4 md:p-6">
-                  {/* Logo placeholder with enhanced animation */}
+                  {/* Logo with fallback */}
                   <div
-                    className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-lg md:rounded-xl bg-gradient-to-br from-[#fb923c]/15 to-[#1e40af]/15 border-2 border-[#e5e7eb] group-hover:border-[#fb923c]/30 flex items-center justify-center mb-2 md:mb-4 transition-all duration-500 shadow-lg group-hover:rotate-[360deg] group-hover:scale-110"
+                    className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-lg md:rounded-xl bg-white border-2 border-[#e5e7eb] group-hover:border-[#fb923c]/30 flex items-center justify-center mb-2 md:mb-4 transition-all duration-500 shadow-lg group-hover:scale-110 overflow-hidden"
                   >
-                    <span 
-                      className="font-bold bg-gradient-to-br from-[#fb923c] to-[#1e40af] bg-clip-text text-transparent"
-                      style={{
-                        fontSize: 'clamp(1.25rem, 3vw, 1.875rem)',
-                      }}
-                    >
-                      {client.logo}
-                    </span>
+                    {client.logo && !imageError ? (
+                      <img
+                        src={client.logo}
+                        alt={client.name}
+                        className="w-full h-full object-contain p-2 grayscale group-hover:grayscale-0 transition-all duration-500"
+                        onError={() => setImageError(true)}
+                        loading="lazy"
+                      />
+                    ) : (
+                      <span 
+                        className="font-bold bg-gradient-to-br from-[#fb923c] to-[#1e40af] bg-clip-text text-transparent"
+                        style={{
+                          fontSize: 'clamp(1.25rem, 3vw, 1.875rem)',
+                        }}
+                      >
+                        {client.fallback || client.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                      </span>
+                    )}
                   </div>
 
                   {/* Company name */}
