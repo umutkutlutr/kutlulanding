@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "./ui/button";
 import { useLanguage } from "../../contexts/LanguageContext";
 import {
@@ -18,6 +18,34 @@ export function DiscoveryCall() {
   const { t } = useLanguage();
   const [showModal, setShowModal] = useState(false);
   const [step, setStep] = useState(1); // 1: Form, 2: Calendar, 3: Confirmation
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            if (sectionRef.current) {
+              observer.unobserve(sectionRef.current);
+            }
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -100px 0px" }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -77,10 +105,18 @@ export function DiscoveryCall() {
   };
 
   return (
-    <section id="discovery" className="relative py-32 border-t border-[#e5e7eb]/50 overflow-hidden bg-white">
-      {/* Static gradient orbs - no animation, reduced blur */}
+    <section 
+      ref={sectionRef}
+      id="discovery" 
+      className="relative py-14 md:py-20 lg:py-32 border-t border-[#e5e7eb]/50 overflow-hidden bg-white opacity-0 translate-y-8 transition-all duration-700 ease-out"
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : 'translateY(32px)',
+      }}
+    >
+      {/* Static gradient orbs - no animation, reduced blur, responsive sizes */}
       <div
-        className="absolute top-20 left-1/4 w-96 h-96 rounded-full"
+        className="absolute top-10 left-1/4 md:top-20 w-48 h-48 md:w-64 md:h-64 lg:w-96 lg:h-96 rounded-full"
         style={{
           background: "radial-gradient(circle, rgba(251, 146, 60, 0.08) 0%, transparent 70%)",
           filter: "blur(30px)",
@@ -88,31 +124,50 @@ export function DiscoveryCall() {
       />
 
       <div
-        className="absolute bottom-20 right-1/4 w-96 h-96 rounded-full"
+        className="absolute bottom-10 right-1/4 md:bottom-20 w-48 h-48 md:w-64 md:h-64 lg:w-96 lg:h-96 rounded-full"
         style={{
           background: "radial-gradient(circle, rgba(30, 64, 175, 0.06) 0%, transparent 70%)",
           filter: "blur(30px)",
         }}
       />
 
-      <div className="relative max-w-4xl mx-auto px-6 lg:px-12">
-        <div className="text-center">
+      <div className="relative max-w-4xl mx-auto px-4 md:px-6 lg:px-8">
+        <div 
+          className="text-center opacity-0 translate-y-4 transition-all duration-700 ease-out"
+          style={{
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? 'translateY(0)' : 'translateY(16px)',
+            transitionDelay: '200ms',
+          }}
+        >
           <div className="inline-block mb-4">
             <span className="text-sm tracking-[0.3em] text-[#1e40af] uppercase font-medium">
               {t('discovery.badge')}
             </span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl tracking-tight mb-6 text-[#1a1d29]">
+          <h2 
+            className="tracking-tight mb-4 md:mb-6 text-[#1a1d29]"
+            style={{
+              fontSize: 'clamp(1.5rem, 5vw, 3.75rem)',
+              lineHeight: '1.1',
+            }}
+          >
             {t('discovery.title')}
           </h2>
-          <p className="text-[#71717a] max-w-2xl mx-auto mb-12 leading-relaxed text-lg">
+          <p 
+            className="text-[#71717a] max-w-2xl mx-auto mb-8 md:mb-12 leading-relaxed"
+            style={{
+              fontSize: 'clamp(0.9375rem, 1.5vw, 1.125rem)',
+              lineHeight: '1.6',
+            }}
+          >
             {t('discovery.subtitle')}
           </p>
 
           <div className="relative max-w-2xl mx-auto">
             {/* Card */}
-            <div className="relative p-12 rounded-2xl border-2 border-[#e5e7eb] backdrop-blur-sm overflow-hidden bg-white/60 hover:scale-[1.01] transition-transform duration-300">
+            <div className="relative p-6 md:p-8 lg:p-12 rounded-xl md:rounded-2xl border-2 border-[#e5e7eb] backdrop-blur-sm overflow-hidden bg-white/60 hover:scale-[1.01] transition-transform duration-300">
               {/* Static gradient background */}
               <div className="absolute inset-0 opacity-20" style={{
                 background: "radial-gradient(circle at 50% 50%, rgba(251, 146, 60, 0.15) 0%, transparent 50%)",
@@ -147,7 +202,7 @@ export function DiscoveryCall() {
                 <div className="hover:scale-[1.02] active:scale-[0.98] transition-transform duration-300">
                   <Button
                     onClick={() => setShowModal(true)}
-                    className="w-full bg-[#1e40af] text-white hover:bg-[#1e3a8a] py-6 text-sm tracking-wide rounded-lg border-0 transition-colors duration-300 font-semibold cursor-hover shadow-xl shadow-[#1e40af]/30"
+                    className="w-full bg-[#1e40af] text-white hover:bg-[#1e3a8a] py-4 md:py-6 text-sm tracking-wide rounded-lg border-0 transition-colors duration-300 font-semibold cursor-hover shadow-xl shadow-[#1e40af]/30 min-h-[44px] md:min-h-[52px]"
                   >
                     <span className="relative z-10 flex items-center justify-center gap-2">
                       {t('discovery.cta')}
@@ -167,7 +222,7 @@ export function DiscoveryCall() {
 
       {/* Discovery Call Modal */}
       <Dialog open={showModal} onOpenChange={handleClose}>
-        <DialogContent className="bg-white border-[#e5e7eb] max-w-3xl rounded-2xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="bg-white border-[#e5e7eb] max-w-3xl rounded-xl md:rounded-2xl max-h-[90vh] overflow-y-auto mx-4 md:mx-0">
           <DialogHeader>
             <DialogTitle className="text-3xl tracking-tight text-[#1a1d29]">
               {step === 1 && t('discovery.modal.step1.title')}
@@ -195,7 +250,7 @@ export function DiscoveryCall() {
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
                     placeholder="John Smith"
-                    className="bg-white border-[#e5e7eb] mt-2 focus:border-[#fb923c] transition-colors text-[#1a1d29] placeholder:text-[#9ca3af]"
+                    className="bg-white border-[#e5e7eb] mt-2 focus:border-[#fb923c] transition-colors text-[#1a1d29] placeholder:text-[#9ca3af] w-full min-h-[44px]"
                   />
                 </div>
                 <div>
@@ -209,7 +264,7 @@ export function DiscoveryCall() {
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
                     placeholder="john@company.com"
-                    className="bg-white border-[#e5e7eb] mt-2 focus:border-[#1e40af] transition-colors text-[#1a1d29] placeholder:text-[#9ca3af]"
+                    className="bg-white border-[#e5e7eb] mt-2 focus:border-[#1e40af] transition-colors text-[#1a1d29] placeholder:text-[#9ca3af] w-full min-h-[44px]"
                   />
                 </div>
               </div>
@@ -225,7 +280,7 @@ export function DiscoveryCall() {
                     value={formData.company}
                     onChange={(e) => setFormData({...formData, company: e.target.value})}
                     placeholder="Acme Corporation"
-                    className="bg-white border-[#e5e7eb] mt-2 focus:border-[#fb923c] transition-colors text-[#1a1d29] placeholder:text-[#9ca3af]"
+                    className="bg-white border-[#e5e7eb] mt-2 focus:border-[#fb923c] transition-colors text-[#1a1d29] placeholder:text-[#9ca3af] w-full min-h-[44px]"
                   />
                 </div>
                 <div>
@@ -238,7 +293,7 @@ export function DiscoveryCall() {
                     value={formData.role}
                     onChange={(e) => setFormData({...formData, role: e.target.value})}
                     placeholder="CTO, Founder, etc."
-                    className="bg-white border-[#e5e7eb] mt-2 focus:border-[#1e40af] transition-colors text-[#1a1d29] placeholder:text-[#9ca3af]"
+                    className="bg-white border-[#e5e7eb] mt-2 focus:border-[#1e40af] transition-colors text-[#1a1d29] placeholder:text-[#9ca3af] w-full min-h-[44px]"
                   />
                 </div>
               </div>
@@ -252,7 +307,7 @@ export function DiscoveryCall() {
                   value={formData.phone}
                   onChange={(e) => setFormData({...formData, phone: e.target.value})}
                   placeholder="+1 (555) 123-4567"
-                  className="bg-white border-[#e5e7eb] mt-2 focus:border-[#fb923c] transition-colors text-[#1a1d29] placeholder:text-[#9ca3af]"
+                  className="bg-white border-[#e5e7eb] mt-2 focus:border-[#fb923c] transition-colors text-[#1a1d29] placeholder:text-[#9ca3af] w-full min-h-[44px]"
                 />
               </div>
 
@@ -266,7 +321,7 @@ export function DiscoveryCall() {
                   value={formData.projectBrief}
                   onChange={(e) => setFormData({...formData, projectBrief: e.target.value})}
                   placeholder="Tell us about your project goals, challenges, and timeline..."
-                  className="bg-white border-[#e5e7eb] mt-2 min-h-[120px] focus:border-[#1e40af] transition-colors text-[#1a1d29] placeholder:text-[#9ca3af]"
+                  className="bg-white border-[#e5e7eb] mt-2 min-h-[120px] focus:border-[#1e40af] transition-colors text-[#1a1d29] placeholder:text-[#9ca3af] w-full"
                 />
               </div>
 

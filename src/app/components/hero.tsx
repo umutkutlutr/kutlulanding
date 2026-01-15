@@ -12,7 +12,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#f5f1ea]">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#f5f1ea] py-16 md:py-24 lg:py-32">
       {/* Multi-layered Animated Background */}
       <div className="absolute inset-0">
         {/* Layer 1 - Static gradient orbs - no animation */}
@@ -26,9 +26,9 @@ export function Hero() {
 
       </div>
 
-      {/* Simplified floating shapes - static, reduced blur */}
+      {/* Simplified floating shapes - static, reduced blur, responsive sizes */}
       <div
-        className="absolute top-1/4 left-1/4 w-80 h-80 rounded-full"
+        className="absolute top-1/4 left-1/4 w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 rounded-full"
         style={{
           background: "radial-gradient(circle, rgba(251, 146, 60, 0.1) 0%, transparent 70%)",
           filter: "blur(40px)",
@@ -36,7 +36,7 @@ export function Hero() {
       />
 
       <div
-        className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full"
+        className="absolute bottom-1/4 right-1/4 w-56 h-56 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full"
         style={{
           background: "radial-gradient(circle, rgba(30, 64, 175, 0.08) 0%, transparent 70%)",
           filter: "blur(40px)",
@@ -52,9 +52,14 @@ export function Hero() {
       />
 
       {/* Content */}
-      <div className="relative z-10 max-w-5xl mx-auto px-6 lg:px-12 text-center">
+      <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-6 lg:px-8 text-center">
         <div>
-          <h1 className="text-6xl md:text-7xl lg:text-8xl tracking-tight mb-8 leading-[1.1] text-[#1a1d29] font-bold">
+          <h1 
+            className="tracking-tight mb-6 md:mb-8 leading-[1.1] text-[#1a1d29] font-bold"
+            style={{
+              fontSize: 'clamp(2rem, 8vw, 4.5rem)',
+            }}
+          >
             {t('hero.title.line1')}
             <br />
             <span className="bg-gradient-to-r from-[#fb923c] to-[#1e40af] bg-clip-text text-transparent">
@@ -63,27 +68,33 @@ export function Hero() {
           </h1>
         </div>
 
-        <p className="text-lg md:text-xl text-[#52525b] mb-16 max-w-2xl mx-auto leading-relaxed font-medium">
+        <p 
+          className="text-[#52525b] mb-12 md:mb-16 max-w-2xl mx-auto leading-relaxed font-medium"
+          style={{
+            fontSize: 'clamp(0.9375rem, 2vw, 1.25rem)',
+            lineHeight: '1.6',
+          }}
+        >
           {t('hero.subtitle.line1')}
           <br />
           {t('hero.subtitle.line2')}
         </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto">
           <Button
             onClick={() => scrollToSection("discovery")}
-            className="relative overflow-hidden bg-[#1e40af] text-white px-10 py-6 rounded-lg text-base tracking-wide border-0 hover:bg-[#1e3a8a] transition-all duration-300 cursor-hover font-semibold shadow-xl shadow-[#1e40af]/30 hover:scale-105 hover:-translate-y-0.5 active:scale-95"
+            className="relative overflow-hidden bg-[#1e40af] text-white w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-6 rounded-lg text-sm sm:text-base tracking-wide border-0 hover:bg-[#1e3a8a] transition-all duration-300 cursor-hover font-semibold shadow-xl shadow-[#1e40af]/30 hover:scale-105 hover:-translate-y-0.5 active:scale-95 min-h-[44px] sm:min-h-[52px]"
           >
-            <span className="relative z-10 flex items-center">
+            <span className="relative z-10 flex items-center justify-center">
               {t('hero.cta.primary')}
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-500" />
+              <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform duration-500" />
             </span>
           </Button>
 
           <Button
             onClick={() => scrollToSection("expertise")}
             variant="outline"
-            className="border-[#1a1d29]/30 hover:border-[#fb923c]/60 bg-white/80 hover:bg-white text-[#1a1d29] px-10 py-6 rounded-lg transition-all duration-300 text-base tracking-wide cursor-hover font-semibold shadow-lg hover:scale-105 hover:-translate-y-0.5 active:scale-95"
+            className="border-[#1a1d29]/30 hover:border-[#fb923c]/60 bg-white/80 hover:bg-white text-[#1a1d29] w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-6 rounded-lg transition-all duration-300 text-sm sm:text-base tracking-wide cursor-hover font-semibold shadow-lg hover:scale-105 hover:-translate-y-0.5 active:scale-95 min-h-[44px] sm:min-h-[52px]"
           >
             {t('hero.cta.secondary')}
           </Button>

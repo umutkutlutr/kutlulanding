@@ -1,5 +1,5 @@
 import { Shield, Activity, TrendingUp } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export function Maintenance() {
 
@@ -30,11 +30,11 @@ export function Maintenance() {
   return (
     <section
       id="maintenance"
-      className="relative py-32 border-t border-white/5 overflow-hidden"
+      className="relative py-14 md:py-20 lg:py-32 border-t border-white/5 overflow-hidden"
     >
-      {/* Static backgrounds - no animation, reduced blur */}
+      {/* Static backgrounds - no animation, reduced blur, responsive sizes */}
       <div
-        className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full"
+        className="absolute top-1/4 left-1/4 w-48 h-48 md:w-64 md:h-64 lg:w-[400px] lg:h-[400px] rounded-full"
         style={{
           background: "radial-gradient(circle, rgba(167, 139, 250, 0.06) 0%, transparent 70%)",
           filter: "blur(30px)",
@@ -42,25 +42,53 @@ export function Maintenance() {
       />
 
       <div
-        className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full"
+        className="absolute bottom-1/4 right-1/4 w-56 h-56 md:w-80 md:h-80 lg:w-[500px] lg:h-[500px] rounded-full"
         style={{
           background: "radial-gradient(circle, rgba(96, 165, 250, 0.05) 0%, transparent 70%)",
           filter: "blur(30px)",
         }}
       />
 
-      <div className="relative max-w-6xl mx-auto px-6 lg:px-12">
-        <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl tracking-tight mb-6">
+      <div className="relative max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
+        <div 
+          className="text-center mb-12 md:mb-16 lg:mb-20 opacity-0 translate-y-8 transition-all duration-700 ease-out"
+          ref={(el) => {
+            if (el) {
+              const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                  if (entry.isIntersecting) {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                    observer.unobserve(el);
+                  }
+                });
+              }, { threshold: 0.1 });
+              observer.observe(el);
+            }
+          }}
+        >
+          <h2 
+            className="tracking-tight mb-4 md:mb-6"
+            style={{
+              fontSize: 'clamp(1.5rem, 5vw, 3.75rem)',
+              lineHeight: '1.1',
+            }}
+          >
             Continuity & Maintenance
           </h2>
-          <p className="text-[#9ca3af] max-w-2xl mx-auto leading-relaxed">
+          <p 
+            className="text-[#9ca3af] max-w-2xl mx-auto leading-relaxed"
+            style={{
+              fontSize: 'clamp(0.9375rem, 1.5vw, 1rem)',
+              lineHeight: '1.6',
+            }}
+          >
             Your software stays current, secure, and performant.
           </p>
         </div>
 
         {/* Feature Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {features.map((feature, i) => {
             return (
               <FeatureCard key={i} feature={feature} index={i} />
@@ -75,6 +103,34 @@ export function Maintenance() {
 function FeatureCard({ feature, index }: any) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            if (cardRef.current) {
+              observer.unobserve(cardRef.current);
+            }
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => {
+      if (cardRef.current) {
+        observer.unobserve(cardRef.current);
+      }
+    };
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -89,13 +145,19 @@ function FeatureCard({ feature, index }: any) {
 
   return (
     <div
-      className="relative group cursor-hover"
+      ref={cardRef}
+      className="relative group cursor-hover opacity-0 translate-y-8 transition-all duration-700 ease-out"
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : 'translateY(32px)',
+        transitionDelay: `${index * 100}ms`,
+      }}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
     >
       <div 
-        className="p-10 border border-white/5 rounded-xl transition-all duration-700 bg-white/[0.01] relative overflow-hidden"
+        className="p-6 md:p-8 lg:p-10 border border-white/5 rounded-xl transition-all duration-700 bg-white/[0.01] relative overflow-hidden"
       >
         {/* Gradient background on hover */}
         <div

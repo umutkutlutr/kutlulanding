@@ -46,7 +46,7 @@ export default function App() {
   return (
     <ErrorBoundary>
       <LanguageProvider>
-        <div className="min-h-screen bg-[#f5f1ea] text-[#1a1d29] antialiased">
+        <div className="min-h-screen bg-[#f5f1ea] text-[#1a1d29] antialiased overflow-x-hidden">
           <Navbar />
           <main>
             <Hero />

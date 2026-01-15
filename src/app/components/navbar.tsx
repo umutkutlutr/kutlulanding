@@ -1,9 +1,16 @@
 import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
+import { Menu, X } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "./ui/sheet";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
 
   useEffect(() => {
@@ -52,27 +59,27 @@ export function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-[90] transition-all duration-300 ${
         scrolled 
-          ? "bg-[#f5f1ea]/90 shadow-lg border-b border-[#e5e7eb] backdrop-blur-sm py-3" 
-          : "bg-[#f5f1ea]/40 py-5"
+          ? "bg-[#f5f1ea]/90 shadow-lg border-b border-[#e5e7eb] backdrop-blur-sm py-2 md:py-3" 
+          : "bg-[#f5f1ea]/40 py-3 md:py-5"
       }`}
     >
       {/* Content */}
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
+      <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex-shrink-0 relative">
-            <span className="text-xl tracking-tight relative inline-block text-[#1a1d29] font-semibold">
+            <span className="text-lg md:text-xl tracking-tight relative inline-block text-[#1a1d29] font-semibold">
               Kutlu Solutions
             </span>
           </div>
 
-          {/* Center Nav */}
-          <div className="hidden lg:flex items-center gap-10">
+          {/* Desktop Center Nav */}
+          <div className="hidden lg:flex items-center gap-8 xl:gap-10">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="relative text-sm text-[#52525b] hover:text-[#1a1d29] transition-colors duration-500 tracking-wide group font-medium hover:scale-105"
+                className="relative text-sm text-[#52525b] hover:text-[#1a1d29] transition-colors duration-500 tracking-wide group font-medium hover:scale-105 min-h-[44px] flex items-center"
               >
                 <span className="relative z-10">{item.label}</span>
                 <div className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-[#fb923c] to-[#1e40af] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
@@ -80,13 +87,14 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* Right CTA */}
-          <div className="flex items-center gap-4">
+          {/* Right CTA - Desktop */}
+          <div className="hidden lg:flex items-center gap-4">
             {/* Language Toggle */}
             <button
               onClick={() => setLanguage(language === 'en' ? 'tr' : 'en')}
-              className="w-8 h-8 rounded-md hover:bg-white/10 transition-colors duration-300 flex items-center justify-center"
+              className="w-10 h-10 rounded-md hover:bg-white/10 transition-colors duration-300 flex items-center justify-center min-h-[44px] min-w-[44px]"
               title={language === 'en' ? 'Switch to Turkish' : 'Switch to English'}
+              aria-label={language === 'en' ? 'Switch to Turkish' : 'Switch to English'}
             >
               {language === 'en' ? (
                 <span className="text-lg">🇹🇷</span>
@@ -96,12 +104,79 @@ export function Navbar() {
             </button>
             <div className="hover:scale-105 active:scale-95 transition-transform duration-300">
               <Button
-                onClick={() => scrollToSection("contact")}
-                className="relative overflow-hidden bg-[#1e40af] text-white px-6 py-2.5 rounded-lg text-sm tracking-wide border-0 hover:bg-[#1e3a8a] transition-all duration-300 font-semibold cursor-hover shadow-lg shadow-[#1e40af]/30"
+                onClick={() => {
+                  scrollToSection("contact");
+                  setMobileMenuOpen(false);
+                }}
+                className="relative overflow-hidden bg-[#1e40af] text-white px-6 py-2.5 rounded-lg text-sm tracking-wide border-0 hover:bg-[#1e3a8a] transition-all duration-300 font-semibold cursor-hover shadow-lg shadow-[#1e40af]/30 min-h-[44px]"
               >
                 <span className="relative z-10">{t("nav.cta")}</span>
               </Button>
             </div>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="flex lg:hidden items-center gap-3">
+            {/* Language Toggle - Mobile */}
+            <button
+              onClick={() => setLanguage(language === 'en' ? 'tr' : 'en')}
+              className="w-10 h-10 rounded-md hover:bg-white/10 transition-colors duration-300 flex items-center justify-center min-h-[44px] min-w-[44px]"
+              title={language === 'en' ? 'Switch to Turkish' : 'Switch to English'}
+              aria-label={language === 'en' ? 'Switch to Turkish' : 'Switch to English'}
+            >
+              {language === 'en' ? (
+                <span className="text-lg">🇹🇷</span>
+              ) : (
+                <span className="text-lg">🇬🇧</span>
+              )}
+            </button>
+            
+            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <button
+                  className="w-10 h-10 rounded-md hover:bg-white/10 transition-colors duration-300 flex items-center justify-center min-h-[44px] min-w-[44px]"
+                  aria-label="Toggle menu"
+                >
+                  {mobileMenuOpen ? (
+                    <X className="h-6 w-6 text-[#1a1d29]" />
+                  ) : (
+                    <Menu className="h-6 w-6 text-[#1a1d29]" />
+                  )}
+                </button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[85vw] max-w-sm bg-[#f5f1ea] border-[#e5e7eb]">
+                <div className="flex flex-col h-full pt-8">
+                  {/* Mobile Nav Items */}
+                  <nav className="flex flex-col gap-2 mb-8">
+                    {navItems.map((item) => (
+                      <button
+                        key={item.id}
+                        onClick={() => {
+                          scrollToSection(item.id);
+                          setMobileMenuOpen(false);
+                        }}
+                        className="text-left px-4 py-3 text-base text-[#52525b] hover:text-[#1a1d29] hover:bg-white/10 rounded-lg transition-colors duration-300 font-medium min-h-[44px] flex items-center"
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </nav>
+
+                  {/* Mobile CTA */}
+                  <div className="mt-auto pb-8">
+                    <Button
+                      onClick={() => {
+                        scrollToSection("contact");
+                        setMobileMenuOpen(false);
+                      }}
+                      className="w-full bg-[#1e40af] text-white hover:bg-[#1e3a8a] py-3 rounded-lg text-base tracking-wide border-0 transition-all duration-300 font-semibold shadow-lg shadow-[#1e40af]/30 min-h-[44px]"
+                    >
+                      {t("nav.cta")}
+                    </Button>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>

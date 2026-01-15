@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { saveFormSubmission } from "../../utils/formSubmission";
 import { useLanguage } from "../../contexts/LanguageContext";
 
@@ -12,12 +12,40 @@ export function Contact() {
   const { t } = useLanguage();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     company: "",
     message: "",
   });
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            if (sectionRef.current) {
+              observer.unobserve(sectionRef.current);
+            }
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -100px 0px" }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
   const rafRef = useRef<number | null>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -58,22 +86,49 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="relative py-32 border-t border-white/5 overflow-hidden">
-      {/* Static background gradient - no animation, reduced blur */}
+    <section 
+      ref={sectionRef}
+      id="contact" 
+      className="relative py-14 md:py-20 lg:py-32 border-t border-white/5 overflow-hidden opacity-0 translate-y-8 transition-all duration-700 ease-out"
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : 'translateY(32px)',
+      }}
+    >
+      {/* Static background gradient - no animation, reduced blur, responsive sizes */}
       <div
-        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full"
+        className="absolute top-1/4 left-1/4 w-48 h-48 md:w-64 md:h-64 lg:w-96 lg:h-96 rounded-full"
         style={{
           background: "radial-gradient(circle, rgba(96, 165, 250, 0.05) 0%, transparent 70%)",
           filter: "blur(30px)",
         }}
       />
 
-      <div className="relative max-w-4xl mx-auto px-6 lg:px-12">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl tracking-tight mb-6">
+      <div className="relative max-w-4xl mx-auto px-4 md:px-6 lg:px-8">
+        <div 
+          className="text-center mb-12 md:mb-16 opacity-0 translate-y-4 transition-all duration-700 ease-out"
+          style={{
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? 'translateY(0)' : 'translateY(16px)',
+            transitionDelay: '200ms',
+          }}
+        >
+          <h2 
+            className="tracking-tight mb-4 md:mb-6"
+            style={{
+              fontSize: 'clamp(1.5rem, 5vw, 3.75rem)',
+              lineHeight: '1.1',
+            }}
+          >
             {t('contact.title')}
           </h2>
-          <p className="text-[#9ca3af] leading-relaxed">
+          <p 
+            className="text-[#9ca3af] leading-relaxed"
+            style={{
+              fontSize: 'clamp(0.9375rem, 1.5vw, 1rem)',
+              lineHeight: '1.6',
+            }}
+          >
             {t('contact.subtitle')}
           </p>
         </div>
@@ -85,7 +140,7 @@ export function Contact() {
           onMouseLeave={handleMouseLeave}
         >
           <div 
-            className="p-10 border border-white/5 rounded-xl bg-white/[0.01] backdrop-blur-sm relative overflow-hidden"
+            className="p-6 md:p-8 lg:p-10 border border-white/5 rounded-xl bg-white/[0.01] backdrop-blur-sm relative overflow-hidden"
           >
             {/* Mouse-following gradient spotlight */}
             <div
@@ -107,8 +162,8 @@ export function Contact() {
                     }}
                   />
 
-            <form onSubmit={handleSubmit} className="space-y-6 relative" style={{ transform: "translateZ(20px)" }}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6 relative" style={{ transform: "translateZ(20px)" }}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <div>
                   <Label htmlFor="contact-name" className="text-[#9ca3af] text-sm">
                     {t('contact.form.name')}
@@ -118,7 +173,7 @@ export function Contact() {
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
                     placeholder=""
-                    className="bg-white/5 border-white/10 mt-2 focus:border-[#a78bfa]/50 transition-all duration-300"
+                    className="bg-white/5 border-white/10 mt-2 focus:border-[#a78bfa]/50 transition-all duration-300 w-full min-h-[44px]"
                   />
                 </div>
 
@@ -132,7 +187,7 @@ export function Contact() {
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
                     placeholder=""
-                    className="bg-white/5 border-white/10 mt-2 focus:border-[#60a5fa]/50 transition-all duration-300"
+                    className="bg-white/5 border-white/10 mt-2 focus:border-[#60a5fa]/50 transition-all duration-300 w-full min-h-[44px]"
                   />
                 </div>
               </div>
@@ -146,7 +201,7 @@ export function Contact() {
                   value={formData.company}
                   onChange={(e) => setFormData({...formData, company: e.target.value})}
                   placeholder=""
-                  className="bg-white/5 border-white/10 mt-2 focus:border-[#f472b6]/50 transition-all duration-300"
+                  className="bg-white/5 border-white/10 mt-2 focus:border-[#f472b6]/50 transition-all duration-300 w-full min-h-[44px]"
                 />
               </div>
 
@@ -159,14 +214,14 @@ export function Contact() {
                   value={formData.message}
                   onChange={(e) => setFormData({...formData, message: e.target.value})}
                   placeholder=""
-                  className="bg-white/5 border-white/10 mt-2 min-h-[140px] focus:border-[#a78bfa]/50 transition-all duration-300"
+                  className="bg-white/5 border-white/10 mt-2 min-h-[120px] md:min-h-[140px] focus:border-[#a78bfa]/50 transition-all duration-300 w-full"
                 />
               </div>
 
               <div className="hover:scale-[1.02] active:scale-[0.98] transition-transform duration-300">
                 <Button
                   type="submit"
-                  className="w-full bg-white text-[#1a1d29] hover:bg-[#f3f4f6] transition-all duration-300 py-6 text-sm tracking-wide border-0 font-medium cursor-hover"
+                  className="w-full bg-white text-[#1a1d29] hover:bg-[#f3f4f6] transition-all duration-300 py-4 md:py-6 text-sm tracking-wide border-0 font-medium cursor-hover min-h-[44px] md:min-h-[52px]"
                 >
                   <span className="relative z-10 flex items-center justify-center">
                     {t('contact.form.submit')}

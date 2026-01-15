@@ -1,5 +1,5 @@
 import { Code, Users, Shield, Wrench } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import {
   Dialog,
@@ -82,10 +82,10 @@ export function Expertise() {
 
   return (
     <>
-      <section id="expertise" className="relative py-32 border-t border-[#e5e7eb]/50 overflow-hidden bg-[#fafaf9]">
-        {/* Static background elements - no animation */}
+      <section id="expertise" className="relative py-14 md:py-20 lg:py-32 border-t border-[#e5e7eb]/50 overflow-hidden bg-[#fafaf9]">
+        {/* Static background elements - no animation, responsive sizes */}
         <div
-          className="absolute top-20 right-20 w-96 h-96 rounded-full"
+          className="absolute top-10 right-10 md:top-20 md:right-20 w-48 h-48 md:w-64 md:h-64 lg:w-96 lg:h-96 rounded-full"
           style={{
             background: "radial-gradient(circle, rgba(251, 146, 60, 0.08) 0%, transparent 70%)",
             filter: "blur(30px)",
@@ -93,29 +93,41 @@ export function Expertise() {
         />
 
         <div
-          className="absolute bottom-20 left-20 w-96 h-96 rounded-full"
+          className="absolute bottom-10 left-10 md:bottom-20 md:left-20 w-48 h-48 md:w-64 md:h-64 lg:w-96 lg:h-96 rounded-full"
           style={{
             background: "radial-gradient(circle, rgba(96, 165, 250, 0.06) 0%, transparent 70%)",
             filter: "blur(30px)",
           }}
         />
 
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="text-center mb-20">
-            <div className="inline-block mb-4">
-              <span className="text-sm tracking-[0.3em] text-[#fb923c] uppercase font-medium">
+        <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <div className="text-center mb-12 md:mb-16 lg:mb-20">
+            <div className="inline-block mb-3 md:mb-4">
+              <span className="text-xs md:text-sm tracking-[0.3em] text-[#fb923c] uppercase font-medium">
                 {t('expertise.title')}
               </span>
             </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl tracking-tight mb-6 text-[#1a1d29]">
+            <h2 
+              className="tracking-tight mb-4 md:mb-6 text-[#1a1d29]"
+              style={{
+                fontSize: 'clamp(1.5rem, 5vw, 3.75rem)',
+                lineHeight: '1.1',
+              }}
+            >
               {t('expertise.heading')}
             </h2>
-            <p className="text-[#71717a] max-w-2xl mx-auto leading-relaxed text-lg">
+            <p 
+              className="text-[#71717a] max-w-2xl mx-auto leading-relaxed"
+              style={{
+                fontSize: 'clamp(0.9375rem, 1.5vw, 1.125rem)',
+                lineHeight: '1.6',
+              }}
+            >
               {t('expertise.subtitle')}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             {expertiseAreas.map((area, i) => {
               return (
                 <ExpertiseCard 
@@ -182,8 +194,37 @@ export function Expertise() {
 }
 
 function ExpertiseCard({ area, index, onClick }: any) {
+  const { t } = useLanguage();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            if (cardRef.current) {
+              observer.unobserve(cardRef.current);
+            }
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => {
+      if (cardRef.current) {
+        observer.unobserve(cardRef.current);
+      }
+    };
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -198,7 +239,13 @@ function ExpertiseCard({ area, index, onClick }: any) {
 
   return (
     <div
-      className="group relative cursor-hover"
+      ref={cardRef}
+      className="group relative cursor-hover opacity-0 translate-y-8 transition-all duration-700 ease-out"
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : 'translateY(32px)',
+        transitionDelay: `${index * 100}ms`,
+      }}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
@@ -206,7 +253,7 @@ function ExpertiseCard({ area, index, onClick }: any) {
     >
       {/* 3D Card with perspective */}
       <div
-        className="relative p-10 rounded-2xl backdrop-blur-sm transition-all duration-700 overflow-hidden"
+        className="relative p-6 md:p-8 lg:p-10 rounded-xl md:rounded-2xl backdrop-blur-sm transition-all duration-700 overflow-hidden"
         style={{
           border: "1px solid rgba(255, 255, 255, 0.05)",
           background: "rgba(255, 255, 255, 0.01)",
@@ -267,17 +314,36 @@ function ExpertiseCard({ area, index, onClick }: any) {
           </div>
         </div>
 
-        <h3 className="relative text-xl mb-3 tracking-tight text-[#1a1d29]" style={{ transform: "translateZ(30px)" }}>
-          {area.title}
+        <h3 
+          className="relative mb-2 md:mb-3 tracking-tight text-[#1a1d29]" 
+          style={{ 
+            transform: "translateZ(30px)",
+            fontSize: 'clamp(1.125rem, 2.5vw, 1.25rem)',
+          }}
+        >
+          {t(area.titleKey)}
         </h3>
-        <p className="relative text-[#9ca3af] text-sm leading-relaxed mb-6" style={{ transform: "translateZ(20px)" }}>
-          {area.brief}
+        <p 
+          className="relative text-[#9ca3af] leading-relaxed mb-4 md:mb-6" 
+          style={{ 
+            transform: "translateZ(20px)",
+            fontSize: 'clamp(0.875rem, 1.2vw, 0.875rem)',
+            lineHeight: '1.6',
+          }}
+        >
+          {t(area.briefKey)}
         </p>
 
         {/* Learn more indicator */}
-        <div className="flex items-center gap-2 text-sm text-[#9ca3af] group-hover:text-[#1a1d29] transition-colors duration-300" style={{ transform: "translateZ(20px)" }}>
-          <span>Learn more</span>
-          <span className="transition-transform duration-300">
+        <div 
+          className="flex items-center gap-2 text-[#9ca3af] group-hover:text-[#1a1d29] transition-colors duration-300 min-h-[44px]" 
+          style={{ 
+            transform: "translateZ(20px)",
+            fontSize: 'clamp(0.875rem, 1.2vw, 0.875rem)',
+          }}
+        >
+          <span>{t('expertise.learnMore')}</span>
+          <span className="transition-transform duration-300 group-hover:translate-x-1">
             →
           </span>
         </div>
