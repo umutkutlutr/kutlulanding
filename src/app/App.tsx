@@ -30,6 +30,9 @@ const Maintenance = lazy(() =>
 const Contact = lazy(() => 
   import("./components/contact").then(m => ({ default: m.Contact }))
 );
+const About = lazy(() => 
+  import("./components/about").then(m => ({ default: m.About }))
+);
 const Footer = lazy(() => 
   import("./components/footer").then(m => ({ default: m.Footer }))
 );
@@ -56,6 +59,7 @@ export default function App() {
             <DiscoveryCall />
             <Maintenance />
             <Contact />
+            <About />
             </Suspense>
           </main>
           <Suspense fallback={null}>

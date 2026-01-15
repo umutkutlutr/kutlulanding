@@ -64,7 +64,7 @@ export function Footer() {
           {/* Contact */}
           <div>
             <h4 className="text-sm mb-4 text-[#9ca3af]">{t('footer.contact')}</h4>
-            <div className="space-y-3 text-sm text-[#71717a]">
+            <div className="space-y-4 text-sm text-[#71717a]">
               <a
                 href="mailto:hello@kutlusolutions.com"
                 className="cursor-hover block hover:text-[#a78bfa] hover:translate-x-1 transition-all duration-300"
@@ -77,9 +77,20 @@ export function Footer() {
               >
                 0212 688 21 12
               </a>
+              
+              {/* Headquarters */}
               <div className="cursor-hover leading-relaxed pt-2 hover:text-[#f472b6] hover:translate-x-1 transition-all duration-300">
-                <p className="text-xs">Zekeriyaköy Mahallesi,</p>
-                <p className="text-xs">Mavromolos Sk. A Blok No: 8 A</p>
+                <p className="text-xs font-semibold text-[#9ca3af] mb-1">Headquarters</p>
+                <p className="text-xs">7480 Bird Rd. STE 810</p>
+                <p className="text-xs">33155 Miami, Florida</p>
+                <p className="text-xs">USA</p>
+              </div>
+
+              {/* Turkey Office */}
+              <div className="cursor-hover leading-relaxed pt-2 hover:text-[#f472b6] hover:translate-x-1 transition-all duration-300">
+                <p className="text-xs font-semibold text-[#9ca3af] mb-1">Turkey Office</p>
+                <p className="text-xs">Zekeriyaköy Mah. Mavromolos Sk.</p>
+                <p className="text-xs">A Blok No: 8 A</p>
                 <p className="text-xs">İç Kapı No: 22</p>
                 <p className="text-xs">Sarıyer / İstanbul</p>
               </div>
