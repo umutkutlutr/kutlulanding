@@ -132,23 +132,47 @@ function ReferencesTicker({ references }: { references: Reference[] }) {
 
 function LogoItem({ reference }: { reference: Reference }) {
   const [imageError, setImageError] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
+
+  // Check if image exists before trying to load
+  const handleImageLoad = () => {
+    setImageLoading(false);
+  };
+
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    console.warn(`Logo not found: ${reference.logoSrc} - showing fallback for ${reference.name}`);
+    setImageError(true);
+    setImageLoading(false);
+  };
 
   const logoContent = (
-    <div className="w-full h-10 md:h-12 lg:h-14 flex items-center justify-center">
+    <div className="w-full h-10 md:h-12 lg:h-14 flex items-center justify-center relative">
       {reference.logoSrc && !imageError ? (
-        <img
-          src={reference.logoSrc}
-          alt={reference.name}
-          className="w-full h-full object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
-          onError={() => setImageError(true)}
-          loading="lazy"
-        />
+        <>
+          {imageLoading && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-6 h-6 border-2 border-[#e5e7eb] border-t-[#fb923c] rounded-full animate-spin opacity-50" />
+            </div>
+          )}
+          <img
+            src={reference.logoSrc}
+            alt={reference.name}
+            className={`w-full h-full object-contain grayscale hover:grayscale-0 transition-all duration-300 ${
+              imageLoading ? 'opacity-0' : 'opacity-100'
+            }`}
+            onLoad={handleImageLoad}
+            onError={handleImageError}
+            loading="lazy"
+          />
+        </>
       ) : (
-        <span 
-          className="font-semibold text-[#9ca3af] text-xs md:text-sm"
-        >
-          {reference.fallback || reference.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
-        </span>
+        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#fb923c]/10 to-[#1e40af]/10 rounded-lg border border-[#e5e7eb]">
+          <span 
+            className="font-bold text-[#52525b] text-xs md:text-sm"
+          >
+            {reference.fallback || reference.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+          </span>
+        </div>
       )}
     </div>
   );
