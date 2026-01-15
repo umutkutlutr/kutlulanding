@@ -11,7 +11,7 @@ import {
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { language, setLanguage, t } = useLanguage();
+  const { t } = useLanguage();
 
   useEffect(() => {
     let lastScrollY = 0;
@@ -68,9 +68,13 @@ export function Navbar() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex-shrink-0 relative">
-            <span className="text-lg md:text-xl tracking-tight relative inline-block text-[#1a1d29] font-semibold">
-              Kutlu Solutions
-            </span>
+            <a href="/" className="flex items-center">
+              <img
+                src="/images/logos/kutlu.png"
+                alt="Kutlu Solutions"
+                className="h-8 md:h-10 w-auto object-contain"
+              />
+            </a>
           </div>
 
           {/* Desktop Center Nav */}
@@ -89,19 +93,6 @@ export function Navbar() {
 
           {/* Right CTA - Desktop */}
           <div className="hidden lg:flex items-center gap-4">
-            {/* Language Toggle */}
-            <button
-              onClick={() => setLanguage(language === 'en' ? 'tr' : 'en')}
-              className="w-10 h-10 rounded-md hover:bg-white/10 transition-colors duration-300 flex items-center justify-center min-h-[44px] min-w-[44px]"
-              title={language === 'en' ? 'Switch to Turkish' : 'Switch to English'}
-              aria-label={language === 'en' ? 'Switch to Turkish' : 'Switch to English'}
-            >
-              {language === 'en' ? (
-                <span className="text-lg">🇹🇷</span>
-              ) : (
-                <span className="text-lg">🇬🇧</span>
-              )}
-            </button>
             <div className="hover:scale-105 active:scale-95 transition-transform duration-300">
               <Button
                 onClick={() => {
@@ -117,20 +108,6 @@ export function Navbar() {
 
           {/* Mobile Menu Button */}
           <div className="flex lg:hidden items-center gap-3">
-            {/* Language Toggle - Mobile */}
-            <button
-              onClick={() => setLanguage(language === 'en' ? 'tr' : 'en')}
-              className="w-10 h-10 rounded-md hover:bg-white/10 transition-colors duration-300 flex items-center justify-center min-h-[44px] min-w-[44px]"
-              title={language === 'en' ? 'Switch to Turkish' : 'Switch to English'}
-              aria-label={language === 'en' ? 'Switch to Turkish' : 'Switch to English'}
-            >
-              {language === 'en' ? (
-                <span className="text-lg">🇹🇷</span>
-              ) : (
-                <span className="text-lg">🇬🇧</span>
-              )}
-            </button>
-            
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
                 <button
