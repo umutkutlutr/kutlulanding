@@ -49,6 +49,7 @@ export function Navbar() {
   };
 
   const navItems = [
+    { id: "about", label: t("nav.about") },
     { id: "expertise", label: t("nav.expertise") },
     { id: "industries", label: t("nav.industries") },
     { id: "approach", label: t("nav.approach") },
@@ -72,7 +73,7 @@ export function Navbar() {
               <img
                 src="/images/logos/kutlu.png"
                 alt="Kutlu Solutions"
-                className="h-8 md:h-10 w-auto object-contain"
+                className="h-10 md:h-12 lg:h-14 w-auto object-contain"
               />
             </a>
           </div>

@@ -62,6 +62,7 @@ export function Footer() {
             </h4>
             <div className="space-y-2">
               {[
+                { id: "about", labelKey: "nav.about" },
                 { id: "expertise", labelKey: "nav.expertise" },
                 { id: "industries", labelKey: "nav.industries" },
                 { id: "approach", labelKey: "nav.approach" },

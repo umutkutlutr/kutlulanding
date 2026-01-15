@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Search, Palette, Code, Rocket, Settings } from "lucide-react";
+import { useLanguage } from "../../contexts/LanguageContext";
 import {
   Dialog,
   DialogContent,
@@ -9,72 +10,73 @@ import {
 } from "./ui/dialog";
 
 export function Process() {
+  const { t } = useLanguage();
   const [selectedStep, setSelectedStep] = useState<number | null>(null);
 
   const steps = [
     {
       icon: Search,
       number: "01",
-      title: "Discovery",
-      description: "On-site workshops. Stakeholder interviews. Process mapping. We learn your business before proposing solutions.",
+      titleKey: "process.step.0.title",
+      descriptionKey: "process.step.0.description",
       color: "#fb923c",
-      details: [
-        "Multi-day on-site workshops with your team",
-        "Process mapping and stakeholder interviews",
-        "Technical infrastructure assessment",
-        "Identify integration requirements",
+      detailKeys: [
+        "process.step.0.detail.0",
+        "process.step.0.detail.1",
+        "process.step.0.detail.2",
+        "process.step.0.detail.3",
       ],
     },
     {
       icon: Palette,
       number: "02",
-      title: "Architecture",
-      description: "System design reviews. Technology selection. Security planning. We build a foundation for the long term.",
+      titleKey: "process.step.1.title",
+      descriptionKey: "process.step.1.description",
       color: "#1e40af",
-      details: [
-        "System architecture design and review",
-        "Technology stack selection for stability",
-        "Security architecture planning",
-        "Database design and data modeling",
+      detailKeys: [
+        "process.step.1.detail.0",
+        "process.step.1.detail.1",
+        "process.step.1.detail.2",
+        "process.step.1.detail.3",
       ],
     },
     {
       icon: Code,
       number: "03",
-      title: "Development",
-      description: "Senior-led implementation. Weekly progress reviews. Continuous testing. No surprises.",
+      titleKey: "process.step.2.title",
+      descriptionKey: "process.step.2.description",
       color: "#f97316",
-      details: [
-        "Senior developers lead implementation",
-        "Weekly progress reviews with stakeholders",
-        "Continuous integration and testing",
-        "Code reviews and quality assurance",
+      detailKeys: [
+        "process.step.2.detail.0",
+        "process.step.2.detail.1",
+        "process.step.2.detail.2",
+        "process.step.2.detail.3",
       ],
     },
     {
       icon: Rocket,
       number: "04",
-      title: "Deployment",
-      description: "Phased rollouts. Staff training. Documentation. We ensure smooth transitions.",
+      titleKey: "process.step.3.title",
+      descriptionKey: "process.step.3.description",
       color: "#1e3a8a",
-      details: [
-        "Phased deployment strategy",
-        "Comprehensive staff training",
-        "Full technical documentation",
-        "Performance monitoring and optimization",
+      detailKeys: [
+        "process.step.3.detail.0",
+        "process.step.3.detail.1",
+        "process.step.3.detail.2",
+        "process.step.3.detail.3",
       ],
     },
     {
       icon: Settings,
       number: "05",
-      title: "Support",
-      description: "Ongoing maintenance. Feature improvements. Technology updates. We stay engaged.",
+      titleKey: "process.step.4.title",
+      descriptionKey: "process.step.4.description",
       color: "#1e58a8",
-      details: [
-        "Dedicated support team (not offshore)",
-        "Proactive monitoring and maintenance",
-        "Regular feature enhancements",
-        "Annual roadmap planning sessions",
+      detailKeys: [
+        "process.step.4.detail.0",
+        "process.step.4.detail.1",
+        "process.step.4.detail.2",
+        "process.step.4.detail.3",
       ],
     },
   ];
@@ -112,7 +114,7 @@ export function Process() {
               lineHeight: '1.1',
             }}
           >
-            Our Approach
+            {t('process.title')}
           </h2>
           <p 
             className="text-[#9ca3af] max-w-2xl mx-auto leading-relaxed"
@@ -121,7 +123,7 @@ export function Process() {
               lineHeight: '1.6',
             }}
           >
-            Transparent and predictable delivery.
+            {t('process.subtitle')}
           </p>
         </div>
 
@@ -139,6 +141,7 @@ export function Process() {
                   step={step} 
                   index={i} 
                   onClick={() => setSelectedStep(i)}
+                  t={t}
                 />
               );
             })}
@@ -154,18 +157,18 @@ export function Process() {
               {selectedStep !== null && (
                 <>
                   <span className="text-white/40">{steps[selectedStep].number}</span>
-                  {steps[selectedStep].title}
+                  {t(steps[selectedStep].titleKey)}
                 </>
               )}
             </DialogTitle>
             <DialogDescription className="text-sm text-[#9ca3af]">
-              {selectedStep !== null && steps[selectedStep].description}
+              {selectedStep !== null && t(steps[selectedStep].descriptionKey)}
             </DialogDescription>
           </DialogHeader>
           {selectedStep !== null && (
             <div className="space-y-6 pt-4">
               <div className="space-y-3">
-                {steps[selectedStep].details.map((detail, i) => (
+                {steps[selectedStep].detailKeys.map((detailKey, i) => (
                   <div
                     key={i}
                     className="flex items-start gap-3"
@@ -177,7 +180,7 @@ export function Process() {
                         boxShadow: `0 0 10px ${steps[selectedStep].color}`,
                       }}
                     />
-                    <p className="text-sm text-[#9ca3af]">{detail}</p>
+                    <p className="text-sm text-[#9ca3af]">{t(detailKey)}</p>
                   </div>
                 ))}
               </div>
@@ -189,7 +192,7 @@ export function Process() {
   );
 }
 
-function ProcessStep({ step, index, onClick }: any) {
+function ProcessStep({ step, index, onClick, t }: any) {
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const stepRef = useRef<HTMLDivElement>(null);
@@ -275,7 +278,7 @@ function ProcessStep({ step, index, onClick }: any) {
                 lineHeight: '1.2',
               }}
             >
-              {step.title}
+              {t(step.titleKey)}
             </h3>
             <p 
               className="text-[#9ca3af] leading-relaxed"
@@ -284,7 +287,7 @@ function ProcessStep({ step, index, onClick }: any) {
                 lineHeight: '1.6',
               }}
             >
-              {step.description}
+              {t(step.descriptionKey)}
             </p>
             <p
               className="text-xs mt-3 group-hover:text-white/50 transition-colors duration-500 opacity-50"

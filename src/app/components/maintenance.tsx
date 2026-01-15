@@ -1,27 +1,29 @@
 import { Shield, Activity, TrendingUp } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 export function Maintenance() {
+  const { t } = useLanguage();
 
   const features = [
     {
       icon: Shield,
-      title: "Proactive Monitoring",
-      description: "24/7 system health monitoring. Security updates. Performance optimization.",
+      titleKey: "maintenance.feature.0.title",
+      descriptionKey: "maintenance.feature.0.description",
       color: "#fb923c",
       gradient: "from-[#fb923c]/10 to-[#f97316]/5"
     },
     {
       icon: Activity,
-      title: "Guaranteed Response Times",
-      description: "Dedicated support team. Clear SLAs. Direct access to senior engineers.",
+      titleKey: "maintenance.feature.1.title",
+      descriptionKey: "maintenance.feature.1.description",
       color: "#1e40af",
       gradient: "from-[#1e40af]/10 to-[#1e3a8a]/5"
     },
     {
       icon: TrendingUp,
-      title: "Continuous Improvement",
-      description: "Regular feature enhancements. Technology updates. Annual roadmap planning.",
+      titleKey: "maintenance.feature.2.title",
+      descriptionKey: "maintenance.feature.2.description",
       color: "#f97316",
       gradient: "from-[#f97316]/10 to-[#fb923c]/5"
     },
@@ -74,7 +76,7 @@ export function Maintenance() {
               lineHeight: '1.1',
             }}
           >
-            Continuity & Maintenance
+            {t('maintenance.title')}
           </h2>
           <p 
             className="text-[#9ca3af] max-w-2xl mx-auto leading-relaxed"
@@ -83,7 +85,7 @@ export function Maintenance() {
               lineHeight: '1.6',
             }}
           >
-            Your software stays current, secure, and performant.
+            {t('maintenance.subtitle')}
           </p>
         </div>
 
@@ -91,7 +93,7 @@ export function Maintenance() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {features.map((feature, i) => {
             return (
-              <FeatureCard key={i} feature={feature} index={i} />
+              <FeatureCard key={i} feature={feature} index={i} t={t} />
             );
           })}
         </div>
@@ -100,7 +102,7 @@ export function Maintenance() {
   );
 }
 
-function FeatureCard({ feature, index }: any) {
+function FeatureCard({ feature, index, t }: any) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -200,10 +202,10 @@ function FeatureCard({ feature, index }: any) {
         </div>
         
         <h3 className="relative text-xl mb-3 tracking-tight">
-          {feature.title}
+          {t(feature.titleKey)}
         </h3>
         <p className="relative text-sm text-[#9ca3af] leading-relaxed">
-          {feature.description}
+          {t(feature.descriptionKey)}
         </p>
 
         {/* Floating particle */}
