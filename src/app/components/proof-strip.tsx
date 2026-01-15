@@ -34,19 +34,19 @@ export function ProofStrip() {
 
   const stats = [
     { 
-      number: "$2.3B+", 
+      number: "Factory-first delivery", 
       labelKey: "proof.stats.0.label",
       color: "#fb923c",
       gradient: "from-[#fb923c] to-[#f97316]"
     },
     { 
-      number: "18 years", 
+      number: "Decision-ready reporting", 
       labelKey: "proof.stats.1.label",
       color: "#1e40af",
       gradient: "from-[#1e40af] to-[#1e3a8a]"
     },
     { 
-      number: "Enterprise", 
+      number: "Enterprise-grade execution", 
       labelKey: "proof.stats.2.label",
       color: "#f97316",
       gradient: "from-[#f97316] to-[#fb923c]"
@@ -138,9 +138,10 @@ export function ProofStrip() {
                     style={{ transform: "translateZ(20px)" }}
                   >
                     <p
-                      className={`text-5xl md:text-6xl tracking-tight bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent`}
+                      className={`text-3xl md:text-4xl lg:text-5xl tracking-tight bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent font-bold`}
                       style={{
                         textShadow: `0 0 40px ${stat.color}40`,
+                        lineHeight: '1.2',
                       }}
                     >
                       {stat.number}

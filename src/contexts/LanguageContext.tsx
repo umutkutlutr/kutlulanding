@@ -29,9 +29,9 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.cta': 'Talk to the Team',
     
     // ProofStrip
-    'proof.stats.0.label': 'Systems under management',
-    'proof.stats.1.label': 'Average team tenure',
-    'proof.stats.2.label': 'Exclusively',
+    'proof.stats.0.label': 'On-site workflow discovery',
+    'proof.stats.1.label': 'Clean data, clear actions',
+    'proof.stats.2.label': 'Built for reliability and scale',
     
     // About
     'about.badge': 'About',

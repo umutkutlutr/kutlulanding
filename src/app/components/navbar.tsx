@@ -73,7 +73,7 @@ export function Navbar() {
               <img
                 src="/images/logos/kutlu.png"
                 alt="Kutlu Solutions"
-                className="h-12 md:h-16 lg:h-20 w-auto object-contain"
+                className="h-24 md:h-32 lg:h-40 w-auto object-contain"
                 style={{
                   mixBlendMode: 'multiply',
                   filter: 'contrast(1.1)',
