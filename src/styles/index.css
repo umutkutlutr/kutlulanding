@@ -1,3 +1,93 @@
 @import './fonts.css';
 @import './tailwind.css';
 @import './theme.css';
+
+/* Infinite Scrolling Logo Ticker */
+.ticker-wrapper {
+  /* Prevent horizontal page scroll */
+  overflow: hidden;
+  position: relative;
+  /* Ensure single row height */
+  min-height: clamp(60px, 8vw, 80px);
+}
+
+.ticker {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.ticker-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  will-change: transform;
+  gap: clamp(16px, 3vw, 28px);
+  animation: marquee 30s linear infinite;
+}
+
+.ticker:hover .ticker-track,
+.ticker:focus-within .ticker-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Soft edge fade masks */
+.ticker-fade-left {
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.95) 20%,
+    rgba(255, 255, 255, 0.8) 40%,
+    rgba(255, 255, 255, 0.4) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.ticker-fade-right {
+  background: linear-gradient(
+    to left,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.95) 20%,
+    rgba(255, 255, 255, 0.8) 40%,
+    rgba(255, 255, 255, 0.4) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+  }
+  
+  .ticker {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+  
+  .ticker::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+  
+  .ticker-track {
+    width: max-content;
+    transform: none;
+  }
+  
+  /* Hide fade masks when scrolling manually */
+  .ticker-fade-left,
+  .ticker-fade-right {
+    display: none;
+  }
+}

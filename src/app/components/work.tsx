@@ -1,27 +1,28 @@
-// Motion removed for performance
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
 
 // Logo type definition
-type Client = {
+type Reference = {
   name: string;
-  logo: string;
+  logoSrc: string;
   fallback?: string;
+  url?: string;
 };
 
 export function Work() {
   const { t } = useLanguage();
 
-  const clients = [
-    { name: "Maison Sacree", logo: "/images/logos/maison-sacree.png", fallback: "MS" },
-    { name: "TM Mühendislik", logo: "/images/logos/tm-muhendislik.png", fallback: "TM" },
-    { name: "Ledvision", logo: "/images/logos/ledvision.png", fallback: "LV" },
-    { name: "Avitech Metal", logo: "/images/logos/avitech-metal.png", fallback: "AM" },
-    { name: "Graphene", logo: "/images/logos/graphene.png", fallback: "GR" },
-    { name: "Vesil", logo: "/images/logos/vesil.png", fallback: "VE" },
-    { name: "Işıl Metal", logo: "/images/logos/isil-metal.png", fallback: "IM" },
-    { name: "Sadık Kağıt", logo: "/images/logos/sadik-kagit.png", fallback: "SK" },
-    { name: "Diaporta", logo: "/images/logos/diaporta.png", fallback: "DI" },
+  const references: Reference[] = [
+    { name: "Maison Sacree", logoSrc: "/images/logos/maison-sacree.png", fallback: "MS", url: "https://maisonsacreecannes.com" },
+    { name: "T&M Mühendislik", logoSrc: "/images/logos/tm-muhendislik.png", fallback: "TM", url: "https://www.heidenhain.com.tr" },
+    { name: "LEDVISION", logoSrc: "/images/logos/ledvision.png", fallback: "LV", url: "https://ledvision.tr" },
+    { name: "Avitech", logoSrc: "/images/logos/avitech-metal.png", fallback: "AV", url: "https://www.avitechmetal.com" },
+    { name: "Graphene", logoSrc: "/images/logos/graphene.png", fallback: "GR" },
+    { name: "Vesil", logoSrc: "/images/logos/vesil.png", fallback: "VE", url: "https://vesil.com.tr" },
+    { name: "Işıl Metal", logoSrc: "/images/logos/isil-metal.png", fallback: "IM", url: "https://www.isilmetal.com.tr" },
+    { name: "TZL Suites", logoSrc: "/images/logos/tzl-suites.png", fallback: "TZ", url: "https://www.tzlsuites.com" },
+    { name: "Sadık Kağıt", logoSrc: "/images/logos/sadik-kagit.png", fallback: "SK", url: "https://www.sadikkagit.com.tr" },
+    { name: "Diaporta", logoSrc: "/images/logos/diaporta.png", fallback: "DI", url: "https://www.diaporta.com.tr" },
   ];
 
   return (
@@ -71,12 +72,8 @@ export function Work() {
           </p>
         </div>
 
-        {/* Logos Grid with advanced stagger animation */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-          {clients.map((client, index) => (
-            <ClientCard key={index} client={client} index={index} />
-          ))}
-        </div>
+        {/* Infinite Scrolling Logo Ticker */}
+        <ReferencesTicker references={references} />
 
         {/* Bottom decorative line */}
         <div className="mt-12 md:mt-16 lg:mt-20 h-[2px] bg-gradient-to-r from-transparent via-[#fb923c] to-transparent origin-center" />
@@ -97,112 +94,85 @@ export function Work() {
   );
 }
 
-function ClientCard({ client, index }: { client: Client, index: number }) {
+function ReferencesTicker({ references }: { references: Reference[] }) {
+  return (
+    <div 
+      className="ticker-wrapper relative w-full"
+      aria-label="References"
+    >
+      {/* Edge fade masks - soft gradient */}
+      <div 
+        className="absolute left-0 top-0 bottom-0 z-10 pointer-events-none ticker-fade-left"
+        style={{
+          width: 'clamp(60px, 8vw, 120px)',
+        }}
+      />
+      <div 
+        className="absolute right-0 top-0 bottom-0 z-10 pointer-events-none ticker-fade-right"
+        style={{
+          width: 'clamp(60px, 8vw, 120px)',
+        }}
+      />
+      
+      <div className="ticker overflow-hidden">
+        <div className="ticker-track flex items-center">
+          {/* First set of logos */}
+          {references.map((ref, index) => (
+            <LogoItem key={`first-${index}`} reference={ref} />
+          ))}
+          {/* Duplicated set for seamless loop */}
+          {references.map((ref, index) => (
+            <LogoItem key={`second-${index}`} reference={ref} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function LogoItem({ reference }: { reference: Reference }) {
   const [imageError, setImageError] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-            if (cardRef.current) {
-              observer.unobserve(cardRef.current);
-            }
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -30px 0px" }
-    );
-
-    if (cardRef.current) {
-      observer.observe(cardRef.current);
-    }
-
-    return () => {
-      if (cardRef.current) {
-        observer.unobserve(cardRef.current);
-      }
-    };
-  }, []);
+  const logoContent = (
+    <div className="w-full h-10 md:h-12 lg:h-14 flex items-center justify-center">
+      {reference.logoSrc && !imageError ? (
+        <img
+          src={reference.logoSrc}
+          alt={reference.name}
+          className="w-full h-full object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+          onError={() => setImageError(true)}
+          loading="lazy"
+        />
+      ) : (
+        <span 
+          className="font-semibold text-[#9ca3af] text-xs md:text-sm"
+        >
+          {reference.fallback || reference.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+        </span>
+      )}
+    </div>
+  );
 
   return (
-    <div
-      ref={cardRef}
-      className="group relative hover:-translate-y-3 hover:scale-[1.03] transition-all duration-300 opacity-0 translate-y-4"
+    <div 
+      className="ticker-item flex-shrink-0 flex items-center justify-center px-4 md:px-6 lg:px-8"
       style={{
-        opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'translateY(0)' : 'translateY(16px)',
-        transitionDelay: `${index * 50}ms`,
+        minWidth: 'clamp(120px, 15vw, 200px)',
       }}
     >
-              {/* Card */}
-              <div className="relative min-h-[120px] md:h-36 lg:h-44 bg-white border-2 border-[#e5e7eb] rounded-xl md:rounded-2xl overflow-hidden transition-all duration-500 group-hover:border-[#fb923c]/40 group-hover:shadow-2xl group-hover:shadow-[#fb923c]/20">
-                {/* Gradient background on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#fb923c]/8 via-transparent to-[#1e40af]/8 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                {/* Animated top border - removed animation for performance */}
-                <div
-                  className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#fb923c] via-[#1e40af] to-[#1e3a8a] origin-left scale-x-100"
-                />
-
-                {/* Content */}
-                <div className="relative z-10 h-full flex flex-col items-center justify-center p-4 md:p-6">
-                  {/* Logo with fallback */}
-                  <div
-                    className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-lg md:rounded-xl bg-white border-2 border-[#e5e7eb] group-hover:border-[#fb923c]/30 flex items-center justify-center mb-2 md:mb-4 transition-all duration-500 shadow-lg group-hover:scale-110 overflow-hidden"
-                  >
-                    {client.logo && !imageError ? (
-                      <img
-                        src={client.logo}
-                        alt={client.name}
-                        className="w-full h-full object-contain p-2 grayscale group-hover:grayscale-0 transition-all duration-500"
-                        onError={() => setImageError(true)}
-                        loading="lazy"
-                      />
-                    ) : (
-                      <span 
-                        className="font-bold bg-gradient-to-br from-[#fb923c] to-[#1e40af] bg-clip-text text-transparent"
-                        style={{
-                          fontSize: 'clamp(1.25rem, 3vw, 1.875rem)',
-                        }}
-                      >
-                        {client.fallback || client.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Company name */}
-                  <h3 
-                    className="text-[#52525b] group-hover:text-[#1a1d29] transition-colors duration-300 font-semibold text-center"
-                    style={{
-                      fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)',
-                      lineHeight: '1.4',
-                    }}
-                  >
-                    {client.name}
-                  </h3>
-                </div>
-
-                {/* Decorative corner glow - no animation */}
-                <div
-                  className="absolute -bottom-16 -right-16 w-40 h-40 rounded-full opacity-0 group-hover:opacity-50 transition-opacity duration-500"
-                  style={{
-                    background: "radial-gradient(circle, rgba(251, 146, 60, 0.4), transparent)",
-                    filter: "blur(20px)"
-                  }}
-                />
-
-                <div
-                  className="absolute -top-16 -left-16 w-40 h-40 rounded-full opacity-0 group-hover:opacity-40 transition-opacity duration-500"
-                  style={{
-                    background: "radial-gradient(circle, rgba(30, 64, 175, 0.3), transparent)",
-                    filter: "blur(20px)"
-                  }}
-                />
-              </div>
+      {reference.url ? (
+        <a
+          href={reference.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full h-full flex items-center justify-center transition-transform duration-300 hover:scale-105"
+          aria-label={`Visit ${reference.name} website`}
+        >
+          {logoContent}
+        </a>
+      ) : (
+        logoContent
+      )}
     </div>
   );
 }

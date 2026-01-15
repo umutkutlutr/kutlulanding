@@ -140,7 +140,7 @@ export function Contact() {
           onMouseLeave={handleMouseLeave}
         >
           <div 
-            className="p-6 md:p-8 lg:p-10 border border-white/5 rounded-xl bg-white/[0.01] backdrop-blur-sm relative overflow-hidden"
+            className="p-6 md:p-8 lg:p-10 border border-[#e5e7eb] rounded-xl bg-white shadow-lg relative overflow-hidden"
           >
             {/* Mouse-following gradient spotlight */}
             <div
@@ -165,20 +165,20 @@ export function Contact() {
             <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6 relative" style={{ transform: "translateZ(20px)" }}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <div>
-                  <Label htmlFor="contact-name" className="text-[#9ca3af] text-sm">
+                  <Label htmlFor="contact-name" className="text-[#52525b] font-medium text-sm mb-2 block">
                     {t('contact.form.name')}
                   </Label>
                   <Input
                     id="contact-name"
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    placeholder=""
-                    className="bg-white/5 border-white/10 mt-2 focus:border-[#a78bfa]/50 transition-all duration-300 w-full min-h-[44px]"
+                    placeholder={t('contact.form.namePlaceholder') || "John Smith"}
+                    className="bg-white border-[#e5e7eb] text-[#1a1d29] placeholder:text-[#9ca3af] mt-0 focus:border-[#a78bfa] focus:ring-[#a78bfa]/20 focus:ring-2 transition-all duration-300 w-full min-h-[48px] text-base shadow-sm hover:border-[#d1d5db]"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="contact-email" className="text-[#9ca3af] text-sm">
+                  <Label htmlFor="contact-email" className="text-[#52525b] font-medium text-sm mb-2 block">
                     {t('contact.form.email')}
                   </Label>
                   <Input
@@ -186,35 +186,35 @@ export function Contact() {
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    placeholder=""
-                    className="bg-white/5 border-white/10 mt-2 focus:border-[#60a5fa]/50 transition-all duration-300 w-full min-h-[44px]"
+                    placeholder={t('contact.form.emailPlaceholder') || "john@company.com"}
+                    className="bg-white border-[#e5e7eb] text-[#1a1d29] placeholder:text-[#9ca3af] mt-0 focus:border-[#60a5fa] focus:ring-[#60a5fa]/20 focus:ring-2 transition-all duration-300 w-full min-h-[48px] text-base shadow-sm hover:border-[#d1d5db]"
                   />
                 </div>
               </div>
 
               <div>
-                <Label htmlFor="contact-company" className="text-[#9ca3af] text-sm">
+                <Label htmlFor="contact-company" className="text-[#52525b] font-medium text-sm mb-2 block">
                   {t('contact.form.company')}
                 </Label>
                 <Input
                   id="contact-company"
                   value={formData.company}
                   onChange={(e) => setFormData({...formData, company: e.target.value})}
-                  placeholder=""
-                  className="bg-white/5 border-white/10 mt-2 focus:border-[#f472b6]/50 transition-all duration-300 w-full min-h-[44px]"
+                  placeholder={t('contact.form.companyPlaceholder') || "Company Name"}
+                  className="bg-white border-[#e5e7eb] text-[#1a1d29] placeholder:text-[#9ca3af] mt-0 focus:border-[#f472b6] focus:ring-[#f472b6]/20 focus:ring-2 transition-all duration-300 w-full min-h-[48px] text-base shadow-sm hover:border-[#d1d5db]"
                 />
               </div>
 
               <div>
-                <Label htmlFor="contact-message" className="text-[#9ca3af] text-sm">
+                <Label htmlFor="contact-message" className="text-[#52525b] font-medium text-sm mb-2 block">
                   {t('contact.form.message')}
                 </Label>
                 <Textarea
                   id="contact-message"
                   value={formData.message}
                   onChange={(e) => setFormData({...formData, message: e.target.value})}
-                  placeholder=""
-                  className="bg-white/5 border-white/10 mt-2 min-h-[120px] md:min-h-[140px] focus:border-[#a78bfa]/50 transition-all duration-300 w-full"
+                  placeholder={t('contact.form.messagePlaceholder') || "Tell us about your project..."}
+                  className="bg-white border-[#e5e7eb] text-[#1a1d29] placeholder:text-[#9ca3af] mt-0 min-h-[120px] md:min-h-[140px] focus:border-[#a78bfa] focus:ring-[#a78bfa]/20 focus:ring-2 transition-all duration-300 w-full text-base shadow-sm hover:border-[#d1d5db] resize-y"
                 />
               </div>
 

@@ -7,14 +7,15 @@ Bu klasöre müşteri logolarını ekleyin.
 Lütfen logoları şu isimlerle kaydedin:
 
 1. `maison-sacree.png` - Maison Sacree
-2. `tm-muhendislik.png` - TM Mühendislik
-3. `ledvision.png` - Ledvision
-4. `avitech-metal.png` - Avitech Metal
+2. `tm-muhendislik.png` - T&M Mühendislik
+3. `ledvision.png` - LEDVISION
+4. `avitech-metal.png` - Avitech
 5. `graphene.png` - Graphene
 6. `vesil.png` - Vesil
 7. `isil-metal.png` - Işıl Metal
-8. `sadik-kagit.png` - Sadık Kağıt
-9. `diaporta.png` - Diaporta
+8. `tzl-suites.png` - TZL Suites
+9. `sadik-kagit.png` - Sadık Kağıt
+10. `diaporta.png` - Diaporta
 
 ## Logo Gereksinimleri
 
@@ -46,9 +47,15 @@ Lütfen logoları şu isimlerle kaydedin:
 
 Eğer bir logo yüklenemezse veya dosya bulunamazsa, firma adının baş harfleri gösterilecek:
 - Maison Sacree → MS
-- TM Mühendislik → TM
-- Ledvision → LV
-- vb.
+- T&M Mühendislik → TM
+- LEDVISION → LV
+- Avitech → AV
+- Graphene → GR
+- Vesil → VE
+- Işıl Metal → IM
+- TZL Suites → TZ
+- Sadık Kağıt → SK
+- Diaporta → DI
 
 ## Test
 
