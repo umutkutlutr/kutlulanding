@@ -146,7 +146,7 @@ function LogoItem({ reference }: { reference: Reference }) {
   };
 
   const logoContent = (
-    <div className="w-full h-10 md:h-12 lg:h-14 flex items-center justify-center relative">
+    <div className="flex items-center justify-center relative overflow-hidden" style={{ width: '240px', height: '80px' }}>
       {reference.logoSrc && !imageError ? (
         <>
           {imageLoading && (
@@ -157,18 +157,27 @@ function LogoItem({ reference }: { reference: Reference }) {
           <img
             src={reference.logoSrc}
             alt={reference.name}
-            className={`w-full h-full object-contain grayscale hover:grayscale-0 transition-all duration-300 ${
+            className={`object-contain grayscale hover:grayscale-0 transition-all duration-300 ${
               imageLoading ? 'opacity-0' : 'opacity-100'
             }`}
+            style={{ 
+              maxWidth: '230px', 
+              maxHeight: '70px', 
+              width: 'auto', 
+              height: 'auto',
+              objectFit: 'contain',
+              objectPosition: 'center',
+              display: 'block'
+            }}
             onLoad={handleImageLoad}
             onError={handleImageError}
             loading="lazy"
           />
         </>
       ) : (
-        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#fb923c]/10 to-[#1e40af]/10 rounded-lg border border-[#e5e7eb]">
+        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#fb923c]/10 to-[#1e40af]/10 border border-[#e5e7eb]">
           <span 
-            className="font-bold text-[#52525b] text-xs md:text-sm"
+            className="font-bold text-[#52525b] text-sm md:text-base"
           >
             {reference.fallback || reference.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
           </span>
@@ -179,9 +188,10 @@ function LogoItem({ reference }: { reference: Reference }) {
 
   return (
     <div 
-      className="ticker-item flex-shrink-0 flex items-center justify-center px-4 md:px-6 lg:px-8"
+      className="ticker-item flex-shrink-0 flex items-center justify-center"
       style={{
-        minWidth: 'clamp(120px, 15vw, 200px)',
+        width: '240px',
+        height: '80px',
       }}
     >
       {reference.url ? (

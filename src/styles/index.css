@@ -7,8 +7,8 @@
   /* Prevent horizontal page scroll */
   overflow: hidden;
   position: relative;
-  /* Ensure single row height */
-  min-height: clamp(60px, 8vw, 80px);
+  /* Ensure single row height - fixed to match logo height */
+  height: 80px;
 }
 
 .ticker {
@@ -22,7 +22,7 @@
   align-items: center;
   width: max-content;
   will-change: transform;
-  gap: clamp(16px, 3vw, 28px);
+  gap: 0;
   animation: marquee 30s linear infinite;
 }
 
