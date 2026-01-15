@@ -17,7 +17,6 @@ export function Work() {
     { name: "T&M Mühendislik", logoSrc: "/images/logos/tm-muhendislik.png", fallback: "TM", url: "https://www.heidenhain.com.tr" },
     { name: "LEDVISION", logoSrc: "/images/logos/ledvision.png", fallback: "LV", url: "https://ledvision.tr" },
     { name: "Avitech", logoSrc: "/images/logos/avitech-metal.png", fallback: "AV", url: "https://www.avitechmetal.com" },
-    { name: "Graphene", logoSrc: "/images/logos/graphene.png", fallback: "GR" },
     { name: "Vesil", logoSrc: "/images/logos/vesil.png", fallback: "VE", url: "https://vesil.com.tr" },
     { name: "Işıl Metal", logoSrc: "/images/logos/isil-metal.png", fallback: "IM", url: "https://www.isilmetal.com.tr" },
     { name: "TZL Suites", logoSrc: "/images/logos/tzl-suites.png", fallback: "TZ", url: "https://www.tzlsuites.com" },
