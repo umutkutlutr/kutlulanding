@@ -10,6 +10,8 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  // Explicitly set public directory
+  publicDir: 'public',
   resolve: {
     alias: {
       // Alias @ to the src directory
