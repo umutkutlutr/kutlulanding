@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
 
 // Logo type definition
@@ -135,13 +135,28 @@ function LogoItem({ reference }: { reference: Reference }) {
   const [imageError, setImageError] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
 
-  // Check if image exists before trying to load
+  // Preload image to check if it exists
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => {
+      setImageLoading(false);
+      setImageError(false);
+    };
+    img.onerror = () => {
+      console.error(`Logo failed to preload: ${reference.logoSrc} for ${reference.name}`);
+      setImageError(true);
+      setImageLoading(false);
+    };
+    img.src = reference.logoSrc;
+  }, [reference.logoSrc, reference.name]);
+
   const handleImageLoad = () => {
     setImageLoading(false);
+    setImageError(false);
   };
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    console.warn(`Logo not found: ${reference.logoSrc} - showing fallback for ${reference.name}`);
+    console.error(`Logo failed to load: ${reference.logoSrc} for ${reference.name}`, e);
     setImageError(true);
     setImageLoading(false);
   };
@@ -151,7 +166,7 @@ function LogoItem({ reference }: { reference: Reference }) {
       {reference.logoSrc && !imageError ? (
         <>
           {imageLoading && (
-            <div className="absolute inset-0 flex items-center justify-center">
+            <div className="absolute inset-0 flex items-center justify-center z-10">
               <div className="w-6 h-6 border-2 border-[#e5e7eb] border-t-[#fb923c] rounded-full animate-spin opacity-50" />
             </div>
           )}
@@ -168,7 +183,8 @@ function LogoItem({ reference }: { reference: Reference }) {
               height: 'auto',
               objectFit: 'contain',
               objectPosition: 'center',
-              display: 'block'
+              display: 'block',
+              margin: '0 auto'
             }}
             onLoad={handleImageLoad}
             onError={handleImageError}
