@@ -66,28 +66,19 @@ export function Navbar() {
     >
       {/* Content */}
       <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-4">
           {/* Logo */}
-          <div className="flex-shrink-0 relative">
-            <a href="/" className="flex items-center">
-              <div 
-                className="relative"
+          <div className="flex-shrink-0 min-w-0">
+            <a href="/" className="flex items-center h-full">
+              <img
+                src="/images/logos/kutlu.png"
+                alt="Kutlu Solutions"
+                className="h-10 sm:h-12 md:h-14 lg:h-16 w-auto max-w-[120px] sm:max-w-[140px] md:max-w-[160px] lg:max-w-[180px] object-contain"
                 style={{
-                  backgroundColor: 'transparent',
+                  display: 'block',
+                  height: 'auto',
                 }}
-              >
-                <img
-                  src="/images/logos/kutlu.png"
-                  alt="Kutlu Solutions"
-                  className="h-24 md:h-32 lg:h-40 w-auto object-contain"
-                  style={{
-                    backgroundColor: 'transparent',
-                    mixBlendMode: 'multiply',
-                    filter: 'contrast(1.2) brightness(0.95)',
-                    imageRendering: 'crisp-edges',
-                  }}
-                />
-              </div>
+              />
             </a>
           </div>
 
@@ -136,7 +127,20 @@ export function Navbar() {
                 </button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[85vw] max-w-sm bg-[#f5f1ea] border-[#e5e7eb]">
-                <div className="flex flex-col h-full pt-8">
+                <div className="flex flex-col h-full pt-6">
+                  {/* Mobile Logo */}
+                  <div className="mb-6 pb-6 border-b border-[#e5e7eb]">
+                    <a href="/" className="flex items-center" onClick={() => setMobileMenuOpen(false)}>
+                      <img
+                        src="/images/logos/kutlu.png"
+                        alt="Kutlu Solutions"
+                        className="h-10 w-auto max-w-[120px] object-contain"
+                        style={{
+                          display: 'block',
+                        }}
+                      />
+                    </a>
+                  </div>
                   {/* Mobile Nav Items */}
                   <nav className="flex flex-col gap-2 mb-8">
                     {navItems.map((item) => (
