@@ -23,7 +23,7 @@ export function Work() {
     { name: "Sadık Kağıt", logoSrc: "/images/logos/sadik-kagit.png", fallback: "SK", url: "https://www.sadikkagit.com.tr" },
     { name: "Diaporta", logoSrc: "/images/logos/diaporta.png", fallback: "DI", url: "https://www.diaporta.com.tr" },
     { name: "The CSKY Partners Corp", logoSrc: "/images/logos/csky.png", fallback: "CS", url: "https://www.thecsky.com" },
-    { name: "Graphene", logoSrc: "/images/logos/graphene.png", fallback: "GR" },
+    { name: "Graphene", logoSrc: "/images/logos/graphene.png", fallback: "GR", url: "#" },
   ];
 
   return (
